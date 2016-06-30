@@ -40,7 +40,7 @@ public class SysRole implements Serializable{
 	@Transient
 	private String choiced;
 
-	@ManyToMany(cascade=CascadeType.REFRESH,mappedBy="sysRoles", fetch=FetchType.EAGER)
+	@ManyToMany(cascade=CascadeType.REFRESH,mappedBy="sysRoles")
 	private Set<SysUser> sysUsers;
 
 	/**

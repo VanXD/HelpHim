@@ -65,7 +65,7 @@ public class SysUser implements Serializable{
 	 * joinColumns表示关系维护端对应的中间表的外键名
 	 * @return
 	 */
-	@ManyToMany(cascade={CascadeType.REFRESH}, fetch=FetchType.EAGER)
+	@ManyToMany(cascade={CascadeType.REFRESH})
 	@JoinTable(name="sys_user_role",
 			inverseJoinColumns=@JoinColumn(name="role_id", referencedColumnName = "id"),
 			joinColumns=@JoinColumn(name="user_id", referencedColumnName = "id"))
