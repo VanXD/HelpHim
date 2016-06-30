@@ -1,12 +1,7 @@
 package com.vanxd.data.repository;
 
-import com.vanxd.data.entity.SysRole;
-import com.vanxd.data.entity.SysUser;
+import com.vanxd.data.entity.user.SysRole;
 import org.springframework.data.repository.CrudRepository;
-
-import javax.persistence.*;
-import java.io.Serializable;
-import java.util.Set;
 
 /**
  * 系统角色表

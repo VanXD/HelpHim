@@ -1,7 +1,7 @@
 package com.vanxd.admin.service;
 
-import com.vanxd.data.entity.SysRole;
-import com.vanxd.data.entity.SysUser;
+import com.vanxd.data.entity.user.SysRole;
+import com.vanxd.data.entity.user.SysUser;
 import com.vanxd.data.repository.SysRoleRepository;
 import com.vanxd.data.repository.SysUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

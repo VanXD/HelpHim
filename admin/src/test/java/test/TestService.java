@@ -1,18 +1,18 @@
 package test;
 
-import com.vanxd.data.entity.SysRole;
-import com.vanxd.data.entity.SysUser;
+import com.vanxd.data.entity.user.SysRole;
+import com.vanxd.data.entity.user.SysUser;
 import com.vanxd.data.repository.SysRoleRepository;
 import com.vanxd.data.repository.SysUserRepository;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.Rollback;
-import spring.SpringTest;
+import spring.SpringTestParent;
 
 /**
  * Created by wejoy-a on 2016/6/30.
  */
-public class TestService extends SpringTest {
+public class TestService extends SpringTestParent {
     @Autowired
     private SysRoleRepository sysRoleRepository;
     @Autowired

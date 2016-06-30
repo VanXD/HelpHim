@@ -1,4 +1,4 @@
-package com.vanxd.data.entity;
+package com.vanxd.data.entity.user;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -42,6 +42,44 @@ public class SysRole implements Serializable{
 
 	@ManyToMany(cascade=CascadeType.REFRESH,mappedBy="sysRoles")
 	private Set<SysUser> sysUsers;
+
+	@ManyToMany(cascade={CascadeType.REFRESH})
+	@JoinTable(name="sys_role_permission",
+			inverseJoinColumns=@JoinColumn(name="permission_id", referencedColumnName = "id"),
+			joinColumns=@JoinColumn(name="role_id", referencedColumnName = "id"))
+	private Set<SysPermission> sysPermissions;
+
+	public boolean addPermission(SysPermission sysPermission) {
+		if(!sysPermissions.contains(sysPermission)) {
+			return sysPermissions.add(sysPermission);
+		}
+		return false;
+	}
+
+	public boolean removePermission(SysPermission sysPermission) {
+		if(sysPermissions.contains(sysPermission)) {
+			return sysPermissions.remove(sysPermission);
+		}
+		return false;
+	}
+
+	/**
+	 * Getter for property 'sysPermissions'.
+	 *
+	 * @return Value for property 'sysPermissions'.
+	 */
+	public Set<SysPermission> getSysPermissions() {
+		return sysPermissions;
+	}
+
+	/**
+	 * Setter for property 'sysPermissions'.
+	 *
+	 * @param sysPermissions Value to set for property 'sysPermissions'.
+	 */
+	public void setSysPermissions(Set<SysPermission> sysPermissions) {
+		this.sysPermissions = sysPermissions;
+	}
 
 	/**
 	 * Getter for property 'sysUsers'.

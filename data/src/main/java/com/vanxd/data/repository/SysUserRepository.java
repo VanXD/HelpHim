@@ -1,7 +1,6 @@
 package com.vanxd.data.repository;
 
-import com.vanxd.data.entity.SysRole;
-import com.vanxd.data.entity.SysUser;
+import com.vanxd.data.entity.user.SysUser;
 import org.springframework.data.repository.CrudRepository;
 
 /**
@@ -9,4 +8,5 @@ import org.springframework.data.repository.CrudRepository;
  */
 public interface SysUserRepository extends CrudRepository<SysUser, String>{
 
+    SysUser findByUsername(String username);
 }

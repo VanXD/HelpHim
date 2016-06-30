@@ -1,4 +1,4 @@
-package com.vanxd.data.entity;
+package com.vanxd.data.entity.user;
 
 import org.apache.commons.lang.RandomStringUtils;
 
@@ -13,7 +13,8 @@ import java.util.Set;
  */
 @Entity
 @Table
-public class SysUser implements Serializable{
+public class
+SysUser implements Serializable{
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 4773600964948038322L;

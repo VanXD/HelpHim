@@ -9,10 +9,12 @@ import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Created by wejoy-a on 2016/6/30.
+ * Spring测试基类
+ *
+ * Created by wyd on 2016/6/30.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Start.class)
 @Transactional
-public class SpringTest {
+public class SpringTestParent {
 }
