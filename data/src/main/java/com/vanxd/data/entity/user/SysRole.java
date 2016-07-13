@@ -6,7 +6,7 @@ import java.util.Set;
 
 /**
  * 系统角色表
- * Created by liuyu on 16/3/17.
+ * Created by wyd on 16/3/17.
  */
 @Entity
 @Table

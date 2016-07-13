@@ -9,12 +9,11 @@ import java.util.Set;
 
 /**
  * 系统用户表
- * Created by liuyu on 16/3/17.
+ * Created by wyd on 16/3/17.
  */
 @Entity
 @Table
-public class
-SysUser implements Serializable{
+public class SysUser implements Serializable{
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 4773600964948038322L;
