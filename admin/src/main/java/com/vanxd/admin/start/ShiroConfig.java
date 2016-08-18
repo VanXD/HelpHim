@@ -58,10 +58,8 @@ public class ShiroConfig {
 
     private void loadShiroFilterChain(ShiroFilterFactoryBean shiroFilterFactoryBean){
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<String, String>();
-        filterChainDefinitionMap.put("/user", "authc");
-        filterChainDefinitionMap.put("/user/edit/**", "authc,perms[user:edit]");
         filterChainDefinitionMap.put("/login", "anon");
-        filterChainDefinitionMap.put("/**", "anon");//anon 可以理解为不拦截
+        filterChainDefinitionMap.put("/**", "authc");//anon 可以理解为不拦截
 
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
     }
@@ -77,7 +75,7 @@ public class ShiroConfig {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         shiroFilterFactoryBean.setSecurityManager(securityManager);
         shiroFilterFactoryBean.setLoginUrl("/login");
-        shiroFilterFactoryBean.setSuccessUrl("/user");
+        shiroFilterFactoryBean.setSuccessUrl("/dashboard");
         shiroFilterFactoryBean.setUnauthorizedUrl("/403");
         loadShiroFilterChain(shiroFilterFactoryBean);
         return shiroFilterFactoryBean;

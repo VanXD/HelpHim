@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * 系统用户认证及授权
- * Created by liuyu on 16/3/17.
+ * @author wyd
  */
 public class SysUserRealm extends AuthorizingRealm {
 
