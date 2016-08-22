@@ -58,8 +58,12 @@ public class ShiroConfig {
 
     private void loadShiroFilterChain(ShiroFilterFactoryBean shiroFilterFactoryBean){
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<String, String>();
+        filterChainDefinitionMap.put("/js/**", "anon");
+        filterChainDefinitionMap.put("/css/**", "anon");
+        filterChainDefinitionMap.put("/img/**", "anon");
         filterChainDefinitionMap.put("/login", "anon");
-        filterChainDefinitionMap.put("/**", "authc");//anon 可以理解为不拦截
+        filterChainDefinitionMap.put("/**", "anon");
+//        filterChainDefinitionMap.put("/**", "authc");
 
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
     }

@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * Created by wejoy-a on 2016/8/18.
+ * 登陆管理
+ * Created by wyd on 2016/8/18.
  */
 @Controller
 public class LoginController {
@@ -47,7 +48,4 @@ public class LoginController {
         }
         return mv;
     }
-
-
-
 }
