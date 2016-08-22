@@ -1,12 +1,17 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:fragment="common_header(title, fileName)">
-    <title>${title}</title>
+<!--/*
+ title：页面要显示的标题
+ uri  : 页面文件不含css目录的uri 例如文件: /css/user/dashboard.css，只用传/user/dashboard.css
+*/-->
+<head th:fragment="commonHeader(title, uri)">
+    <title th:text="${title}"></title>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
     <link th:href="@{/font-awesome/css/font-awesome.css}" rel="stylesheet"/>
     <link th:href="@{/css/animate.css}" rel="stylesheet"/>
     <link th:href="@{/css/style.css}" rel="stylesheet"/>
+    <link th:href="@{'/css' + ${uri}}" th:if="${!#strings.isEmpty(uri)}" rel="stylesheet"/>
 </head>
 </html>
