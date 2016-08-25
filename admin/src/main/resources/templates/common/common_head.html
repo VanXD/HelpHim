@@ -8,10 +8,11 @@
     <title th:text="${title}"></title>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
-    <link th:href="@{/font-awesome/css/font-awesome.css}" rel="stylesheet"/>
-    <link th:href="@{/css/animate.css}" rel="stylesheet"/>
-    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+    <link th:href="@{/css/inspinia/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/inspinia/font-awesome.css}" rel="stylesheet"/>
+    <link th:href="@{/css/inspinia/animate.css}" rel="stylesheet"/>
+    <link th:href="@{/css/inspinia/style.css}" rel="stylesheet"/>
+    <link th:href="@{/css/inspinia/toastr.min.css}" rel="stylesheet"/>
     <link th:href="@{'/css' + ${uri}}" th:if="${!#strings.isEmpty(uri)}" rel="stylesheet"/>
 </head>
 </html>
