@@ -1,5 +1,7 @@
 package com.vanxd.data.entity.user;
 
+import com.vanxd.data.entity.BaseEntity;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
@@ -11,17 +13,12 @@ import java.util.Set;
  */
 @Entity
 @Table
-public class SysPermission implements Serializable{
+public class SysPermission extends BaseEntity implements Serializable{
 
-    @Id
-    @Column(length = 32)
-    private String id;
     @Column(length = 50, nullable = false)
     private String permission;
     @Column(length = 100, nullable = false)
     private String description;
-    @Column(nullable = false)
-    private byte status;
 
     @ManyToMany(cascade=CascadeType.REFRESH,mappedBy="sysPermissions")
     private Set<SysRole> sysRoles;
@@ -42,24 +39,6 @@ public class SysPermission implements Serializable{
      */
     public void setSysRoles(Set<SysRole> sysRoles) {
         this.sysRoles = sysRoles;
-    }
-
-    /**
-     * Getter for property 'id'.
-     *
-     * @return Value for property 'id'.
-     */
-    public String getId() {
-        return id;
-    }
-
-    /**
-     * Setter for property 'id'.
-     *
-     * @param id Value to set for property 'id'.
-     */
-    public void setId(String id) {
-        this.id = id;
     }
 
     /**
@@ -96,23 +75,5 @@ public class SysPermission implements Serializable{
      */
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    /**
-     * Getter for property 'status'.
-     *
-     * @return Value for property 'status'.
-     */
-    public byte getStatus() {
-        return status;
-    }
-
-    /**
-     * Setter for property 'status'.
-     *
-     * @param status Value to set for property 'status'.
-     */
-    public void setStatus(byte status) {
-        this.status = status;
     }
 }

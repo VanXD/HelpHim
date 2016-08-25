@@ -1,5 +1,6 @@
 package com.vanxd.data.entity.user;
 
+import com.vanxd.data.entity.BaseEntity;
 import org.apache.commons.lang.RandomStringUtils;
 
 import javax.persistence.*;
@@ -13,16 +14,11 @@ import java.util.Set;
  */
 @Entity
 @Table
-public class SysUser implements Serializable{
+public class SysUser extends BaseEntity implements Serializable{
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 4773600964948038322L;
 
-    /** id. */
-	@Id
-	@Column(length = 32)
-    private String id;
-    
     /** 用户名. */
 	@Column(length = 100, nullable = false)
     private String username;
@@ -50,10 +46,6 @@ public class SysUser implements Serializable{
     /** 创建时间. */
 	@Column(nullable = false)
     private Date createDate;
-    
-    /** 状态. */
-	@Column(nullable = false)
-    private int status;
 
     /** 是否admin用户. */
 	@Column(nullable = false)
@@ -94,25 +86,6 @@ public class SysUser implements Serializable{
 	 */
 	public void setSysRoles(Set<SysRole> sysRoles) {
 		this.sysRoles = sysRoles;
-	}
-
-	/**
-	 * Gets the id.
-	 *
-	 * @return the id
-	 */
-	public String getId() {
-		return id;
-	}
-	
-	/**
-	 * Sets the id.
-	 *
-	 * @param id
-	 *            the new id
-	 */
-	public void setId(String id) {
-		this.id = id;
 	}
 	
 	/**
@@ -246,25 +219,6 @@ public class SysUser implements Serializable{
 	 */
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
-	}
-	
-	/**
-	 * Gets the 状态.
-	 *
-	 * @return the 状态
-	 */
-	public int getStatus() {
-		return status;
-	}
-	
-	/**
-	 * Sets the 状态.
-	 *
-	 * @param status
-	 *            the new 状态
-	 */
-	public void setStatus(int status) {
-		this.status = status;
 	}
 
 	/**

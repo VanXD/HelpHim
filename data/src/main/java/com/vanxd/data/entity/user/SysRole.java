@@ -1,5 +1,7 @@
 package com.vanxd.data.entity.user;
 
+import com.vanxd.data.entity.BaseEntity;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
@@ -10,16 +12,11 @@ import java.util.Set;
  */
 @Entity
 @Table
-public class SysRole implements Serializable{
+public class SysRole extends BaseEntity implements Serializable{
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = -755770047134738327L;
 
-    /** id. */
-	@Id
-	@Column(length = 32)
-    private String id;
-    
     /** 角色名称. */
 	@Column(length = 100, nullable = false)
     private String name;
@@ -99,23 +96,6 @@ public class SysRole implements Serializable{
 		this.sysUsers = sysUsers;
 	}
 
-	/**
-	 * Gets the id.
-	 *
-	 * @return the id
-	 */
-	public String getId() {
-		return id;
-	}
-
-	/**
-	 * Sets the id.
-	 *
-	 * @param id the new id
-	 */
-	public void setId(String id) {
-		this.id = id;
-	}
 
 	/**
 	 * Gets the 角色名称.

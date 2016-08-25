@@ -7,9 +7,8 @@ import com.vanxd.admin.exception.ParameterException;
 import com.vanxd.data.entity.user.SysUser;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -32,6 +31,8 @@ public abstract class BaseController {
 	protected static final String queryConditionName = "queryCondition";
 	/** 分页变量名 */
 	protected static final String pageName = "page";
+
+	protected final org.slf4j.Logger logger = LoggerFactory.getLogger(getClass());
 
 	/**
 	 * 获取当前登陆人的信息
@@ -69,7 +70,8 @@ public abstract class BaseController {
 		request.setAttribute("description", description);
 		request.setAttribute("simpleName", Throwables.getRootCause(ex).getClass().getName());
 		request.setAttribute("message", message);
-		LogUtils.saveSysLog(request,  null, ex, ex.getMessage());
+//		todo 保存到数据库
+//		LogUtils.saveSysLog(request,  null, ex, ex.getMessage());
 		if(ex instanceof AuthException){
 			return "redirect:/login";
 		} else if (ex instanceof BusinessException) {
@@ -84,33 +86,6 @@ public abstract class BaseController {
 		}
     }
 
-	/**
-	 * 将结果以JSON格式输出。.
-	 *
-	 * @param data
-	 *            需要进行JSON转换的数据对象。
-	 * @return 响应实体。
-	 */
-	protected ResponseEntity<String> renderJson(Object data) {
-		return renderJsonp(data, null);
-	}
-
-	/**
-	 * 跨站访问将结果以JSONP格式输出。.
-	 *
-	 * @param data
-	 *            需要进行JSON转换的数据对象。
-	 * @param callback
-	 *            是否是跨站AJAX请求，有该参数则为跨站请求。
-	 * @return 响应实体。
-	 */
-	protected ResponseEntity<String> renderJsonp(Object data, String callback) {
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("Content-Type", "application/json; charset=utf-8");
-		String responseData = jsonUtils.toJsonByCallback(data, callback);
-		return new ResponseEntity<String>(responseData, headers, HttpStatus.OK);
-	}
-	
 	/**
 	 * 自动转换日期类型的字段格式
 	 * 
