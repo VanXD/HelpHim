@@ -1,190 +1,75 @@
 package com.vanxd.data.entity.user;
 
-import com.vanxd.data.entity.BaseEntity;
+import java.util.Date;
 
-import javax.persistence.*;
-import java.io.Serializable;
-import java.util.Set;
+public class SysRole {
+    private String id;
 
-/**
- * 系统角色表
- * Created by wyd on 16/3/17.
- */
-@Entity
-@Table
-public class SysRole extends BaseEntity implements Serializable{
+    private Date createTime;
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = -755770047134738327L;
+    private Integer status;
 
-    /** 角色名称. */
-	@Column(length = 100, nullable = false)
-    private String name;
-    
-    /** 角色代码. */
-	@Column(length = 100, nullable = false)
-    private String role;
-    
-    /** 描述. */
-	@Column(length = 300, nullable = false)
     private String description;
-    
-    /** 状态. */
-	@Column(nullable = false)
-    private boolean isshow;
 
-	/** 用于判断用户是否选中的标记 */
-	@Transient
-	private String choiced;
+    private Boolean isshow;
 
-	@ManyToMany(cascade=CascadeType.REFRESH,mappedBy="sysRoles")
-	private Set<SysUser> sysUsers;
+    private String name;
 
-	@ManyToMany(cascade={CascadeType.REFRESH})
-	@JoinTable(name="sys_role_permission",
-			inverseJoinColumns=@JoinColumn(name="permission_id", referencedColumnName = "id"),
-			joinColumns=@JoinColumn(name="role_id", referencedColumnName = "id"))
-	private Set<SysPermission> sysPermissions;
+    private String role;
 
-	public boolean addPermission(SysPermission sysPermission) {
-		if(!sysPermissions.contains(sysPermission)) {
-			return sysPermissions.add(sysPermission);
-		}
-		return false;
-	}
+    public String getId() {
+        return id;
+    }
 
-	public boolean removePermission(SysPermission sysPermission) {
-		if(sysPermissions.contains(sysPermission)) {
-			return sysPermissions.remove(sysPermission);
-		}
-		return false;
-	}
+    public void setId(String id) {
+        this.id = id;
+    }
 
-	/**
-	 * Getter for property 'sysPermissions'.
-	 *
-	 * @return Value for property 'sysPermissions'.
-	 */
-	public Set<SysPermission> getSysPermissions() {
-		return sysPermissions;
-	}
+    public Date getCreateTime() {
+        return createTime;
+    }
 
-	/**
-	 * Setter for property 'sysPermissions'.
-	 *
-	 * @param sysPermissions Value to set for property 'sysPermissions'.
-	 */
-	public void setSysPermissions(Set<SysPermission> sysPermissions) {
-		this.sysPermissions = sysPermissions;
-	}
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
 
-	/**
-	 * Getter for property 'sysUsers'.
-	 *
-	 * @return Value for property 'sysUsers'.
-	 */
-	public Set<SysUser> getSysUsers() {
-		return sysUsers;
-	}
+    public Integer getStatus() {
+        return status;
+    }
 
-	/**
-	 * Setter for property 'sysUsers'.
-	 *
-	 * @param sysUsers Value to set for property 'sysUsers'.
-	 */
-	public void setSysUsers(Set<SysUser> sysUsers) {
-		this.sysUsers = sysUsers;
-	}
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
 
+    public String getDescription() {
+        return description;
+    }
 
-	/**
-	 * Gets the 角色名称.
-	 *
-	 * @return the 角色名称
-	 */
-	public String getName() {
-		return name;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	/**
-	 * Sets the 角色名称.
-	 *
-	 * @param name the new 角色名称
-	 */
-	public void setName(String name) {
-		this.name = name;
-	}
+    public Boolean getIsshow() {
+        return isshow;
+    }
 
-	/**
-	 * Gets the 角色代码.
-	 *
-	 * @return the 角色代码
-	 */
-	public String getRole() {
-		return role;
-	}
+    public void setIsshow(Boolean isshow) {
+        this.isshow = isshow;
+    }
 
-	/**
-	 * Sets the 角色代码.
-	 *
-	 * @param role the new 角色代码
-	 */
-	public void setRole(String role) {
-		this.role = role;
-	}
+    public String getName() {
+        return name;
+    }
 
-	/**
-	 * Gets the 描述.
-	 *
-	 * @return the 描述
-	 */
-	public String getDescription() {
-		return description;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	/**
-	 * Sets the 描述.
-	 *
-	 * @param description the new 描述
-	 */
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public String getRole() {
+        return role;
+    }
 
-	/**
-	 * Checks if is 状态.
-	 *
-	 * @return the 状态
-	 */
-	public boolean isIsshow() {
-		return isshow;
-	}
-
-	/**
-	 * Sets the 状态.
-	 *
-	 * @param isshow the new 状态
-	 */
-	public void setIsshow(boolean isshow) {
-		this.isshow = isshow;
-	}
-
-
-	/**
-	 * Gets choiced.
-	 *
-	 * @return the choiced
-	 */
-	public String getChoiced() {
-		return choiced;
-	}
-
-	/**
-	 * Sets choiced.
-	 *
-	 * @param choiced the choiced
-	 */
-	public void setChoiced(String choiced) {
-		this.choiced = choiced;
-	}
+    public void setRole(String role) {
+        this.role = role;
+    }
 }

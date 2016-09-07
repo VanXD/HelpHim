@@ -3,12 +3,14 @@ package com.vanxd.admin.service.user;
 import com.vanxd.data.entity.user.SysPermission;
 import com.vanxd.data.entity.user.SysRole;
 import com.vanxd.data.entity.user.SysUser;
-import com.vanxd.data.repository.SysUserRepository;
+import com.vanxd.data.mapper.user.SysRoleMapper;
+import com.vanxd.data.mapper.user.SysUserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -18,7 +20,9 @@ import java.util.Set;
 @Service
 public class SysUserService {
     @Autowired
-    private SysUserRepository sysUserRepository;
+    private SysUserMapper sysUserMapper;
+    @Autowired
+    private SysRoleMapper sysRoleMapper;
 
     /**
      * 根据用户名获得用户数据
@@ -26,7 +30,7 @@ public class SysUserService {
      * @return  用户对象
      */
     public SysUser getByUsername(String username) {
-        return sysUserRepository.findByUsername(username);
+        return sysUserMapper.selectByUsername(username);
     }
 
     /**
@@ -37,7 +41,7 @@ public class SysUserService {
      */
     public Set<String> getRoleIdentities(SysUser sysUser) {
         Set<String> rolesIdentities = new HashSet<String>();
-        Set<SysRole> sysRoles = sysUser.getSysRoles();
+        List<SysRole> sysRoles = sysRoleMapper.getByUserId(sysUser.getId());
         for(SysRole sysRole : sysRoles) {
             rolesIdentities.add(sysRole.getRole());
         }

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <classPathEntry
+            location="C:\Users\Administrator\.m2\repository\mysql\mysql-connector-java\5.1.39\mysql-connector-java-5.1.39.jar"/>
+
+    <context id="my" targetRuntime="MyBatis3">
+        <commentGenerator>
+            <property name="suppressDate" value="false"/>
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+
+        <!-- 修改数据库连接信息 -->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/helphim"
+                        userId="root"
+                        password=""/>
+        <!--
+            targetPackage : 生成后放于的包名
+            targetProject : 项目路径
+        -->
+        <!--  生成实体文件 改成硬盘上的绝对路径 -->
+        <javaModelGenerator targetPackage="com.vanxd.test.data.entity"
+                            targetProject="D:\IdeaWorkSpaces\HelpHim\data\src\test\java">
+            <property name="enableSubPackages" value="true"/>
+            <!--<property name="trimStrings" value="true"/>-->
+        </javaModelGenerator>
+
+        <!--  生成xml文件 改成硬盘上的绝对路径 -->
+        <sqlMapGenerator targetPackage="mybatis"
+                         targetProject="D:\IdeaWorkSpaces\HelpHim\data\src\test\resources">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+
+
+        <!-- 生成mapper接口文件 改成硬盘上的绝对路径 -->
+        <javaClientGenerator targetPackage="com.vanxd.test.data.mapper"
+                             targetProject="D:\IdeaWorkSpaces\HelpHim\data\src\test\java" type="XMLMAPPER">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+        <!-- 开始设置表 -->
+        <table tableName="sys_permission" schema="helphim" domainObjectName="SysPermission"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
+        <table tableName="sys_role" schema="helphim" domainObjectName="SysRole"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
+        <table tableName="sys_role_permission" schema="helphim" domainObjectName="SysRolePermission"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
+        <table tableName="sys_user" schema="helphim" domainObjectName="SysUser"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
+        <table tableName="sys_user_role" schema="helphim" domainObjectName="SysUserRole"
+               enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false"
+               selectByExampleQueryId="false">
+        </table>
+    </context>
+</generatorConfiguration>

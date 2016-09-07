@@ -4,7 +4,6 @@ import com.google.common.base.Throwables;
 import com.vanxd.admin.exception.AuthException;
 import com.vanxd.admin.exception.BusinessException;
 import com.vanxd.admin.exception.ParameterException;
-import com.vanxd.data.entity.user.SysUser;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.slf4j.LoggerFactory;
@@ -36,12 +35,12 @@ public abstract class BaseController {
 
 	/**
 	 * 获取当前登陆人的信息
-	 *
+	 * todo
 	 * @return
 	 */
-	public SysUser getSessionSysUser(){
-		return (SysUser) getSession().getAttribute("sysUser");
-	}
+//	public SysUser getSessionSysUser(){
+//		return (SysUser) getSession().getAttribute("sysUser");
+//	}
 
 
 	/**

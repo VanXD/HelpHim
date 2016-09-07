@@ -1,13 +1,13 @@
 package com.vanxd.admin.service.user.impl;
 
 import com.vanxd.admin.service.user.SysPermissionService;
-import com.vanxd.data.entity.user.SysPermission;
-import com.vanxd.data.repository.SysPermissionRepo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by wejoy-a on 2016/8/25.
@@ -16,9 +16,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class SysPermissionServiceImpl implements SysPermissionService {
     @Autowired
-    private SysPermissionRepo sysPermissionRepo;
+    private SysPermissionMapper sysPermissionMapper;
 
-    public Page<SysPermission> list(SysPermission queryCondition, PageRequest pageRequest) {
-        return sysPermissionRepo.findAll(pageRequest);
+    public List<SysPermission> list(SysPermission queryCondition, PageRequest pageRequest) {
+        SysPermission sysPermission = sysPermissionMapper.selectByPrimaryKey("2");
+        ArrayList<SysPermission> sysPermissions = new ArrayList<SysPermission>();
+        sysPermissions.add(sysPermission);
+        return sysPermissions;
     }
 }

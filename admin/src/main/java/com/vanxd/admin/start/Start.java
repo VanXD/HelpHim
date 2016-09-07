@@ -18,6 +18,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
@@ -30,8 +31,8 @@ import java.util.Map;
 /**
  * Created by wejoy-a on 2016/6/27.
  */
+@Order(0)
 @EnableAutoConfiguration
-@EnableJpaRepositories(basePackages= { "com.vanxd.data.repository" })
 @ComponentScan(basePackages = "com.vanxd.admin")
 @ConditionalOnClass({FastJsonHttpMessageConverter.class})
 @Configuration
@@ -66,28 +67,19 @@ public class Start {
         converter.setFastJsonConfig(fastJsonConfig);
         return converter;
     }
-    @Bean
-    public DataSource dataSource() {
-        DruidDataSource dataSource = new DruidDataSource();
-        dataSource.setUsername("root");
-        dataSource.setPassword("root");
-        dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/helphim");
-        return dataSource;
-    }
 
-    @Bean
-    public EntityManagerFactory entityManagerFactory() {
-        final LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
-        HibernateJpaVendorAdapter vendor = new HibernateJpaVendorAdapter();
-        vendor.setDatabasePlatform("org.hibernate.dialect.MySQL5Dialect");
-        vendor.setGenerateDdl(true);
-        vendor.setShowSql(true);
-        entityManagerFactoryBean.setJpaVendorAdapter(vendor);
-        entityManagerFactoryBean.setPersistenceXmlLocation("classpath:persistence.xml");
-        entityManagerFactoryBean.setPersistenceUnitName("default");
-        entityManagerFactoryBean.setJtaDataSource(dataSource());
-        entityManagerFactoryBean.afterPropertiesSet();
-        return entityManagerFactoryBean.getObject();
-    }
+//    @Bean
+//    public EntityManagerFactory entityManagerFactory() {
+//        final LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
+//        HibernateJpaVendorAdapter vendor = new HibernateJpaVendorAdapter();
+//        vendor.setDatabasePlatform("org.hibernate.dialect.MySQL5Dialect");
+//        vendor.setGenerateDdl(true);
+//        vendor.setShowSql(true);
+//        entityManagerFactoryBean.setJpaVendorAdapter(vendor);
+//        entityManagerFactoryBean.setPersistenceXmlLocation("classpath:persistence.xml");
+//        entityManagerFactoryBean.setPersistenceUnitName("default");
+//        entityManagerFactoryBean.setJtaDataSource(dataSource());
+//        entityManagerFactoryBean.afterPropertiesSet();
+//        return entityManagerFactoryBean.getObject();
+//    }
 }

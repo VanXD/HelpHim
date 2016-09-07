@@ -1,79 +1,55 @@
 package com.vanxd.data.entity.user;
 
-import com.vanxd.data.entity.BaseEntity;
+import java.util.Date;
 
-import javax.persistence.*;
-import java.io.Serializable;
-import java.util.Set;
+public class SysPermission {
+    private String id;
 
-/**
- * 系统权限实体
- *
- * Created by wyd on 2016/6/30.
- */
-@Entity
-@Table
-public class SysPermission extends BaseEntity implements Serializable{
+    private Date createTime;
 
-    @Column(length = 50, nullable = false)
-    private String permission;
-    @Column(length = 100, nullable = false)
+    private Integer status;
+
     private String description;
 
-    @ManyToMany(cascade=CascadeType.REFRESH,mappedBy="sysPermissions")
-    private Set<SysRole> sysRoles;
+    private String permission;
 
-    /**
-     * Getter for property 'sysRoles'.
-     *
-     * @return Value for property 'sysRoles'.
-     */
-    public Set<SysRole> getSysRoles() {
-        return sysRoles;
+    public String getId() {
+        return id;
     }
 
-    /**
-     * Setter for property 'sysRoles'.
-     *
-     * @param sysRoles Value to set for property 'sysRoles'.
-     */
-    public void setSysRoles(Set<SysRole> sysRoles) {
-        this.sysRoles = sysRoles;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    /**
-     * Getter for property 'permission'.
-     *
-     * @return Value for property 'permission'.
-     */
-    public String getPermission() {
-        return permission;
+    public Date getCreateTime() {
+        return createTime;
     }
 
-    /**
-     * Setter for property 'permission'.
-     *
-     * @param permission Value to set for property 'permission'.
-     */
-    public void setPermission(String permission) {
-        this.permission = permission;
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
-    /**
-     * Getter for property 'description'.
-     *
-     * @return Value for property 'description'.
-     */
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
     public String getDescription() {
         return description;
     }
 
-    /**
-     * Setter for property 'description'.
-     *
-     * @param description Value to set for property 'description'.
-     */
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getPermission() {
+        return permission;
+    }
+
+    public void setPermission(String permission) {
+        this.permission = permission;
     }
 }
