@@ -1,5 +1,7 @@
 package com.vanxd.data.entity.user;
 
+import org.apache.commons.lang.RandomStringUtils;
+
 import java.util.Date;
 
 public class SysUser {
@@ -11,13 +13,11 @@ public class SysUser {
 
     private Boolean admin;
 
-    private Date createDate;
-
     private String email;
 
-    private String fullname;
+    private String nickname;
 
-    private String mobilePhoneNumber;
+    private String mobilePhone;
 
     private String password;
 
@@ -57,14 +57,6 @@ public class SysUser {
         this.admin = admin;
     }
 
-    public Date getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -73,20 +65,20 @@ public class SysUser {
         this.email = email;
     }
 
-    public String getFullname() {
-        return fullname;
+    public String getNickname() {
+        return nickname;
     }
 
-    public void setFullname(String fullname) {
-        this.fullname = fullname;
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
-    public String getMobilePhoneNumber() {
-        return mobilePhoneNumber;
+    public String getMobilePhone() {
+        return mobilePhone;
     }
 
-    public void setMobilePhoneNumber(String mobilePhoneNumber) {
-        this.mobilePhoneNumber = mobilePhoneNumber;
+    public void setMobilePhone(String mobilePhone) {
+        this.mobilePhone = mobilePhone;
     }
 
     public String getPassword() {
@@ -111,5 +103,12 @@ public class SysUser {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    /**
+     * 生成新的种子
+     */
+    public void randomSalt() {
+        setSalt(RandomStringUtils.randomAlphanumeric(5));
     }
 }

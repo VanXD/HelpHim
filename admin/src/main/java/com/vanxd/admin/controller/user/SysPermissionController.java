@@ -1,6 +1,7 @@
 package com.vanxd.admin.controller.user;
 
 import com.vanxd.admin.service.user.SysPermissionService;
+import com.vanxd.admin.service.user.SysUserService;
 import com.vanxd.data.component.PageResult;
 import com.vanxd.data.component.Pagination;
 import com.vanxd.data.entity.user.SysPermission;
@@ -18,6 +19,8 @@ import java.util.Map;
 public class SysPermissionController {
     @Autowired
     private SysPermissionService sysPermissionServiceImpl;
+    @Autowired
+    private SysUserService sysUserService;
 
     @RequestMapping("/list")
     public String list(Map map, SysPermission condition, Pagination pagination) {

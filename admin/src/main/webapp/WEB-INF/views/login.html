@@ -10,13 +10,13 @@
 <div class="middle-box text-center loginscreen animated fadeInDown">
     <div>
         <h3>Welcome to SpringBoot Scaffolding</h3>
-        <p>使用SpringBoot, Shiro, Inspinia搭建的脚手架，实现权限管理。</p>
-        <form class="m-t" role="form" action="index.html">
+        <p>使用SpringBoot,MyBatis,Shiro,Inspinia搭建的脚手架，实现权限管理。</p>
+        <form class="m-t" role="form" action="login" method="post">
             <div class="form-group">
-                <input type="email" class="form-control" placeholder="Username" required=""/>
+                <input name="username" type="text" class="form-control" placeholder="Username" required=""/>
             </div>
             <div class="form-group">
-                <input type="password" class="form-control" placeholder="Password" required=""/>
+                <input name="password" type="password" class="form-control" placeholder="Password" required=""/>
             </div>
             <button type="submit" class="btn btn-primary block full-width m-b">Login</button>
         </form>

@@ -3,16 +3,20 @@ package com.vanxd.admin.service.user.impl;
 import com.vanxd.admin.service.BaseServiceImpl;
 import com.vanxd.admin.service.user.SysPermissionService;
 import com.vanxd.admin.service.user.SysUserService;
+import com.vanxd.admin.shiro.authc.PasswordService;
+import com.vanxd.data.dict.StatusEnum;
 import com.vanxd.data.entity.user.SysPermission;
 import com.vanxd.data.entity.user.SysRole;
 import com.vanxd.data.entity.user.SysUser;
 import com.vanxd.data.mapper.user.SysPermissionMapper;
 import com.vanxd.data.mapper.user.SysRoleMapper;
 import com.vanxd.data.mapper.user.SysUserMapper;
+import com.vanxd.data.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -29,6 +33,8 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, SysUserMapper> 
     private SysRoleMapper sysRoleMapper;
     @Autowired
     private SysPermissionMapper sysPermissionMapper;
+    @Autowired
+    private PasswordService passwordService;
 
     @Override
     public SysUserMapper getMapper() {
@@ -42,6 +48,25 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, SysUserMapper> 
      */
     public SysUser getByUsername(String username) {
         return sysUserMapper.selectByUsername(username);
+    }
+
+    /**
+     * 添加用户
+     * @param sysUser   系统用户
+     * @return
+     * @throws Exception
+     */
+    public boolean add(SysUser sysUser) {
+        sysUser.setId(StringUtils.uuid());
+        sysUser.randomSalt();
+        try {
+            sysUser.setPassword(passwordService.encryptPassword(sysUser.getUsername(),sysUser.getPassword(), sysUser.getSalt()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        sysUser.setCreateTime(new Date());
+        sysUser.setStatus(StatusEnum.NEW.getCode());
+        return save(sysUser) > 0;
     }
 
     /**

@@ -6,20 +6,19 @@
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="status" jdbcType="INTEGER" property="status" />
     <result column="admin" jdbcType="BIT" property="admin" />
-    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
     <result column="email" jdbcType="VARCHAR" property="email" />
-    <result column="fullname" jdbcType="VARCHAR" property="fullname" />
-    <result column="mobile_phone_number" jdbcType="VARCHAR" property="mobilePhoneNumber" />
+    <result column="nickname" jdbcType="VARCHAR" property="nickname" />
+    <result column="mobile_phone" jdbcType="VARCHAR" property="mobilePhone" />
     <result column="password" jdbcType="VARCHAR" property="password" />
     <result column="salt" jdbcType="VARCHAR" property="salt" />
     <result column="username" jdbcType="VARCHAR" property="username" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, create_time, status, admin, create_date, email, fullname, mobile_phone_number, 
+    id, create_time, status, admin, email, nickname, mobile_phone,
     password, salt, username
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from sys_user
     where id = #{id,jdbcType=VARCHAR}
@@ -29,13 +28,13 @@
     where id = #{id,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.vanxd.data.entity.user.SysUser">
-    insert into sys_user (id, create_time, status, 
-      admin, create_date, email, 
-      fullname, mobile_phone_number, password, 
+    insert into sys_user (id, create_time, status,
+      admin, email,
+      nickname, mobile_phone, password,
       salt, username)
-    values (#{id,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}, 
-      #{admin,jdbcType=BIT}, #{createDate,jdbcType=TIMESTAMP}, #{email,jdbcType=VARCHAR}, 
-      #{fullname,jdbcType=VARCHAR}, #{mobilePhoneNumber,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER},
+      #{admin,jdbcType=BIT}, #{email,jdbcType=VARCHAR},
+      #{nickname,jdbcType=VARCHAR}, #{mobilePhone,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
       #{salt,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.vanxd.data.entity.user.SysUser">
@@ -53,17 +52,14 @@
       <if test="admin != null">
         admin,
       </if>
-      <if test="createDate != null">
-        create_date,
-      </if>
       <if test="email != null">
         email,
       </if>
-      <if test="fullname != null">
-        fullname,
+      <if test="nickname != null">
+        nickname,
       </if>
-      <if test="mobilePhoneNumber != null">
-        mobile_phone_number,
+      <if test="mobilePhone != null">
+        mobile_phone,
       </if>
       <if test="password != null">
         password,
@@ -88,17 +84,14 @@
       <if test="admin != null">
         #{admin,jdbcType=BIT},
       </if>
-      <if test="createDate != null">
-        #{createDate,jdbcType=TIMESTAMP},
-      </if>
       <if test="email != null">
         #{email,jdbcType=VARCHAR},
       </if>
-      <if test="fullname != null">
-        #{fullname,jdbcType=VARCHAR},
+      <if test="nickname != null">
+        #{nickname,jdbcType=VARCHAR},
       </if>
-      <if test="mobilePhoneNumber != null">
-        #{mobilePhoneNumber,jdbcType=VARCHAR},
+      <if test="mobilePhone != null">
+        #{mobilePhone,jdbcType=VARCHAR},
       </if>
       <if test="password != null">
         #{password,jdbcType=VARCHAR},
@@ -123,17 +116,14 @@
       <if test="admin != null">
         admin = #{admin,jdbcType=BIT},
       </if>
-      <if test="createDate != null">
-        create_date = #{createDate,jdbcType=TIMESTAMP},
-      </if>
       <if test="email != null">
         email = #{email,jdbcType=VARCHAR},
       </if>
-      <if test="fullname != null">
-        fullname = #{fullname,jdbcType=VARCHAR},
+      <if test="nickname != null">
+        nickname = #{nickname,jdbcType=VARCHAR},
       </if>
-      <if test="mobilePhoneNumber != null">
-        mobile_phone_number = #{mobilePhoneNumber,jdbcType=VARCHAR},
+      <if test="mobilePhone != null">
+        mobile_phone = #{mobilePhone,jdbcType=VARCHAR},
       </if>
       <if test="password != null">
         password = #{password,jdbcType=VARCHAR},
@@ -152,10 +142,9 @@
     set create_time = #{createTime,jdbcType=TIMESTAMP},
       status = #{status,jdbcType=INTEGER},
       admin = #{admin,jdbcType=BIT},
-      create_date = #{createDate,jdbcType=TIMESTAMP},
       email = #{email,jdbcType=VARCHAR},
-      fullname = #{fullname,jdbcType=VARCHAR},
-      mobile_phone_number = #{mobilePhoneNumber,jdbcType=VARCHAR},
+      nickname = #{nickname,jdbcType=VARCHAR},
+      mobile_phone = #{mobilePhone,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
       salt = #{salt,jdbcType=VARCHAR},
       username = #{username,jdbcType=VARCHAR}

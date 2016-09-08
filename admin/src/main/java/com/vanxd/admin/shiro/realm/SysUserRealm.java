@@ -20,6 +20,8 @@ public class SysUserRealm extends AuthorizingRealm {
 
     @Autowired
     private SysUserServiceImpl sysUserService;
+    @Autowired
+    private CustomCredentialsMatcher customCredentialsMatcher;
 
 
     /**
@@ -93,6 +95,6 @@ public class SysUserRealm extends AuthorizingRealm {
 
     @Override
     public CredentialsMatcher getCredentialsMatcher() {
-        return new CustomCredentialsMatcher();
+        return customCredentialsMatcher;
     }
 }

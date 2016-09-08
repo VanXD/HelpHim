@@ -10,4 +10,11 @@ import com.vanxd.data.mapper.user.SysUserMapper;
 public interface SysUserService extends BaseService<SysUser, SysUserMapper>{
 
     SysUser getByUsername(String username);
+
+    /**
+     * 添加新用户
+     * @param sysUser
+     * @return
+     */
+    boolean add(SysUser sysUser);
 }
