@@ -21,8 +21,8 @@ public class SysPermissionController {
 
     @RequestMapping("/list")
     public String list(Map map, SysPermission condition, Pagination pagination) {
-        PageResult<SysPermission> page = sysPermissionServiceImpl.page(condition, pagination);
-        map.put("page", page);
+        PageResult<SysPermission> pageResult = sysPermissionServiceImpl.page(condition, pagination);
+        map.put("pageResult", pageResult);
         return "user/sys_permission/list";
     }
 }
