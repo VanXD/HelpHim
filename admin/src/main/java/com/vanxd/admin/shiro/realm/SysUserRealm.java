@@ -1,6 +1,6 @@
 package com.vanxd.admin.shiro.realm;
 
-import com.vanxd.admin.service.user.SysUserService;
+import com.vanxd.admin.service.user.impl.SysUserServiceImpl;
 import com.vanxd.data.entity.user.SysUser;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -17,7 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class SysUserRealm extends AuthorizingRealm {
 
     @Autowired
-    private SysUserService sysUserService;
+    private SysUserServiceImpl sysUserService;
 
 
     /**

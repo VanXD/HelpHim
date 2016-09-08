@@ -17,6 +17,9 @@ public class SysRole {
 
     private String role;
 
+    /** [VO]用户ID */
+    private String userId;
+
     public String getId() {
         return id;
     }
@@ -71,5 +74,13 @@ public class SysRole {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

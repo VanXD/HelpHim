@@ -1,12 +1,13 @@
 package com.vanxd.admin.service.user;
 
-import org.springframework.data.domain.PageRequest;
-
-import java.util.List;
+import com.vanxd.admin.service.BaseService;
+import com.vanxd.data.component.PageResult;
+import com.vanxd.data.component.Pagination;
+import com.vanxd.data.entity.user.SysPermission;
+import com.vanxd.data.mapper.user.SysPermissionMapper;
 
 /**
  * Created by wyd on 2016/8/25.
  */
-public interface SysPermissionService {
-    List<SysPermission> list(SysPermission queryCondition, PageRequest pageRequest);
+public interface SysPermissionService extends BaseService<SysPermission, SysPermissionMapper>{
 }

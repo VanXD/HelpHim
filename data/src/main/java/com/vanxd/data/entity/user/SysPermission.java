@@ -13,6 +13,9 @@ public class SysPermission {
 
     private String permission;
 
+    /** [VO] 角色ID */
+    private String roleId;
+
     public String getId() {
         return id;
     }
@@ -51,5 +54,13 @@ public class SysPermission {
 
     public void setPermission(String permission) {
         this.permission = permission;
+    }
+
+    public String getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(String roleId) {
+        this.roleId = roleId;
     }
 }

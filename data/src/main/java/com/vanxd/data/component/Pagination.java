@@ -6,8 +6,8 @@ import java.util.List;
  * Created by wyd on 2016/8/25.
  */
 public class Pagination {
-    private Integer pageSize = 10;
-    private Integer pageNo = 1;
+    protected Integer pageSize = 10;
+    protected Integer pageNo = 1;
 
     public Pagination() {
     }

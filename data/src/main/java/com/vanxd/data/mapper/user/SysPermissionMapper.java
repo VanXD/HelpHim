@@ -1,17 +1,7 @@
 package com.vanxd.data.mapper.user;
 
 import com.vanxd.data.entity.user.SysPermission;
+import com.vanxd.data.mapper.BaseMapper;
 
-public interface SysPermissionMapper {
-    int deleteByPrimaryKey(String id);
-
-    int insert(SysPermission record);
-
-    int insertSelective(SysPermission record);
-
-    SysPermission selectByPrimaryKey(String id);
-
-    int updateByPrimaryKeySelective(SysPermission record);
-
-    int updateByPrimaryKey(SysPermission record);
+public interface SysPermissionMapper extends BaseMapper<SysPermission>{
 }

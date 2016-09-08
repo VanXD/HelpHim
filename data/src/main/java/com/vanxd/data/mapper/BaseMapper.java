@@ -22,7 +22,7 @@ public interface BaseMapper<T> {
 
     int updateByPrimaryKey(T entity);
 
-    List<T> page(@Param("queryCondition")T t, @Param("Pagination")Pagination pagination);
+    List<T> page(@Param("conditions")T t, @Param("pagination")Pagination pagination);
 
-    Long count(@Param("queryCondition")T t);
+    Long count(@Param("conditions")T t);
 }
