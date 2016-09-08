@@ -20,11 +20,15 @@ import javax.sql.DataSource;
  * MyBatis Java Configuration
  * @author wyd on 2016/9/7.
  */
-@Order(1)
 @Configuration
 @EnableTransactionManagement
 public class MyBatisConfig implements TransactionManagementConfigurer {
 
+    /**
+     * 设置数据源
+     * todo 设置druid的其他属性
+     * @return
+     */
     @Bean( name = "dataSource", destroyMethod = "close")
     public DataSource getDataSource() {
         DruidDataSource dataSource = new DruidDataSource();
@@ -35,6 +39,10 @@ public class MyBatisConfig implements TransactionManagementConfigurer {
         return dataSource;
     }
 
+    /**
+     * 配置sessionFactory，在其中扫描MyBatis 实体的包 和mapper XML文件
+     * @return
+     */
     @Bean(name = "sqlSessionFactory")
     public SqlSessionFactory sqlSessionFactoryBean() {
 
@@ -49,7 +57,6 @@ public class MyBatisConfig implements TransactionManagementConfigurer {
             bean.setMapperLocations(resolver.getResources("classpath:/mybatis/mapper/*.xml"));
             return bean.getObject();
         } catch (Exception e) {
-            e.printStackTrace();
             throw new RuntimeException("sqlSessionFactory init fail",e);
         }
     }
@@ -63,6 +70,10 @@ public class MyBatisConfig implements TransactionManagementConfigurer {
         return new DataSourceTransactionManager(getDataSource());
     }
 
+    /**
+     * 扫描mapper 接口文件
+     * @return
+     */
     @Bean
     public MapperScannerConfigurer getMapperScannerConfigurer() {
         MapperScannerConfigurer mapperScannerConfigurer = new MapperScannerConfigurer();

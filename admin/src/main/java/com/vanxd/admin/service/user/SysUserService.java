@@ -8,4 +8,6 @@ import com.vanxd.data.mapper.user.SysUserMapper;
  * Created by wyd on 2016/8/25.
  */
 public interface SysUserService extends BaseService<SysUser, SysUserMapper>{
+
+    SysUser getByUsername(String username);
 }

@@ -4,8 +4,6 @@ import com.google.common.base.Throwables;
 import com.vanxd.admin.exception.AuthException;
 import com.vanxd.admin.exception.BusinessException;
 import com.vanxd.admin.exception.ParameterException;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.session.Session;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.web.bind.ServletRequestDataBinder;
@@ -33,25 +31,7 @@ public abstract class BaseController {
 
 	protected final org.slf4j.Logger logger = LoggerFactory.getLogger(getClass());
 
-	/**
-	 * 获取当前登陆人的信息
-	 * todo
-	 * @return
-	 */
-//	public SysUser getSessionSysUser(){
-//		return (SysUser) getSession().getAttribute("sysUser");
-//	}
 
-
-	/**
-	 * 获取session
-	 *
-	 * @return
-     */
-	public Session getSession(){
-		return SecurityUtils.getSubject().getSession();
-	}
-	
     /**
 	 * 全局异常处理类，错误页面。.
 	 *

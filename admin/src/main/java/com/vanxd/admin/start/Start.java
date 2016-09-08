@@ -31,55 +31,43 @@ import java.util.Map;
 /**
  * Created by wejoy-a on 2016/6/27.
  */
-@Order(0)
 @EnableAutoConfiguration
 @ComponentScan(basePackages = "com.vanxd.admin")
-@ConditionalOnClass({FastJsonHttpMessageConverter.class})
 @Configuration
 public class Start {
     public static void main(String[] args) {
         SpringApplication.run(Start.class);
     }
 
-    @Bean
-    @ConditionalOnMissingBean({FastJsonHttpMessageConverter.class})
-    public FastJsonHttpMessageConverter fastJsonHttpMessageConverter() {
-        FastJsonHttpMessageConverter converter = new FastJsonHttpMessageConverter();
-
-        FastJsonConfig fastJsonConfig = new FastJsonConfig();
-        ValueFilter valueFilter = new ValueFilter() {
-            /**
-             * 对特定的值进行处理
-             *
-             * @param o 类
-             * @param key 键
-             * @param value 值
-             * @return
-             */
-            public Object process(Object o, String key, Object value) {
-                if (null == value){
-                    value = "";
-                }
-                return value;
-            }
-        };
-        fastJsonConfig.setSerializeFilters(valueFilter);
-        converter.setFastJsonConfig(fastJsonConfig);
-        return converter;
-    }
-
+//    /**
+//     * @ConditionalOnClass({FastJsonHttpMessageConverter.class})
+//     * 配置使用
+//     * @return
+//     */
 //    @Bean
-//    public EntityManagerFactory entityManagerFactory() {
-//        final LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
-//        HibernateJpaVendorAdapter vendor = new HibernateJpaVendorAdapter();
-//        vendor.setDatabasePlatform("org.hibernate.dialect.MySQL5Dialect");
-//        vendor.setGenerateDdl(true);
-//        vendor.setShowSql(true);
-//        entityManagerFactoryBean.setJpaVendorAdapter(vendor);
-//        entityManagerFactoryBean.setPersistenceXmlLocation("classpath:persistence.xml");
-//        entityManagerFactoryBean.setPersistenceUnitName("default");
-//        entityManagerFactoryBean.setJtaDataSource(dataSource());
-//        entityManagerFactoryBean.afterPropertiesSet();
-//        return entityManagerFactoryBean.getObject();
+//    @ConditionalOnMissingBean({FastJsonHttpMessageConverter.class})
+//    public FastJsonHttpMessageConverter fastJsonHttpMessageConverter() {
+//        FastJsonHttpMessageConverter converter = new FastJsonHttpMessageConverter();
+//
+//        FastJsonConfig fastJsonConfig = new FastJsonConfig();
+//        ValueFilter valueFilter = new ValueFilter() {
+//            /**
+//             * 对特定的值进行处理
+//             *
+//             * @param o 类
+//             * @param key 键
+//             * @param value 值
+//             * @return
+//             */
+//            public Object process(Object o, String key, Object value) {
+//                if (null == value){
+//                    value = "";
+//                }
+//                return value;
+//            }
+//        };
+//        fastJsonConfig.setSerializeFilters(valueFilter);
+//        converter.setFastJsonConfig(fastJsonConfig);
+//        return converter;
 //    }
 }

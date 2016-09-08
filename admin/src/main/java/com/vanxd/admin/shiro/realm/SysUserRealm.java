@@ -1,8 +1,10 @@
 package com.vanxd.admin.shiro.realm;
 
 import com.vanxd.admin.service.user.impl.SysUserServiceImpl;
+import com.vanxd.admin.shiro.authc.CustomCredentialsMatcher;
 import com.vanxd.data.entity.user.SysUser;
 import org.apache.shiro.authc.*;
+import org.apache.shiro.authc.credential.CredentialsMatcher;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
@@ -87,5 +89,10 @@ public class SysUserRealm extends AuthorizingRealm {
     public void clearAllCache() {
         clearAllCachedAuthenticationInfo();
         clearAllCachedAuthorizationInfo();
+    }
+
+    @Override
+    public CredentialsMatcher getCredentialsMatcher() {
+        return new CustomCredentialsMatcher();
     }
 }

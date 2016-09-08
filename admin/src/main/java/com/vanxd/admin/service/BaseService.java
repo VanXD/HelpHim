@@ -2,9 +2,7 @@ package com.vanxd.admin.service;
 
 import com.vanxd.data.component.PageResult;
 import com.vanxd.data.component.Pagination;
-import com.vanxd.data.entity.user.SysPermission;
 import com.vanxd.data.mapper.BaseMapper;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
