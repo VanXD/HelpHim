@@ -7,7 +7,7 @@
     <classPathEntry
             location="C:\Users\Administrator\.m2\repository\mysql\mysql-connector-java\5.1.39\mysql-connector-java-5.1.39.jar"/>
 
-    <context id="my" targetRuntime="MyBatis3">
+    <context id="my" targetRuntime="MyBatis3" defaultModelType="hierarchical">
         <commentGenerator>
             <property name="suppressDate" value="false"/>
             <property name="suppressAllComments" value="true"/>
@@ -36,34 +36,15 @@
         </sqlMapGenerator>
 
 
-        <!-- 生成mapper接口文件 改成硬盘上的绝对路径 -->
+        <!-- 生成mapper接口文件 改成硬盘上的绝对路径，生成时继承com.vanxd.data.mapper.BaseMapper -->
         <javaClientGenerator targetPackage="com.vanxd.test.data.mapper"
                              targetProject="D:\IdeaWorkSpaces\HelpHim\data\src\test\java" type="XMLMAPPER">
             <property name="enableSubPackages" value="true"/>
+            <property name="rootInterface" value="com.vanxd.data.mapper.BaseMapper"/>
         </javaClientGenerator>
 
         <!-- 开始设置表 -->
-        <table tableName="sys_permission" schema="helphim" domainObjectName="SysPermission"
-               enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false"
-               selectByExampleQueryId="false">
-        </table>
-        <table tableName="sys_role" schema="helphim" domainObjectName="SysRole"
-               enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false"
-               selectByExampleQueryId="false">
-        </table>
-        <table tableName="sys_role_permission" schema="helphim" domainObjectName="SysRolePermission"
-               enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false"
-               selectByExampleQueryId="false">
-        </table>
-        <table tableName="sys_user" schema="helphim" domainObjectName="SysUser"
-               enableCountByExample="false" enableUpdateByExample="false"
-               enableDeleteByExample="false" enableSelectByExample="false"
-               selectByExampleQueryId="false">
-        </table>
-        <table tableName="sys_user_role" schema="helphim" domainObjectName="SysUserRole"
+        <table tableName="sys_resource" schema="helphim" domainObjectName="SysResource"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">

@@ -35,7 +35,7 @@ public class MyBatisConfig implements TransactionManagementConfigurer {
         dataSource.setUsername("root");
         dataSource.setPassword("");
         dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/helphim");
+        dataSource.setUrl("jdbc:mysql://localhost:3306/helphim?useUnicode=true&characterEncoding=UTF-8");
         return dataSource;
     }
 

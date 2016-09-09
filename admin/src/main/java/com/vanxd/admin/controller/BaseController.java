@@ -1,78 +1,51 @@
 package com.vanxd.admin.controller;
 
-import com.google.common.base.Throwables;
-import com.vanxd.admin.exception.AuthException;
-import com.vanxd.admin.exception.BusinessException;
-import com.vanxd.admin.exception.ParameterException;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
-import org.springframework.web.bind.ServletRequestDataBinder;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.InitBinder;
-
-import javax.servlet.http.HttpServletRequest;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import com.vanxd.admin.service.BaseService;
+import com.vanxd.data.component.PageResult;
+import com.vanxd.data.component.Pagination;
+import com.vanxd.data.entity.BaseEntity;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
- * 基类控制器.
+ * @author wyd on 2016/9/9.
  */
-public abstract class BaseController {
-	
-	/** The Constant ERROR. */
-	protected static final String ERROR = "error/error";
-	
-	/** The Constant SUCCESS. */
-	protected static final String SUCCESS = "success";
-	/** 查询条件变量名 */
-	protected static final String queryConditionName = "queryCondition";
-	/** 分页变量名 */
-	protected static final String pageName = "page";
-
-	protected final org.slf4j.Logger logger = LoggerFactory.getLogger(getClass());
-
-
+public abstract class BaseController<T extends BaseEntity, Service extends BaseService> extends HandlerController {
     /**
-	 * 全局异常处理类，错误页面。.
-	 *
-	 * @param request
-	 *            用户请求。
-	 * @param ex
-	 *            异常。
-	 * @return 异常显示视图。
-	 */
-    @ExceptionHandler
-    protected String handleException(HttpServletRequest request, Exception ex) {
-    	String message = Throwables.getStackTraceAsString(ex);
-    	String description = ex.getMessage();
-    	logger.error(message);
-		request.setAttribute("description", description);
-		request.setAttribute("simpleName", Throwables.getRootCause(ex).getClass().getName());
-		request.setAttribute("message", message);
-//		todo 保存到数据库
-//		LogUtils.saveSysLog(request,  null, ex, ex.getMessage());
-		if(ex instanceof AuthException){
-			return "redirect:/login";
-		} else if (ex instanceof BusinessException) {
-			return "error/error-business";
-		} else if (ex instanceof ParameterException) {
-			return "error/error-parameter";
-		} else {
-			request.setAttribute("description", description);
-			request.setAttribute("simpleName", Throwables.getRootCause(ex).getClass().getName());
-			request.setAttribute("message", "异常！");
-			return "error/error";
-		}
+     * 获得业务对象
+     * @return
+     */
+    protected abstract Service getService();
+
+    @RequestMapping("/page")
+    public ModelAndView page(ModelAndView mv, T condition, Pagination pagination) {
+        PageResult<T> pageResult = getService().page(condition, pagination);
+        mv.addObject("pageResult", pageResult);
+        mv.addObject("condition", condition);
+        return pageView(mv, condition, pagination);
     }
 
-	/**
-	 * 自动转换日期类型的字段格式
-	 * 
-	 * @param binder binder
-	 */
-	@InitBinder
-	public void initBinder(ServletRequestDataBinder binder) {
-		binder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd HH:mm"), true));
-	}
+    /**
+     * 分页列表展示页
+     * @param mv
+     * @param condition
+     * @param pagination
+     * @return
+     */
+    protected abstract ModelAndView pageView(ModelAndView mv, T condition, Pagination pagination);
 
+
+    @RequestMapping(value = "/edit", method = RequestMethod.GET)
+    public ModelAndView edit(ModelAndView mv, T condition) {
+        T entity = null;
+        if(!StringUtils.isEmpty(condition.getId())) {
+            entity = (T) getService().findByPrimaryKey(condition.getId());
+            mv.addObject("entity", entity);
+        }
+        return editView(mv, entity);
+    }
+
+    protected abstract ModelAndView editView(ModelAndView mv, T entity);
 }
