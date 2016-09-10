@@ -1,7 +1,6 @@
 package com.vanxd.admin.service.user.impl;
 
 import com.vanxd.admin.service.BaseServiceImpl;
-import com.vanxd.admin.service.user.SysPermissionService;
 import com.vanxd.admin.service.user.SysUserService;
 import com.vanxd.admin.shiro.authc.PasswordService;
 import com.vanxd.data.dict.StatusEnum;

@@ -1,6 +1,6 @@
 package com.vanxd.data.vo;
 
-import com.vanxd.data.entity.system.SysResource;
+import com.vanxd.data.entity.user.SysPermission;
 
 import java.util.Date;
 import java.util.List;
@@ -27,14 +27,14 @@ public class MenuTreeVO {
     public MenuTreeVO() {
     }
 
-    public MenuTreeVO(SysResource sysResource) {
-        this.id = sysResource.getId();
-        this.name = sysResource.getName();
-        this.url = sysResource.getUrl();
-        this.icon = sysResource.getIcon();
-        this.parentId = sysResource.getParentId();
-        this.permissionIdentity = sysResource.getPermissionIdentity();
-        this.createTime = sysResource.getCreateTime();
+    public MenuTreeVO(SysPermission sysPermission) {
+        this.id = sysPermission.getId();
+        this.name = sysPermission.getName();
+        this.url = sysPermission.getUrl();
+        this.icon = sysPermission.getIcon();
+        this.parentId = sysPermission.getParentId();
+        this.permissionIdentity = sysPermission.getPermission();
+        this.createTime = sysPermission.getCreateTime();
     }
 
     public String getUrl() {

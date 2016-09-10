@@ -5,6 +5,7 @@ import com.vanxd.admin.exception.AuthException;
 import com.vanxd.admin.exception.BusinessException;
 import com.vanxd.admin.exception.ParameterException;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -18,7 +19,9 @@ import java.util.Date;
  * 基类控制器.
  */
 public abstract class HandlerController {
-	
+	@Autowired
+	private HttpServletRequest request;
+
 	/** The Constant ERROR. */
 	protected static final String ERROR = "error/error";
 	
@@ -30,7 +33,6 @@ public abstract class HandlerController {
 	protected static final String pageName = "page";
 
 	protected final org.slf4j.Logger logger = LoggerFactory.getLogger(getClass());
-
 
     /**
 	 * 全局异常处理类，错误页面。.
@@ -75,4 +77,7 @@ public abstract class HandlerController {
 		binder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd HH:mm"), true));
 	}
 
+	public HttpServletRequest getRequest() {
+		return request;
+	}
 }

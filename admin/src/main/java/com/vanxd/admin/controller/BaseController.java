@@ -1,13 +1,17 @@
 package com.vanxd.admin.controller;
 
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import com.vanxd.admin.service.BaseService;
 import com.vanxd.data.component.PageResult;
 import com.vanxd.data.component.Pagination;
 import com.vanxd.data.entity.BaseEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author wyd on 2016/9/9.
@@ -24,7 +28,8 @@ public abstract class BaseController<T extends BaseEntity, Service extends BaseS
         PageResult<T> pageResult = getService().page(condition, pagination);
         mv.addObject("pageResult", pageResult);
         mv.addObject("condition", condition);
-        return pageView(mv, condition, pagination);
+        pageView(mv, condition, pagination);
+        return mv;
     }
 
     /**
@@ -34,7 +39,9 @@ public abstract class BaseController<T extends BaseEntity, Service extends BaseS
      * @param pagination
      * @return
      */
-    protected abstract ModelAndView pageView(ModelAndView mv, T condition, Pagination pagination);
+    protected void pageView(ModelAndView mv, T condition, Pagination pagination) {
+        returnRequestUriPage(mv);
+    }
 
 
     @RequestMapping(value = "/edit", method = RequestMethod.GET)
@@ -44,8 +51,17 @@ public abstract class BaseController<T extends BaseEntity, Service extends BaseS
             entity = (T) getService().findByPrimaryKey(condition.getId());
             mv.addObject("entity", entity);
         }
-        return editView(mv, entity);
+        editView(mv, entity);
+        return mv;
+
     }
 
-    protected abstract ModelAndView editView(ModelAndView mv, T entity);
+    protected void editView(ModelAndView mv, T entity) {
+        returnRequestUriPage(mv);
+    }
+
+    private void returnRequestUriPage(ModelAndView mv) {
+        String requestURI = getRequest().getRequestURI();
+        mv.setViewName(requestURI);
+    }
 }

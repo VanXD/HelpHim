@@ -7,10 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.dialect.IDialect;
 import org.thymeleaf.spring4.SpringTemplateEngine;
-import org.thymeleaf.templateresolver.FileTemplateResolver;
-import org.thymeleaf.templateresolver.ITemplateResolver;
-import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
-import org.thymeleaf.templateresolver.TemplateResolver;
+import org.thymeleaf.templateresolver.*;
 
 import javax.annotation.PostConstruct;
 import javax.swing.*;
@@ -27,7 +24,9 @@ public class ThymeleafConfig {
 
     @PostConstruct
     public void extension() {
+        templateEngine.addTemplateResolver(new UrlTemplateResolver());
         setShiroTag();
+
     }
 
     public void setShiroTag() {

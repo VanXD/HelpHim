@@ -7,7 +7,7 @@
     <classPathEntry
             location="C:\Users\Administrator\.m2\repository\mysql\mysql-connector-java\5.1.39\mysql-connector-java-5.1.39.jar"/>
 
-    <context id="my" targetRuntime="MyBatis3" defaultModelType="hierarchical">
+    <context id="my" targetRuntime="MyBatis3">
         <commentGenerator>
             <property name="suppressDate" value="false"/>
             <property name="suppressAllComments" value="true"/>
@@ -44,7 +44,7 @@
         </javaClientGenerator>
 
         <!-- 开始设置表 -->
-        <table tableName="sys_resource" schema="helphim" domainObjectName="SysResource"
+        <table tableName="sys_permission" schema="helphim" domainObjectName="SysPermission"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">

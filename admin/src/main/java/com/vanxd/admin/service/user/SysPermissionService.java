@@ -1,8 +1,6 @@
 package com.vanxd.admin.service.user;
 
 import com.vanxd.admin.service.BaseService;
-import com.vanxd.data.component.PageResult;
-import com.vanxd.data.component.Pagination;
 import com.vanxd.data.entity.user.SysPermission;
 import com.vanxd.data.mapper.user.SysPermissionMapper;
 

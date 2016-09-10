@@ -7,14 +7,21 @@
     <result column="status" jdbcType="INTEGER" property="status" />
     <result column="description" jdbcType="VARCHAR" property="description" />
     <result column="permission" jdbcType="VARCHAR" property="permission" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="icon" jdbcType="VARCHAR" property="icon" />
+    <result column="weight" jdbcType="INTEGER" property="weight" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="creator_user_id" jdbcType="VARCHAR" property="creatorUserId" />
+    <result column="is_show" jdbcType="BIT" property="isShow" />
+    <result column="parent_id" jdbcType="VARCHAR" property="parentId" />
   </resultMap>
-
-  <resultMap id="VOResultMap" type="com.vanxd.data.entity.user.SysPermission" extends="BaseResultMap">
+  <resultMap id="VOResultMap" type="com.vanxd.data.entity.user.SysPermission">
     <result column="role_id" jdbcType="VARCHAR" property="roleId" />
   </resultMap>
-
   <sql id="Base_Column_List">
-    id, create_time, status, description, permission
+    id, create_time, status, description, permission, name, url, icon, weight, type, 
+    creator_user_id, is_show, parent_id
   </sql>
   <sql id="VO_Column_List">
     <include refid="Base_Column_List"/>, role_id
@@ -32,9 +39,15 @@
   </delete>
   <insert id="insert" parameterType="com.vanxd.data.entity.user.SysPermission">
     insert into sys_permission (id, create_time, status, 
-      description, permission)
+      description, permission, name, 
+      url, icon, weight, 
+      type, creator_user_id, is_show, 
+      parent_id)
     values (#{id,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}, 
-      #{description,jdbcType=VARCHAR}, #{permission,jdbcType=VARCHAR})
+      #{description,jdbcType=VARCHAR}, #{permission,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{url,jdbcType=VARCHAR}, #{icon,jdbcType=VARCHAR}, #{weight,jdbcType=INTEGER}, 
+      #{type,jdbcType=INTEGER}, #{creatorUserId,jdbcType=VARCHAR}, #{isShow,jdbcType=BIT}, 
+      #{parentId,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.vanxd.data.entity.user.SysPermission">
     insert into sys_permission
@@ -54,6 +67,30 @@
       <if test="permission != null">
         permission,
       </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="url != null">
+        url,
+      </if>
+      <if test="icon != null">
+        icon,
+      </if>
+      <if test="weight != null">
+        weight,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="creatorUserId != null">
+        creator_user_id,
+      </if>
+      <if test="isShow != null">
+        is_show,
+      </if>
+      <if test="parentId != null">
+        parent_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -70,6 +107,30 @@
       </if>
       <if test="permission != null">
         #{permission,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="icon != null">
+        #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="weight != null">
+        #{weight,jdbcType=INTEGER},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="creatorUserId != null">
+        #{creatorUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="isShow != null">
+        #{isShow,jdbcType=BIT},
+      </if>
+      <if test="parentId != null">
+        #{parentId,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -88,6 +149,30 @@
       <if test="permission != null">
         permission = #{permission,jdbcType=VARCHAR},
       </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="icon != null">
+        icon = #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="weight != null">
+        weight = #{weight,jdbcType=INTEGER},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="creatorUserId != null">
+        creator_user_id = #{creatorUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="isShow != null">
+        is_show = #{isShow,jdbcType=BIT},
+      </if>
+      <if test="parentId != null">
+        parent_id = #{parentId,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
@@ -96,15 +181,27 @@
     set create_time = #{createTime,jdbcType=TIMESTAMP},
       status = #{status,jdbcType=INTEGER},
       description = #{description,jdbcType=VARCHAR},
-      permission = #{permission,jdbcType=VARCHAR}
+      permission = #{permission,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      icon = #{icon,jdbcType=VARCHAR},
+      weight = #{weight,jdbcType=INTEGER},
+      type = #{type,jdbcType=INTEGER},
+      creator_user_id = #{creatorUserId,jdbcType=VARCHAR},
+      is_show = #{isShow,jdbcType=BIT},
+      parent_id = #{parentId,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+
 
   <!-- 公共查询条件 -->
   <sql id="Common-Conditions">
     <where>
       <if test="conditions.roleId != null and conditions.roleId != ''">
         AND role_id = #{conditions.roleId}
+      </if>
+      <if test="conditions.parentId != null and conditions.parentId != ''">
+        AND parent_id = #{conditions.parentId}
       </if>
       AND status != -9
     </where>
@@ -120,10 +217,7 @@
     <include refid="Common-Conditions"></include>
     ORDER BY
     create_time DESC
-    <if test="pagination != null">
-      LIMIT
-      #{pagination.start},#{pagination.pageSize}
-    </if>
+    <include refid="page.limit"/>
   </select>
 
   <!-- 获取未删除的所有的记录 -->
