@@ -14,13 +14,17 @@ function initMenu() {
             url  : "/system/menu/list",
             async : false,
             success : function (result) {
-                $("#page-wrapper").before(result);
-                var navbar = $("#navbar");
-                navbar.find(".active").removeClass("active");
-                var choosedMenu = getChoosedMenu(navbar);
-                choosedMenu.parent().addClass("active");
-                var topParentId = choosedMenu.data("parent-id");
-                $("#menu_" + topParentId).addClass("active").trigger("click");
+                if($("#page-wrapper").length > 0) {
+                    $("#page-wrapper").before(result);
+                    var navbar = $("#navbar");
+                    navbar.find(".active").removeClass("active");
+                    var choosedMenu = getChoosedMenu(navbar);
+                    if(choosedMenu) {
+                        choosedMenu.parent().addClass("active");
+                        var topParentId = choosedMenu.data("parent-id");
+                        $("#menu_" + topParentId).addClass("active").trigger("click");
+                    }
+                }
             }
         });
     }
@@ -37,17 +41,19 @@ function initMenu() {
  */
 function getChoosedMenu(navbar) {
     var uri = getUriWithParamsByUrl(window.location.href);
-    var choosedMenu = navbar.find("a[href*='"+ uri +"']");
-    if(0 == choosedMenu.length) {
-        while (choosedMenu.length == 0 && uri) {
-            if(uri.lastIndexOf("&") > -1) {
-                uri = uri.substr(0,uri.lastIndexOf("&"));
-            } else if (uri.lastIndexOf("?") > -1) {
-                uri = uri.substr(0,uri.lastIndexOf("?"));
-            }
+    while(true) {
+        var choosedMenu = navbar.find("a[href*='"+ uri +"']");
+        if(choosedMenu.length > 0) {
+            return choosedMenu[0];
+        }
+        var index = uri.lastIndexOf("&") > -1 ? uri.lastIndexOf("&") : uri.lastIndexOf("?") > -1 ? uri.lastIndexOf("?") : null;
+        if(index) {
+            uri = uri.substr(0, index);
+        } else {
+            return null;
         }
     }
-    return choosedMenu;
+    return choosedMenu[0];
 }
 
 function getUriWithParamsByUrl(url) {

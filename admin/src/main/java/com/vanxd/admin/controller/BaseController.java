@@ -1,11 +1,9 @@
 package com.vanxd.admin.controller;
 
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import com.vanxd.admin.service.BaseService;
 import com.vanxd.data.component.PageResult;
 import com.vanxd.data.component.Pagination;
 import com.vanxd.data.entity.BaseEntity;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
