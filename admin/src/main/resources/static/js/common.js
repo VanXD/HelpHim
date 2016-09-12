@@ -20,7 +20,7 @@ function initMenu() {
                     navbar.find(".active").removeClass("active");
                     var choosedMenu = getChoosedMenu(navbar);
                     if(choosedMenu) {
-                        choosedMenu.parent().addClass("active");
+                        $(choosedMenu).parent().addClass("active");
                         var topParentId = choosedMenu.data("parent-id");
                         $("#menu_" + topParentId).addClass("active").trigger("click");
                     }
@@ -44,7 +44,7 @@ function getChoosedMenu(navbar) {
     while(true) {
         var choosedMenu = navbar.find("a[href*='"+ uri +"']");
         if(choosedMenu.length > 0) {
-            return choosedMenu[0];
+            return choosedMenu.eq(0);
         }
         var index = uri.lastIndexOf("&") > -1 ? uri.lastIndexOf("&") : uri.lastIndexOf("?") > -1 ? uri.lastIndexOf("?") : null;
         if(index) {
@@ -53,7 +53,6 @@ function getChoosedMenu(navbar) {
             return null;
         }
     }
-    return choosedMenu[0];
 }
 
 function getUriWithParamsByUrl(url) {
