@@ -1,19 +1,17 @@
 package com.vanxd.data.component;
 
-import java.util.List;
-
 /**
  * Created by wyd on 2016/8/25.
  */
 public class Pagination {
     protected Integer pageSize = 10;
-    protected Integer pageNo = 1;
+    protected Integer page = 1;
 
     public Pagination() {
     }
 
-    public Pagination(Integer pageNo, Integer pageSize) {
-        this.pageNo = pageNo;
+    public Pagination(Integer page, Integer pageSize) {
+        this.page = page;
         this.pageSize = pageSize;
     }
 
@@ -25,21 +23,21 @@ public class Pagination {
         this.pageSize = pageSize;
     }
 
-    public Integer getPageNo() {
-        return this.pageNo;
+    public Integer getPage() {
+        return this.page;
     }
 
-    public void setPageNo(Integer pageNo) {
-        if(pageNo == null) {
-            this.pageNo = Integer.valueOf(1);
+    public void setPage(Integer page) {
+        if(page == null) {
+            this.page = Integer.valueOf(1);
         } else {
-            this.pageNo = pageNo;
+            this.page = page;
         }
 
     }
 
     public int getStart() {
-        return this.pageNo.intValue() > 1?(this.pageNo.intValue() - 1) * this.pageSize.intValue():0;
+        return this.page.intValue() > 1?(this.page.intValue() - 1) * this.pageSize.intValue():0;
     }
 
 }

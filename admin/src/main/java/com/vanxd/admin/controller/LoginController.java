@@ -48,4 +48,10 @@ public class LoginController {
         }
         return mv;
     }
+
+    @RequestMapping("/logout")
+    public String logout() {
+        SecurityUtils.getSubject().logout();
+        return "redirect:login";
+    }
 }

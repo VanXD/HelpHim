@@ -14,12 +14,12 @@ public abstract class BaseServiceImpl<T, Mapper extends BaseMapper<T>> implement
 
     @Override
     public PageResult<T> page(T conditions, Pagination pagination) {
-        PageResult<T> pageResult = new PageResult<T>(pagination.getPageNo(), pagination.getPageSize());
-        pageResult.setTotal(count(conditions));
-        if(0 > pageResult.getTotal()) {
+        PageResult<T> pageResult = new PageResult<T>(pagination.getPage(), pagination.getPageSize());
+        pageResult.setRecords(count(conditions));
+        if(0 > pageResult.getRecords()) {
             return pageResult;
         } else {
-            pageResult.setResult(list(conditions, pagination));
+            pageResult.setRows(list(conditions, pagination));
             return pageResult;
         }
     }

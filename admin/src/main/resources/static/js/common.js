@@ -1,7 +1,22 @@
+$(window).bind('resize', function () {
+    bindJqGridResize();
+});
+
 $(function () {
     initMenu();
 });
 
+
+/**
+ * 浏览器尺寸改变时，改变jqGrid的宽度
+ */
+function bindJqGridResize() {
+    var jqGridWrapper = $('.jqGrid_wrapper');
+    if(jqGridWrapper.length > 0) {
+        var width = $('.jqGrid_wrapper').width();
+        $('#data-table-1').setGridWidth(width);
+    }
+}
 
 /**
  * 初始化菜单，没找到thymeleaf怎么include一个url，只能用这种方式了，感觉好蠢。

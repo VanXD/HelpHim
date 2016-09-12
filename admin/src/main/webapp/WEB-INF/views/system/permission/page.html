@@ -5,9 +5,27 @@
 <body>
 <div id="wrapper">
     <div id="page-wrapper" class="gray-bg dashbard-1">
+        <div th:replace="/common/common_head :: contentHeader"></div>
 
+        <div class="wrapper wrapper-content  animated fadeInRight">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ibox ">
+                        <div class="ibox-title">
+                            <h5>jQuery Grid Plugin – jqGrid</h5>
+                        </div>
+                        <div class="ibox-content">
+                            <div class="jqGrid_wrapper">
+                                <table id="data-table-1"></table>
+                                <div id="pager-table-1"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-<div th:include="/common/onload_js :: onloadJS('')"></div>
+<div th:include="/common/onload_js :: onloadJS('/system/permission/page.js')"></div>
 </body>
 </html>

@@ -7,9 +7,11 @@ import java.util.List;
  * @author wyd on 2016/9/8.
  */
 public class PageResult<T> extends Pagination implements Serializable{
+    /** 数据总数 */
+    private Long records = 0l;
+    /** 总页数 */
     private Long total = 0l;
-    private Long pageCount = 0l;
-    private List<T> result = null;
+    private List<T> rows = null;
     private int startPage = 1;
     private int endPage = 1;
 
@@ -21,26 +23,26 @@ public class PageResult<T> extends Pagination implements Serializable{
     }
 
     public void compute() {
-        this.pageCount = Long.valueOf(this.pageSize.intValue() > 0?Long.valueOf((long)(this.total.intValue() / this.pageSize.intValue() + (this.total.intValue() % this.pageSize.intValue() == 0?0:1))).longValue():(long)(this.total.longValue() > 0L?1:0));
-        this.startPage = this.pageNo.intValue() > 3?this.pageNo.intValue() - 3:1;
-        this.endPage = (int)(this.pageCount.longValue() > (long)(this.startPage + 9)?(long)(this.startPage + 9):this.pageCount.longValue());
+        this.total = Long.valueOf(this.pageSize.intValue() > 0?Long.valueOf((long)(this.records.intValue() / this.pageSize.intValue() + (this.records.intValue() % this.pageSize.intValue() == 0?0:1))).longValue():(long)(this.records.longValue() > 0L?1:0));
+        this.startPage = this.page.intValue() > 3?this.page.intValue() - 3:1;
+        this.endPage = (int)(this.total.longValue() > (long)(this.startPage + 9)?(long)(this.startPage + 9):this.total.longValue());
     }
 
-    public Long getTotal() {
-        return this.total;
+    public Long getRecords() {
+        return this.records;
     }
 
-    public void setTotal(Long total) {
-        this.total = total;
+    public void setRecords(Long records) {
+        this.records = records;
         this.compute();
     }
 
-    public List<T> getResult() {
-        return result;
+    public List<T> getRows() {
+        return rows;
     }
 
-    public void setResult(List<T> result) {
-        this.result = result;
+    public void setRows(List<T> rows) {
+        this.rows = rows;
     }
 
     public int getStartPage() {
@@ -59,11 +61,11 @@ public class PageResult<T> extends Pagination implements Serializable{
         this.endPage = endPage;
     }
 
-    public void setPageCount(Long pageCount) {
-        this.pageCount = pageCount;
+    public void setTotal(Long total) {
+        this.total = total;
     }
 
-    public Long getPageCount() {
-        return this.pageCount;
+    public Long getTotal() {
+        return this.total;
     }
 }
