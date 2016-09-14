@@ -74,7 +74,7 @@ public abstract class HandlerController {
 	 */
 	@InitBinder
 	public void initBinder(ServletRequestDataBinder binder) {
-		binder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd HH:mm"), true));
+		binder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"), true));
 	}
 
 	public HttpServletRequest getRequest() {

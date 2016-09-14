@@ -1,33 +1,54 @@
 $(function () {
-    $("#data-table-1").jqGrid({
+    jqGridFactory.generate({
+        tableSelector : "#data-table-1",
+        pager : "pager-table-1",
         url : "/system/permission/list.json",
-        datatype : "json",
-        colNames : ["权限", "名称"],
+        caption:"菜单管理",
+        colNames : ["名称", "权限", "图标", "描述", "URL", "权重", "是否显示", "创建人","创建时间" ],
         colModel : [
             {
-                name : "permission",
-                index : "permission",
-                width : 1
+                name : "name",
+                index : "name"
             },
             {
-                name : "name",
-                index : "name",
-                width : 1
+                name : "permission",
+                index : "permission"
+            },
+            {
+                name : "icon",
+                index : "icon",
+            },
+            {
+                name : "description",
+                index : "description"
+            },
+            {
+                name : "url",
+                index : "url"
+            },
+            {
+                name : "weight",
+                index : "weight"
+            },
+            {
+                name : "isShow",
+                index : "isShow",
+                formatter : (cellValue, options, row) => {
+                    return cellValue ? "是" : "否";
+                }
+            },
+            {
+                name : "creatorUserId",
+                index : "creatorUserId"
+            },
+            {
+                name : "createTime",
+                index : "createTime",
+                formatter : (cellValue, options, row) => {
+                    return new Date(cellValue).format("yyyy-MM-dd hh:mm:ss");
+                }
             }
-        ],
-        rownumbers : true,
-        rowNum : 10,
-        rowList : [10, 20, 30],
-        pager : "pager-table-1",
-        sortname : "permission",
-        viewrecords: true,
-        sortorder: "desc",
-        autowidth : true,
-        caption:"JSON Example"
+        ]
     });
-    // $("#data-table-1").jqGrid('navGrid', '#pager-table-1',
-    //     {edit: true, add: true, del: true, search: true},
-    //     {height: 200, reloadAfterSubmit: true}
-    // );
 });
 

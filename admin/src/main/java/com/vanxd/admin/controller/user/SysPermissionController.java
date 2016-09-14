@@ -22,11 +22,4 @@ public class SysPermissionController extends BaseController<SysPermission, SysPe
     protected SysPermissionService getService() {
         return sysPermissionServiceImpl;
     }
-
-    @RequestMapping("/list.json")
-    @ResponseBody
-    public PageResult<SysPermission> list(SysPermission condition, Pagination pagination) {
-        PageResult<SysPermission> pageResult = getService().page(condition, pagination);
-        return pageResult;
-    }
 }

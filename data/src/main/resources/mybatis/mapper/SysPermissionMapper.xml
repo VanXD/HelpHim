@@ -16,7 +16,7 @@
     <result column="is_show" jdbcType="BIT" property="isShow" />
     <result column="parent_id" jdbcType="VARCHAR" property="parentId" />
   </resultMap>
-  <resultMap id="VOResultMap" type="com.vanxd.data.entity.user.SysPermission">
+  <resultMap id="VOResultMap" type="com.vanxd.data.entity.user.SysPermission" extends="BaseResultMap">
     <result column="role_id" jdbcType="VARCHAR" property="roleId" />
   </resultMap>
   <sql id="Base_Column_List">
