@@ -5,8 +5,19 @@ $(window).bind('resize', function () {
 $(function () {
     initMenu();
     dateFormatterRegister();
+    bindIChecks();
 });
 
+
+function bindIChecks() {
+    var iChecks = $('.i-checks');
+    if(0 < iChecks.length) {
+        $('.i-checks').iCheck({
+            checkboxClass: 'icheckbox_square-green',
+            radioClass: 'iradio_square-green',
+        });
+    }
+}
 
 function dateFormatterRegister() {
     // 对Date的扩展，将 Date 转化为指定格式的String
@@ -117,20 +128,17 @@ var jqGridFactory = {
             height : "100%",
             rownumbers : true,
             rowNum : 10,
-            rowList : [10, 20, 30],
+            rowList : [10, 20, 30, 50],
             colNames : data.colNames,
             colModel : data.colModel
         });
         // Setup buttons
         $(data.tableSelector).jqGrid('navGrid', '#' + data.pager,
             {
-                edit: true,
-                add: true,
-                del: true,
-                search: true
-            },
-            {
-                height: 200, reloadAfterSubmit: true
+                addfunc : addFuncDiaglog,
+                editfunc  : editFuncDiaglog,
+                delfunc : delFuncDiaglog,
+                alerttext  : "请选中需要操作的数据行！"
             }
         );
     }

@@ -1,4 +1,9 @@
 $(function () {
+    buildJqGridGenerator();
+});
+
+
+function buildJqGridGenerator() {
     jqGridFactory.generate({
         tableSelector : "#data-table-1",
         pager : "pager-table-1",
@@ -50,5 +55,27 @@ $(function () {
             }
         ]
     });
-});
+}
 
+/**
+ * 添加模板，模态框
+ */
+function addFuncDiaglog() {
+    $("#add-modal-form").modal();
+}
+
+/**
+ * 编辑模板，模态框
+ *
+ * @param id 数据ID
+ */
+function editFuncDiaglog(id) {
+}
+
+/**
+ * 删除模板，模态框
+ *
+ * @param id 数据ID
+ */
+function delFuncDiaglog(id) {
+}

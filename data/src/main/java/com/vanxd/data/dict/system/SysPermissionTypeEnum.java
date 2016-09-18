@@ -3,7 +3,7 @@ package com.vanxd.data.dict.system;
 /**
  * @author wyd on 2016/9/9.
  */
-public enum SRtypeEnum {
+public enum SysPermissionTypeEnum {
     MODULE(1, "模块"),
 
     MENU(2, "菜单"),
@@ -18,7 +18,7 @@ public enum SRtypeEnum {
      * @param text
      *            the 文字描述
      */
-    private SRtypeEnum(Integer code, String text) {
+    private SysPermissionTypeEnum(Integer code, String text) {
         this.code = code;
         this.text = text;
     }
