@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50616
 File Encoding         : 65001
 
-Date: 2016-09-09 14:07:24
+Date: 2016-09-19 16:30:35
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -25,26 +25,14 @@ CREATE TABLE `sys_permission` (
   `status` int(11) NOT NULL,
   `description` varchar(100) NOT NULL,
   `permission` varchar(50) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Table structure for sys_resource
--- ----------------------------
-DROP TABLE IF EXISTS `sys_resource`;
-CREATE TABLE `sys_resource` (
-  `id` varchar(32) NOT NULL,
-  `create_time` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP,
-  `status` int(11) NOT NULL,
   `name` varchar(20) NOT NULL,
-  `url` varchar(255) NOT NULL,
-  `parent_id` varchar(32) NOT NULL,
-  `icon` varchar(20) NOT NULL,
   `weight` int(11) NOT NULL,
-  `permission_identity` varchar(255) NOT NULL,
   `type` int(11) NOT NULL,
   `creator_user_id` varchar(32) NOT NULL,
   `is_show` bit(1) NOT NULL,
+  `icon` varchar(20) DEFAULT NULL,
+  `url` varchar(255) DEFAULT NULL,
+  `parent_id` varchar(32) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
