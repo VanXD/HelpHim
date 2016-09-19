@@ -1,5 +1,7 @@
 package com.vanxd.admin.controller;
 
+import com.vanxd.admin.util.GlobalKey;
+import com.vanxd.admin.util.ShiroUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.subject.Subject;
@@ -51,6 +53,8 @@ public class LoginController {
 
     @RequestMapping("/logout")
     public String logout() {
+        ShiroUtil.getSession().removeAttribute(GlobalKey.SESSION_USER);
+        ShiroUtil.getSession().removeAttribute(GlobalKey.THYMELEAF_MENU);
         SecurityUtils.getSubject().logout();
         return "redirect:login";
     }

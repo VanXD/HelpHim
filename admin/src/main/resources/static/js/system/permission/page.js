@@ -1,6 +1,26 @@
 $(function () {
     buildJqGridGenerator();
+    initValidate();
 });
+
+function initValidate() {
+    $("#edit-form").validate({
+        errorPlacement: function (error, element)
+        {
+            element.after(error);
+        },
+        rules: {
+            name : {
+                required : true
+            }
+        },
+        messages : {
+            name : {
+                required : "必填"
+            }
+        }
+    });
+}
 
 
 function buildJqGridGenerator() {
@@ -60,8 +80,8 @@ function buildJqGridGenerator() {
 /**
  * 添加模板，模态框
  */
-function addFuncDiaglog() {
-    $("#add-modal-form").modal();
+function addFuncDiaglog(id) {
+    $("#parent-id").val(id);
 }
 
 /**
@@ -69,7 +89,9 @@ function addFuncDiaglog() {
  *
  * @param id 数据ID
  */
-function editFuncDiaglog(id) {
+function editFuncDiaglog(id, entity) {
+    alert(id);
+    alert(JSON.stringify(entity));
 }
 
 /**

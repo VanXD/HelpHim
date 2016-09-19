@@ -1,12 +1,12 @@
 package com.vanxd.data.entity.user;
 
+import com.sun.xml.internal.rngom.parse.host.Base;
+import com.vanxd.data.entity.BaseEntity;
 import org.apache.commons.lang.RandomStringUtils;
 
 import java.util.Date;
 
-public class SysUser {
-    private String id;
-
+public class SysUser extends BaseEntity{
     private Date createTime;
 
     private Integer status;
@@ -24,14 +24,6 @@ public class SysUser {
     private String salt;
 
     private String username;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public Date getCreateTime() {
         return createTime;

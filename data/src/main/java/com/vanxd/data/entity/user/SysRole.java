@@ -1,10 +1,10 @@
 package com.vanxd.data.entity.user;
 
+import com.vanxd.data.entity.BaseEntity;
+
 import java.util.Date;
 
-public class SysRole {
-    private String id;
-
+public class SysRole extends BaseEntity{
     private Date createTime;
 
     private Integer status;
@@ -19,14 +19,6 @@ public class SysRole {
 
     /** [VO]用户ID */
     private String userId;
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public Date getCreateTime() {
         return createTime;

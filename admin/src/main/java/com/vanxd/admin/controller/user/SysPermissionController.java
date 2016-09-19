@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  * Created by wyd on 2016/8/25.
@@ -21,5 +22,11 @@ public class SysPermissionController extends BaseController<SysPermission, SysPe
     @Override
     protected SysPermissionService getService() {
         return sysPermissionServiceImpl;
+    }
+
+
+    @Override
+    protected void editView(ModelAndView mv, SysPermission entity) {
+        super.editView(mv, entity);
     }
 }

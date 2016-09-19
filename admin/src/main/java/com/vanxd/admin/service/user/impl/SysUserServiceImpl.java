@@ -10,7 +10,7 @@ import com.vanxd.data.entity.user.SysUser;
 import com.vanxd.data.mapper.user.SysPermissionMapper;
 import com.vanxd.data.mapper.user.SysRoleMapper;
 import com.vanxd.data.mapper.user.SysUserMapper;
-import com.vanxd.data.util.StringUtils;
+import com.vanxd.data.util.VanStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -56,7 +56,7 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, SysUserMapper> 
      * @throws Exception
      */
     public boolean add(SysUser sysUser) {
-        sysUser.setId(StringUtils.uuid());
+        sysUser.setId(VanStringUtils.uuid());
         sysUser.randomSalt();
         try {
             sysUser.setPassword(passwordService.encryptPassword(sysUser.getUsername(),sysUser.getPassword(), sysUser.getSalt()));

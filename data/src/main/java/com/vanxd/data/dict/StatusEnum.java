@@ -3,7 +3,7 @@ package com.vanxd.data.dict;
 /**
  * @author wyd on 2016/9/8.
  */
-public enum StatusEnum {
+public enum StatusEnum implements Dictionary{
     NEW(1, "新增"),
 
     AUDIT(2, "审核"),
@@ -38,6 +38,7 @@ public enum StatusEnum {
      *
      * @return the 文字描述
      */
+    @Override
     public String getText() {
         return text;
     }
@@ -47,6 +48,7 @@ public enum StatusEnum {
      *
      * @return the 状态码
      */
+    @Override
     public Integer getCode(){
         return code;
     }

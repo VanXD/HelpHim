@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:van="https://github.com/VanXD/Thymeleaf-Dialect">
 <head th:include="/common/common_head :: commonHeader('权限管理', '')"></head>
 
 <body>
 <div id="wrapper">
     <div id="page-wrapper" class="gray-bg dashbard-1">
         <div th:replace="/common/common_head :: contentHeader"></div>
-
         <div class="wrapper wrapper-content  animated fadeInRight">
             <div class="row">
                 <div class="col-lg-12">
@@ -27,25 +27,29 @@
     </div>
 </div>
 <!-- 添加模板模态框 -->
-<div id="add-modal-form" class="modal fade" aria-hidden="true">
+<div id="edit-modal-form" class="modal fade" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 b-r">
                         <h3 class="m-t-none m-b">新增菜单</h3>
-                        <form role="form">
+                        <form id="edit-form" role="form" action="edit" method="post">
                             <div class="form-group">
-                                <label for="description" >描述</label>
-                                <input id="description" name="description" type="text" placeholder="简要描述一下该权限" class="form-control"/>
+                                <label>父菜单ID</label>
+                                <input id="parent-id" name="parentId" type="text" placeholder="父菜单ID，不需要请清空" class="form-control"/>
+                            </div>
+                            <div class="form-group">
+                                <label>名称</label>
+                                <input id="name" name="name" type="text" placeholder="请填写权限名称" class="form-control"/>
                             </div>
                             <div class="form-group">
                                 <label>权限标识</label>
                                 <input id="permission" name="permission" type="text" placeholder="请填写权限标识" class="form-control"/>
                             </div>
                             <div class="form-group">
-                                <label>名称</label>
-                                <input id="name" name="name" type="text" placeholder="请填写权限名称" class="form-control"/>
+                                <label for="description" >描述</label>
+                                <input id="description" name="description" type="text" placeholder="简要描述一下该权限" class="form-control"/>
                             </div>
                             <div class="form-group">
                                 <label>权重</label>
@@ -53,17 +57,12 @@
                             </div>
                             <div class="form-group">
                                 <label>类型</label>
-                                <select class="form-control m-b" name="type">
-                                    <option>option 1</option>
-                                    <option>option 2</option>
-                                    <option>option 3</option>
-                                    <option>option 4</option>
-                                </select>
+                                <van:select class="form-control m-b" name="type" dict="SysPermissionTypeEnum"  />
                             </div>
                             <div class="form-group">
                                 <label>是否显示</label>
                                 <label class="i-checks form-control" id="is-show-checks">
-                                    <input id="is-show" name="is-show" type="checkbox" />
+                                    <input id="is-show" name="isShow" type="checkbox" />
                                 </label>
                             </div>
                             <div class="form-group">
@@ -74,6 +73,7 @@
                                 <label>URI</label>
                                 <input id="url" name="url" type="text" placeholder="请填写菜单跳转路径（URI，可带参）" class="form-control"/>
                             </div>
+                            <div class="hr-line-dashed"></div>
                             <div>
                                 <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit">
                                     <strong>提交</strong>

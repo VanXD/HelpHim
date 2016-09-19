@@ -5,7 +5,6 @@ import com.vanxd.admin.util.GlobalKey;
 import com.vanxd.admin.util.ShiroUtil;
 import com.vanxd.data.entity.user.SysPermission;
 import com.vanxd.data.mapper.user.SysPermissionMapper;
-import com.vanxd.data.util.StringUtils;
 import com.vanxd.data.vo.MenuTreeVO;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
@@ -13,7 +12,6 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.xml.bind.annotation.XmlElementDecl;
 import java.util.ArrayList;
 import java.util.List;
 

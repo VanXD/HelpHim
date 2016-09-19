@@ -2,6 +2,7 @@ package com.vanxd.admin.service;
 
 import com.vanxd.data.component.PageResult;
 import com.vanxd.data.component.Pagination;
+import com.vanxd.data.entity.BaseEntity;
 import com.vanxd.data.mapper.BaseMapper;
 
 import java.util.List;
@@ -9,7 +10,7 @@ import java.util.List;
 /**
  * @author wyd on 2016/9/8.
  */
-public interface BaseService<T, Mapper extends BaseMapper<T>> {
+public interface BaseService<T extends BaseEntity, Mapper extends BaseMapper<T>> {
     /**
      * 将实体当作筛选条件，进行分页查询
      *
@@ -52,4 +53,6 @@ public interface BaseService<T, Mapper extends BaseMapper<T>> {
     int updateByPrimaryKeySelective(T entity);
 
     int updateByPrimaryKey(T entity);
+
+    boolean edit(T entity);
 }

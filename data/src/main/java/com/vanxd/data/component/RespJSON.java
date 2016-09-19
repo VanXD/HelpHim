@@ -139,15 +139,11 @@ public class RespJSON<T> {
 
     public enum RespCode {
 
-        /**
-         * The success.
-         */
         SUCCESS(200, "操作成功"),
 
-        /**
-         * The fail.
-         */
-        FAIL(0, "操作失败");
+        FAIL(0, "操作失败"),
+
+        DATA_EMPTY(-1, "未获取到数据");
 
         /**
          * 响应代码.

@@ -1,9 +1,11 @@
-package com.vanxd.data.dict.system;
+package com.vanxd.data.dict;
+
+import com.vanxd.data.dict.Dictionary;
 
 /**
  * @author wyd on 2016/9/9.
  */
-public enum SysPermissionTypeEnum {
+public enum SysPermissionTypeEnum implements Dictionary{
     MODULE(1, "模块"),
 
     MENU(2, "菜单"),
@@ -35,6 +37,7 @@ public enum SysPermissionTypeEnum {
      *
      * @return the 文字描述
      */
+    @Override
     public String getText() {
         return text;
     }
@@ -44,6 +47,7 @@ public enum SysPermissionTypeEnum {
      *
      * @return the 状态码
      */
+    @Override
     public Integer getCode(){
         return code;
     }

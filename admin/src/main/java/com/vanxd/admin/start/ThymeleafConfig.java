@@ -1,6 +1,7 @@
 package com.vanxd.admin.start;
 
 import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
+import com.vanxd.admin.dialect.VanThymeleafDialect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,13 +26,18 @@ public class ThymeleafConfig {
     @PostConstruct
     public void extension() {
         templateEngine.addTemplateResolver(new UrlTemplateResolver());
-        setShiroTag();
-
+        setExtraTag();
     }
 
-    public void setShiroTag() {
+    public void setExtraTag() {
         Set<IDialect> additionalDialects = new HashSet<IDialect>();
+
+        // shiro tag
         additionalDialects.add(new ShiroDialect());
+
+        // van tag
+        additionalDialects.add(new VanThymeleafDialect());
+
         templateEngine.setAdditionalDialects(additionalDialects);
     }
 }

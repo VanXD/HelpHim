@@ -135,8 +135,25 @@ var jqGridFactory = {
         // Setup buttons
         $(data.tableSelector).jqGrid('navGrid', '#' + data.pager,
             {
-                addfunc : addFuncDiaglog,
-                editfunc  : editFuncDiaglog,
+                addfunc : id => {
+                    var editModalForm = $("#edit-modal-form");
+                    editModalForm.find("input[type=text], input[type=number], input[type=email]").val("");
+                    addFuncDiaglog(id);
+                    editModalForm.modal();
+                },
+                editfunc  : id => {
+                    $.ajax({
+                        type : "GET",
+                        url  : "getById",
+                        data : {
+                            id : id
+                        },
+                        success : result => {
+                            editFuncDiaglog(id, result);
+                            $("#edit-modal-form").modal();
+                        }
+                    });
+                },
                 delfunc : delFuncDiaglog,
                 alerttext  : "请选中需要操作的数据行！"
             }

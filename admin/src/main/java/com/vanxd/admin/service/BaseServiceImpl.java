@@ -2,7 +2,9 @@ package com.vanxd.admin.service;
 
 import com.vanxd.data.component.PageResult;
 import com.vanxd.data.component.Pagination;
+import com.vanxd.data.entity.BaseEntity;
 import com.vanxd.data.mapper.BaseMapper;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -10,7 +12,7 @@ import java.util.List;
  *
  * @author wyd on 2016/9/8.
  */
-public abstract class BaseServiceImpl<T, Mapper extends BaseMapper<T>> implements BaseService<T, Mapper> {
+public abstract class BaseServiceImpl<T extends BaseEntity, Mapper extends BaseMapper<T>> implements BaseService<T, Mapper> {
 
     @Override
     public PageResult<T> page(T conditions, Pagination pagination) {
@@ -21,6 +23,15 @@ public abstract class BaseServiceImpl<T, Mapper extends BaseMapper<T>> implement
         } else {
             pageResult.setRows(list(conditions, pagination));
             return pageResult;
+        }
+    }
+
+    @Override
+    public boolean edit(T entity) {
+        if(StringUtils.isEmpty(entity.getId())) {
+            return save(entity) > 0;
+        } else {
+            return updateByPrimaryKeySelective(entity) > 0;
         }
     }
 

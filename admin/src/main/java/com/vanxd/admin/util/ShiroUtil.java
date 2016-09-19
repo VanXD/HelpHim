@@ -14,7 +14,7 @@ public class ShiroUtil {
      * @return
      */
     public static SysUser getSessionSysUser(){
-        return (SysUser) getSession().getAttribute("sysUser");
+        return (SysUser) getSession().getAttribute(GlobalKey.SESSION_USER);
     }
 
 
