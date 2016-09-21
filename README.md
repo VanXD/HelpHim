@@ -5,6 +5,7 @@
 3.MyBatis3.4.1
 4.MySQL
 5.Shiro1.2.5
+6.前端基于Bootstrap3的框架：Inspinia2.5， 这个出2.6了，修复了2.5在移动端的BUG等等，之后有时间再升级。
 
 ## 目的
 1.抽象Controller、Service、Mapper中的公共方法，
