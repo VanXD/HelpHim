@@ -43,4 +43,12 @@ public class SysPermissionServiceImpl extends BaseServiceImpl<SysPermission, Sys
         }
         return super.save(entity);
     }
+
+    @Override
+    public int updateByPrimaryKeySelective(SysPermission entity) {
+        if(null == entity.getIsShow()) {
+            entity.setIsShow(false);
+        }
+        return super.updateByPrimaryKeySelective(entity);
+    }
 }

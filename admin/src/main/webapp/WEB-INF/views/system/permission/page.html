@@ -34,10 +34,12 @@
                 <div class="row">
                     <div class="col-sm-12 b-r">
                         <h3 class="m-t-none m-b">新增菜单</h3>
-                        <form id="edit-form" role="form" action="edit" method="post">
+                        <form id="edit-form" role="form" action="edit.json" method="post">
+                            <!-- 主键 -->
+                            <input id="id" type="hidden" name="id"/>
                             <div class="form-group">
                                 <label>父菜单ID</label>
-                                <input id="parent-id" name="parentId" type="text" placeholder="父菜单ID，不需要请清空" class="form-control"/>
+                                <input id="parentId" name="parentId" type="text" placeholder="父菜单ID，不需要请清空" class="form-control"/>
                             </div>
                             <div class="form-group">
                                 <label>名称</label>
@@ -62,7 +64,7 @@
                             <div class="form-group">
                                 <label>是否显示</label>
                                 <label class="i-checks form-control" id="is-show-checks">
-                                    <input id="is-show" name="isShow" type="checkbox" />
+                                    <input id="isShow" name="isShow" type="checkbox" />
                                 </label>
                             </div>
                             <div class="form-group">
@@ -75,7 +77,7 @@
                             </div>
                             <div class="hr-line-dashed"></div>
                             <div>
-                                <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit">
+                                <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit" onsubmit="return postSubmit();">
                                     <strong>提交</strong>
                                 </button>
                             </div>

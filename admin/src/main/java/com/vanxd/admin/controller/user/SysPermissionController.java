@@ -23,10 +23,4 @@ public class SysPermissionController extends BaseController<SysPermission, SysPe
     protected SysPermissionService getService() {
         return sysPermissionServiceImpl;
     }
-
-
-    @Override
-    protected void editView(ModelAndView mv, SysPermission entity) {
-        super.editView(mv, entity);
-    }
 }

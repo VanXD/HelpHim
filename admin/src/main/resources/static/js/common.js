@@ -1,3 +1,7 @@
+/**
+ * todo 这个文件里的各个功能分到其他文件去
+ */
+
 $(window).bind('resize', function () {
     bindJqGridResize();
 });
@@ -117,7 +121,7 @@ function getUriWithParamsByUrl(url) {
  */
 var jqGridFactory = {
     generate : function (data) {
-        $(data.tableSelector).jqGrid({
+        var iJqGrid = $(data.tableSelector).jqGrid({
             url : data.url,
             mtype : data.mtype || "get",
             datatype : "json",
@@ -149,8 +153,14 @@ var jqGridFactory = {
                             id : id
                         },
                         success : result => {
-                            editFuncDiaglog(id, result);
-                            $("#edit-modal-form").modal();
+                            if(isRequestSuccess(result)) {
+                                addPrimaryKeyInput(id);
+                                renderData(result.result);
+                                editFuncDiaglog(result.result);
+                                $("#edit-modal-form").modal();
+                            } else {
+                                handleRequestFail(result);
+                            }
                         }
                     });
                 },
@@ -158,5 +168,44 @@ var jqGridFactory = {
                 alerttext  : "请选中需要操作的数据行！"
             }
         );
+        return iJqGrid;
     }
 };
+
+/**
+ * 渲染数据，需要input的ID和字段名相同
+ * @param entity
+ */
+function renderData(entity) {
+    var value;
+    for(var key in entity) {
+        value = entity[key];
+        // 这里判断可能会是checkbox radio之类的
+        if(typeof value == "boolean") {
+            if(value == true) {
+                $("#" + key).iCheck("check");
+            } else {
+                $("#" + key).iCheck("uncheck");
+            }
+        } else {
+            $("#" + key).val(value);
+        }
+    }
+}
+
+function addPrimaryKeyInput(id) {
+    document.getElementById("id").value = id;
+}
+
+function postSubmit() {
+    alert(1);
+    return false;
+}
+
+function isRequestSuccess(result) {
+    return 200 == result.code;
+}
+
+function handleRequestFail(result) {
+    alert(result.message);
+}

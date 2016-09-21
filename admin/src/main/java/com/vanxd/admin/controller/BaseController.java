@@ -71,11 +71,6 @@ public abstract class BaseController<T extends BaseEntity, Service extends BaseS
         }
     }
 
-
-    protected void editView(ModelAndView mv, T entity) {
-        returnRequestUriPage(mv);
-    }
-
     private void returnRequestUriPage(ModelAndView mv) {
         String requestURI = getRequest().getRequestURI();
         mv.setViewName(requestURI);

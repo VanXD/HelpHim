@@ -1,12 +1,12 @@
+var iJqGrid = null;
 $(function () {
-    buildJqGridGenerator();
+    iJqGrid = buildJqGridGenerator();
     initValidate();
 });
 
 function initValidate() {
     $("#edit-form").validate({
-        errorPlacement: function (error, element)
-        {
+        errorPlacement: (error, element) => {
             element.after(error);
         },
         rules: {
@@ -18,18 +18,30 @@ function initValidate() {
             name : {
                 required : "必填"
             }
+        },
+        submitHandler : form => {
+            $(form).ajaxSubmit({
+                success : result => {
+                    if(200 == result.code) {
+                        $(iJqGrid).trigger("reloadGrid");
+                        $("#edit-modal-form").modal("hide");
+                    } else {
+                        alert(result.message);
+                    }
+                }
+            });
         }
     });
 }
 
 
 function buildJqGridGenerator() {
-    jqGridFactory.generate({
+    return jqGridFactory.generate({
         tableSelector : "#data-table-1",
         pager : "pager-table-1",
         url : "/system/permission/list.json",
         caption:"菜单管理",
-        colNames : ["名称", "权限", "图标", "描述", "URL", "权重", "是否显示", "创建人","创建时间" ],
+        colNames : ["名称", "权限", "图标", "URL", "权重", "是否显示","类型", "描述", "创建人","创建时间" ],
         colModel : [
             {
                 name : "name",
@@ -42,10 +54,6 @@ function buildJqGridGenerator() {
             {
                 name : "icon",
                 index : "icon",
-            },
-            {
-                name : "description",
-                index : "description"
             },
             {
                 name : "url",
@@ -61,6 +69,17 @@ function buildJqGridGenerator() {
                 formatter : (cellValue, options, row) => {
                     return cellValue ? "是" : "否";
                 }
+            },
+            {
+                name : "type",
+                index : "type",
+                formatter : (cellValue, options, row) => {
+
+                }
+            },
+            {
+                name : "description",
+                index : "description"
             },
             {
                 name : "creatorUserId",
@@ -81,7 +100,8 @@ function buildJqGridGenerator() {
  * 添加模板，模态框
  */
 function addFuncDiaglog(id) {
-    $("#parent-id").val(id);
+    $("#parentId").val(id);
+    $("#id").val();
 }
 
 /**
@@ -89,9 +109,8 @@ function addFuncDiaglog(id) {
  *
  * @param id 数据ID
  */
-function editFuncDiaglog(id, entity) {
-    alert(id);
-    alert(JSON.stringify(entity));
+function editFuncDiaglog(entity) {
+    console.log(JSON.stringify(entity));
 }
 
 /**
