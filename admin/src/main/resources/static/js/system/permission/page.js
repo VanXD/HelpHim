@@ -74,7 +74,8 @@ function buildJqGridGenerator() {
                 name : "type",
                 index : "type",
                 formatter : (cellValue, options, row) => {
-
+                    // todo 这里是个梗，无法使用自定义的字典标签。return "<span th:dict='StatusEnum' value='1'></span>"
+                    return getSysPermissionTypeText(cellValue);
                 }
             },
             {
@@ -94,6 +95,17 @@ function buildJqGridGenerator() {
             }
         ]
     });
+}
+
+function getSysPermissionTypeText(value) {
+    switch (parseInt(value)) {
+        case 1 :
+            return "模块";
+        case 2 :
+            return "菜单";
+        case 3 :
+            return "功能";
+    }
 }
 
 /**
