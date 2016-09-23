@@ -1,6 +1,7 @@
 package com.vanxd.admin.dialect.processor;
 
 import com.vanxd.data.dict.Dictionary;
+import com.vanxd.data.util.DictionaryUtils;
 import org.thymeleaf.Arguments;
 import org.thymeleaf.dom.Attribute;
 import org.thymeleaf.dom.Element;
@@ -46,29 +47,13 @@ public class SelectEleProcessor extends AbstractMarkupSubstitutionElementProcess
      */
     private void addOptions(Element container, Map<String, Attribute> attributeMap) {
         if (attributeMap.containsKey(dictAttrName)) {
-            String dict = attributeMap.get(dictAttrName).getValue();
-            Class<?> clazz = null;
-            try {
-                clazz = Class.forName("com.vanxd.data.dict." + dict);
-            } catch (ClassNotFoundException e) {
-                throw new RuntimeException(e);
+            Attribute className = attributeMap.get(dictAttrName);
+            if(null == className) {
+                return;
             }
-            Dictionary[] dictionaries = getDictionaries(clazz);
+            Dictionary[] dictionaries = DictionaryUtils.getDictionaries(className.getValue());
             buildOptions(container, dictionaries);
         }
-    }
-
-    /**
-     * 获得所有枚举类型
-     * @param clazz
-     * @return
-     */
-    private Dictionary[] getDictionaries(Class<?> clazz) {
-        Dictionary[] dictionaries = null;
-        if(null != clazz) {
-            dictionaries = (Dictionary[]) clazz.getEnumConstants();
-        }
-        return dictionaries;
     }
 
     /**

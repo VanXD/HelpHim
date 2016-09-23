@@ -1,5 +1,6 @@
 package com.vanxd.admin.dialect;
 
+import com.vanxd.admin.dialect.processor.DictTextProcessor;
 import com.vanxd.admin.dialect.processor.SelectEleProcessor;
 import org.thymeleaf.dialect.AbstractDialect;
 import org.thymeleaf.processor.IProcessor;
@@ -18,6 +19,7 @@ public class VanThymeleafDialect extends AbstractDialect {
     public Set<IProcessor> getProcessors() {
         final Set<IProcessor> processors = new HashSet<IProcessor>();
         processors.add(SelectEleProcessor.create());
+        processors.add(DictTextProcessor.create());
 
         return Collections.unmodifiableSet(processors);
     }

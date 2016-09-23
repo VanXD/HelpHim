@@ -31,4 +31,10 @@
 		]]></documentation>
     </element-processor>
 
+    <attribute-processor name="select" class="com.vanxd.admin.dialect.processor.DictTextProcessor">
+        <documentation><![CDATA[
+		整型与中文转换，将dict指定的枚举类型中code对应的text写入元素内
+		]]></documentation>
+    </attribute-processor>
+
 </dialect>
