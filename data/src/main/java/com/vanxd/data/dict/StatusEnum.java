@@ -10,7 +10,7 @@ public enum StatusEnum implements Dictionary{
 
     REALEASE(3, "发布"),
 
-    DELEATED(-9, "删除");
+    DELETED(-9, "删除");
 
 
     /**

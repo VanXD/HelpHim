@@ -7,8 +7,6 @@ import java.util.Date;
 public class SysPermission extends BaseEntity{
     private Date createTime;
 
-    private Integer status;
-
     private String description;
 
     private String permission;
@@ -54,14 +52,6 @@ public class SysPermission extends BaseEntity{
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
     }
 
     public String getDescription() {

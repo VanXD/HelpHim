@@ -1,6 +1,5 @@
-var iJqGrid = null;
 $(function () {
-    iJqGrid = buildJqGridGenerator();
+    buildJqGridGenerator();
     initValidate();
 });
 

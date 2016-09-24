@@ -55,4 +55,11 @@ public interface BaseService<T extends BaseEntity, Mapper extends BaseMapper<T>>
     int updateByPrimaryKey(T entity);
 
     boolean edit(T entity);
+
+    /**
+     * 软删除，status改为 StatusEnum.DELETED
+     * @param id    主键
+     * @return
+     */
+    int deleteSoftlyByPrimaryKey(String id);
 }

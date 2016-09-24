@@ -7,8 +7,6 @@ import java.util.Date;
 public class SysRole extends BaseEntity{
     private Date createTime;
 
-    private Integer status;
-
     private String description;
 
     private Boolean isshow;
@@ -26,14 +24,6 @@ public class SysRole extends BaseEntity{
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
     }
 
     public String getDescription() {

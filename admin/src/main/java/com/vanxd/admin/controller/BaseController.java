@@ -43,7 +43,11 @@ public abstract class BaseController<T extends BaseEntity, Service extends BaseS
      * @return
      */
     protected void pageView(ModelAndView mv, T condition, Pagination pagination) {
-        returnRequestUriPage(mv);
+        String simpleName = this.getClass().getSimpleName();
+        // 移除类名后面的Controller
+        String controllerName = simpleName.substring(0, simpleName.length() - 10);
+        String requestURI = getRequest().getRequestURI();
+        mv.setViewName(requestURI + controllerName);
     }
 
 
@@ -71,8 +75,16 @@ public abstract class BaseController<T extends BaseEntity, Service extends BaseS
         }
     }
 
-    private void returnRequestUriPage(ModelAndView mv) {
-        String requestURI = getRequest().getRequestURI();
-        mv.setViewName(requestURI);
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    @ResponseBody
+    public RespJSON delete(String id) {
+        if(StringUtils.isEmpty(id)) {
+            throw new BusinessException("参数不正确！");
+        }
+        if(getService().deleteSoftlyByPrimaryKey(id) > 0) {
+            return new RespJSON(RespJSON.RespCode.SUCCESS);
+        } else {
+            return new RespJSON(RespJSON.RespCode.FAIL);
+        }
     }
 }

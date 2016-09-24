@@ -9,8 +9,6 @@ import java.util.Date;
 public class SysUser extends BaseEntity{
     private Date createTime;
 
-    private Integer status;
-
     private Boolean admin;
 
     private String email;
@@ -31,14 +29,6 @@ public class SysUser extends BaseEntity{
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
     }
 
     public Boolean getAdmin() {

@@ -1,7 +1,9 @@
 package com.vanxd.admin.service;
 
+import com.vanxd.admin.exception.BusinessException;
 import com.vanxd.data.component.PageResult;
 import com.vanxd.data.component.Pagination;
+import com.vanxd.data.dict.StatusEnum;
 import com.vanxd.data.entity.BaseEntity;
 import com.vanxd.data.mapper.BaseMapper;
 import org.springframework.util.StringUtils;
@@ -48,6 +50,16 @@ public abstract class BaseServiceImpl<T extends BaseEntity, Mapper extends BaseM
     @Override
     public int deleteByPrimaryKey(String id) {
         return getMapper().deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public int deleteSoftlyByPrimaryKey(String id) {
+        T entity = findByPrimaryKey(id);
+        if(null == entity) {
+            throw new BusinessException("未获取到数据！");
+        }
+        entity.setStatus(StatusEnum.DELETED.getCode());
+        return updateByPrimaryKeySelective(entity);
     }
 
     @Override

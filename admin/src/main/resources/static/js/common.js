@@ -1,6 +1,8 @@
 /**
  * todo 这个文件里的各个功能分到其他文件去
  */
+var iJqGrid = null;
+
 
 $(window).bind('resize', function () {
     bindJqGridResize();
@@ -121,7 +123,7 @@ function getUriWithParamsByUrl(url) {
  */
 var jqGridFactory = {
     generate : function (data) {
-        var iJqGrid = $(data.tableSelector).jqGrid({
+        iJqGrid = $(data.tableSelector).jqGrid({
             url : data.url,
             mtype : data.mtype || "get",
             datatype : "json",
@@ -164,7 +166,22 @@ var jqGridFactory = {
                         }
                     });
                 },
-                delfunc : delFuncDiaglog,
+                delfunc : id => {
+                    $.ajax({
+                        type : "POST",
+                        url  : "delete",
+                        data : {
+                            id : id
+                        },
+                        success : result => {
+                            if(isRequestSuccess(result)) {
+                                $(iJqGrid).trigger("reloadGrid");
+                            } else {
+                                handleRequestFail(result);
+                            }
+                        }
+                    });
+                },
                 alerttext  : "请选中需要操作的数据行！"
             }
         );
@@ -195,11 +212,6 @@ function renderData(entity) {
 
 function addPrimaryKeyInput(id) {
     document.getElementById("id").value = id;
-}
-
-function postSubmit() {
-    alert(1);
-    return false;
 }
 
 function isRequestSuccess(result) {

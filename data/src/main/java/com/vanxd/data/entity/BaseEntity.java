@@ -6,6 +6,16 @@ package com.vanxd.data.entity;
 public class BaseEntity {
     protected String id;
 
+    protected Integer status;
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
     public String getId() {
         return id;
     }
