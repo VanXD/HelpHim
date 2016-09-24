@@ -90,6 +90,11 @@ function buildJqGridGenerator() {
                 index : "createTime",
                 formatter : (cellValue, options, row) => {
                     return new Date(cellValue).format("yyyy-MM-dd hh:mm:ss");
+                },
+                searchoptions : {
+                    dataInit : ele => {
+                        DateTimePickerFactory.generate(ele);
+                    }
                 }
             }
         ]

@@ -183,11 +183,26 @@ var jqGridFactory = {
                     });
                 },
                 alerttext  : "请选中需要操作的数据行！"
+            },{},{},{},{
+                multipleSearch : true
             }
         );
         return iJqGrid;
     }
 };
+
+var DateTimePickerFactory = {
+    /**
+     * 将一个dom实例化为DateTimePicker组件
+     * @param ele
+     */
+    generate : function(ele) {
+        $(ele).datetimepicker({
+            language : "zh-CN"
+        });
+    }
+};
+
 
 /**
  * 渲染数据，需要input的ID和字段名相同
