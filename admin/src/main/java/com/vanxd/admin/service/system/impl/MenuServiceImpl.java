@@ -64,7 +64,7 @@ public class MenuServiceImpl implements MenuService {
     private List<SysPermission> getMenuByParentId(String parentId) {
         SysPermission sysPermission = new SysPermission();
         sysPermission.setParentId(parentId);
-        return sysPermissionMapper.page(sysPermission, null);
+        return sysPermissionMapper.page(sysPermission, null, null);
     }
 
 

@@ -1,10 +1,12 @@
 package com.vanxd.admin.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.vanxd.admin.exception.BusinessException;
 import com.vanxd.admin.service.BaseService;
 import com.vanxd.data.component.PageResult;
 import com.vanxd.data.component.Pagination;
 import com.vanxd.data.component.RespJSON;
+import com.vanxd.data.component.jqgrid.Filter;
 import com.vanxd.data.entity.BaseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,8 +26,9 @@ public abstract class BaseController<T extends BaseEntity, Service extends BaseS
 
     @RequestMapping("/list.json")
     @ResponseBody
-    public PageResult<T> list(T condition, Pagination pagination) {
-        PageResult<T> pageResult = getService().page(condition, pagination);
+    public PageResult<T> list(T condition, String filters, Pagination pagination) {
+        Filter filter = JSON.parseObject(filters, Filter.class);
+        PageResult<T> pageResult = getService().page(condition, filter, pagination);
         return pageResult;
     }
 

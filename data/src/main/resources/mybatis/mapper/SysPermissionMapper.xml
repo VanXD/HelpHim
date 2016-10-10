@@ -214,7 +214,14 @@
     FROM
     sys_permission sp
     LEFT JOIN sys_role_permission srp ON sp.id = srp.role_id
-    <include refid="Common-Conditions"></include>
+    <choose>
+      <when test="filter != null">
+        <include refid="page.Filter-Conditions"></include>
+      </when>
+      <otherwise>
+        <include refid="Common-Conditions"></include>
+      </otherwise>
+    </choose>
     ORDER BY
     create_time DESC
     <include refid="page.limit"/>
@@ -227,6 +234,13 @@
     FROM
     sys_permission sp
     LEFT JOIN sys_role_permission srp ON sp.id = srp.role_id
-    <include refid="Common-Conditions"></include>
+    <choose>
+      <when test="filter != null">
+        <include refid="page.Filter-Conditions"></include>
+      </when>
+      <otherwise>
+        <include refid="Common-Conditions"></include>
+      </otherwise>
+    </choose>
   </select>
 </mapper>

@@ -9,7 +9,7 @@
      * 修改 :
      * 页大小参数:row 改为 pageSize
      * addfunc事件: 原本不会传选中行的ID，改为将选中行的ID进行传递。
-     * addfunc事件: 原本不会传选中行的ID，改为将选中行的ID进行传递。
+     * 6731行: 改为了所有操作符除了[存在、不存在]
      *
      */
     "use strict";
@@ -6728,7 +6728,7 @@
             ops : [],
             operands : null,
             numopts : ['eq','ne', 'lt', 'le', 'gt', 'ge', 'nu', 'nn', 'in', 'ni'],
-            stropts : ['eq', 'ne', 'bw', 'bn', 'ew', 'en', 'cn', 'nc', 'nu', 'nn', 'in', 'ni'],
+            stropts : ['eq', 'ne', 'lt', 'le', 'gt', 'ge', 'bw', 'bn', 'ew', 'en', 'cn', 'nc', 'in', 'ni'],
             strarr : ['text', 'string', 'blob'],
             groupOps : [{ op: "AND", text: "AND" },	{ op: "OR",  text: "OR" }],
             groupButton : true,

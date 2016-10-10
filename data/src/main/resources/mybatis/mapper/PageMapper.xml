@@ -7,4 +7,33 @@
             #{pagination.start},#{pagination.pageSize}
         </if>
     </sql>
+
+    <!-- jqgrid的过滤器查询条件 -->
+    <sql id="Filter-Conditions">
+        <where>
+            <foreach collection="filter.rules" item="item" index="index" separator="AND " >
+                ${item.dbFiled}
+                ${item.dbOp}
+                <choose>
+                    <when test="item.op == 'bw' or item.op == 'bn'">
+                        CONCAT(#{item.data}, "%")
+                    </when>
+                    <when test="item.op == 'ew' or item.op == 'en'">
+                        CONCAT("%", #{item.data})
+                    </when>
+                    <when test="item.op == 'cn' or item.op == 'nc'">
+                        CONCAT("%", #{item.data}, "%")
+                    </when>
+                    <when test="item.op == 'in' or item.op == 'ni'">
+                        ${item.data}
+                    </when>
+                    <otherwise>
+                        #{item.data}
+                    </otherwise>
+                </choose>
+
+            </foreach>
+            AND status != -9
+        </where>
+    </sql>
 </mapper>

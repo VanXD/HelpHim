@@ -3,6 +3,7 @@ package com.vanxd.admin.service;
 import com.vanxd.admin.exception.BusinessException;
 import com.vanxd.data.component.PageResult;
 import com.vanxd.data.component.Pagination;
+import com.vanxd.data.component.jqgrid.Filter;
 import com.vanxd.data.dict.StatusEnum;
 import com.vanxd.data.entity.BaseEntity;
 import com.vanxd.data.mapper.BaseMapper;
@@ -11,19 +12,20 @@ import org.springframework.util.StringUtils;
 import java.util.List;
 
 /**
+ * 基础service实现类
  *
  * @author wyd on 2016/9/8.
  */
 public abstract class BaseServiceImpl<T extends BaseEntity, Mapper extends BaseMapper<T>> implements BaseService<T, Mapper> {
 
     @Override
-    public PageResult<T> page(T conditions, Pagination pagination) {
+    public PageResult<T> page(T conditions, Filter filter, Pagination pagination) {
         PageResult<T> pageResult = new PageResult<T>(pagination.getPage(), pagination.getPageSize());
-        pageResult.setRecords(count(conditions));
+        pageResult.setRecords(count(conditions, filter));
         if(0 > pageResult.getRecords()) {
             return pageResult;
         } else {
-            pageResult.setRows(list(conditions, pagination));
+            pageResult.setRows(list(conditions, filter , pagination));
             return pageResult;
         }
     }
@@ -38,13 +40,13 @@ public abstract class BaseServiceImpl<T extends BaseEntity, Mapper extends BaseM
     }
 
     @Override
-    public Long count(T conditions) {
-        return getMapper().count(conditions);
+    public Long count(T conditions, Filter filter) {
+        return getMapper().count(conditions, filter);
     }
 
     @Override
-    public List<T> list(T conditions, Pagination pagination) {
-        return getMapper().page(conditions, pagination);
+    public List<T> list(T conditions, Filter filter, Pagination pagination) {
+        return getMapper().page(conditions, filter, pagination);
     }
 
     @Override
