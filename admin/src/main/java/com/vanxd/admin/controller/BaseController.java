@@ -36,7 +36,8 @@ public abstract class BaseController<T extends BaseEntity, Service extends BaseS
     }
 
     /**
-     * 分页列表展示页
+     * 分页列表展示页,
+     * 默认返回页面为 page+控制器名称去掉Controller 例如 pageSystemPermission
      * @param mv
      * @param condition
      * @param pagination
@@ -61,7 +62,7 @@ public abstract class BaseController<T extends BaseEntity, Service extends BaseS
         }
     }
 
-    @RequestMapping(value = "/getById", method = RequestMethod.GET)
+    @RequestMapping(value = "/getById.json", method = RequestMethod.GET)
     @ResponseBody
     public RespJSON getById(String id) {
         if(StringUtils.isEmpty(id)) {
@@ -75,7 +76,7 @@ public abstract class BaseController<T extends BaseEntity, Service extends BaseS
         }
     }
 
-    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    @RequestMapping(value = "/delete.json", method = RequestMethod.POST)
     @ResponseBody
     public RespJSON delete(String id) {
         if(StringUtils.isEmpty(id)) {

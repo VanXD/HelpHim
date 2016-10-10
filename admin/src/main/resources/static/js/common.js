@@ -143,14 +143,15 @@ var jqGridFactory = {
             {
                 addfunc : id => {
                     var editModalForm = $("#edit-modal-form");
-                    editModalForm.find("input[type=text], input[type=number], input[type=email]").val("");
+                    editModalForm.find("input:not([type=checkbox]), input:not([type=radio])").val("");
+                    editModalForm.find("input:checked").iCheck("uncheck");
                     addFuncDiaglog(id);
                     editModalForm.modal();
                 },
                 editfunc  : id => {
                     $.ajax({
                         type : "GET",
-                        url  : "getById",
+                        url  : "getById.json",
                         data : {
                             id : id
                         },
@@ -169,7 +170,7 @@ var jqGridFactory = {
                 delfunc : id => {
                     $.ajax({
                         type : "POST",
-                        url  : "delete",
+                        url  : "delete.json",
                         data : {
                             id : id
                         },
