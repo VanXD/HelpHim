@@ -6,7 +6,13 @@ import java.util.List;
  * @author wyd on 2016/10/10.
  */
 public class Filter {
+    /**
+     * 关系，当前无视该字段
+     */
     private String groupOp;
+    /**
+     * 规则
+     */
     private List<Rule> rules;
 
     public String getGroupOp() {
