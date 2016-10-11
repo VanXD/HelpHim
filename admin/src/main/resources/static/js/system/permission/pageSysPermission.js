@@ -11,11 +11,35 @@ function initValidate() {
         rules: {
             name : {
                 required : true
+            },
+            permission : {
+                required : true,
+                maxlength : 20
+            },
+            description : {
+                required : true,
+                maxlength : 100
+            },
+            weight : {
+                required : true,
+                number : true
             }
         },
         messages : {
             name : {
                 required : "必填"
+            },
+            permission : {
+                required : "必填",
+                maxlength : "最长20个字符"
+            },
+            description : {
+                required : "必填",
+                maxlength : "最长100个字符"
+            },
+            weight : {
+                required : "必填",
+                number : "只能填数字"
             }
         },
         submitHandler : form => {
