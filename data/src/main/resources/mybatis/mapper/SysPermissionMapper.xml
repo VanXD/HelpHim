@@ -24,7 +24,7 @@
     creator_user_id, is_show, parent_id
   </sql>
   <sql id="VO_Column_List">
-    <include refid="Base_Column_List"/>, role_id
+    <include refid="Base_Column_List"/>, srp.role_id
   </sql>
 
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
@@ -213,7 +213,7 @@
     <include refid="VO_Column_List"></include>
     FROM
     sys_permission sp
-    LEFT JOIN sys_role_permission srp ON sp.id = srp.role_id
+    LEFT JOIN sys_role_permission srp ON sp.id = srp.permission_id
     <choose>
       <when test="filter != null">
         <include refid="page.Filter-Conditions"></include>
