@@ -24,6 +24,14 @@ public abstract class BaseController<T extends BaseEntity, Service extends BaseS
      */
     protected abstract Service getService();
 
+    /**
+     * 根据条件进行数据列表查询，
+     * condition和filters都有的情况下，默认使用filters(取决于mapper.xml如何写)
+     * @param condition     可为空 数据实体作为参数
+     * @param filters       可为空 符合jqGrid多条件查询的json字符串作为参数
+     * @param pagination    可为空 分页对象，为空查询全部
+     * @return
+     */
     @RequestMapping("/list.json")
     @ResponseBody
     public PageResult<T> list(T condition, String filters, Pagination pagination) {
@@ -32,6 +40,13 @@ public abstract class BaseController<T extends BaseEntity, Service extends BaseS
         return pageResult;
     }
 
+    /**
+     * 打开列表页
+     * @param mv
+     * @param condition
+     * @param pagination
+     * @return
+     */
     @RequestMapping("/page")
     public ModelAndView page(ModelAndView mv, T condition, Pagination pagination) {
         pageView(mv, condition, pagination);
@@ -55,6 +70,11 @@ public abstract class BaseController<T extends BaseEntity, Service extends BaseS
     }
 
 
+    /**
+     * 编辑数据
+     * @param entity    必须  实体数据
+     * @return
+     */
     @RequestMapping(value = "/edit.json", method = RequestMethod.POST)
     @ResponseBody
     public RespJSON<RespJSON> edit(T entity) {
@@ -65,6 +85,11 @@ public abstract class BaseController<T extends BaseEntity, Service extends BaseS
         }
     }
 
+    /**
+     * 通过ID获得对象数据
+     * @param id    必须 对象ID
+     * @return
+     */
     @RequestMapping(value = "/getById.json", method = RequestMethod.GET)
     @ResponseBody
     public RespJSON getById(String id) {
@@ -79,6 +104,11 @@ public abstract class BaseController<T extends BaseEntity, Service extends BaseS
         }
     }
 
+    /**
+     * 通过ID删除对象
+     * @param id    必须 对象ID
+     * @return
+     */
     @RequestMapping(value = "/delete.json", method = RequestMethod.POST)
     @ResponseBody
     public RespJSON delete(String id) {
