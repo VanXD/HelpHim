@@ -69,6 +69,8 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, SysUserMapper> 
     }
 
     /**
+     * todo 改为一条sql
+     *
      * 获得用户的所有角色识别码
      *
      * @param sysUser 用户对象
@@ -86,6 +88,7 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, SysUserMapper> 
     }
 
     /**
+     * todo 改为一条SQL
      * 获得用户的所有权限识别码
      * @param sysUser 用户对象
      * @return set 权限识别码列表
