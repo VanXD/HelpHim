@@ -14,6 +14,10 @@
 
 
 ## 使用
+0.  约定
+    1.  数据库表别名，第一个单词的首字母和下划线后首字母的拼接，例如：sys_role_permission 别名为 srp
+    2.  如果该表需要使用JqGrid条件查询，请在POJO中为表和VO字段加上@TableAlias注解 @see com.vanxd.data.entity.user.SysPermission 
+    3.  Mapper.xml中在需要用到JqGrid条件查询的地方，一定要写表别名。
 1.  分页(page)接口数据筛选条件：    
     1.  可传实体属性作为参数查询。
     2.  可传filters参数，参数值符合jqGrid多条件查询的json字符串格式，具体可看Filter类
