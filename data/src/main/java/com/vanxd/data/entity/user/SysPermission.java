@@ -3,28 +3,32 @@ package com.vanxd.data.entity.user;
 import com.vanxd.data.annotation.TableAlias;
 import com.vanxd.data.entity.BaseEntity;
 
-import java.util.Date;
+/**
+ * 用户菜单权限
+ *
+ * @author wyd
+ */
 @TableAlias(alias = "sp")
 public class SysPermission extends BaseEntity{
-
+    /** 描述 */
     private String description;
-
+    /** 权限标识 */
     private String permission;
-
+    /** 名称 */
     private String name;
-
+    /** 连接地址 */
     private String url;
-
+    /** 图标 */
     private String icon;
-
+    /** 权重 */
     private Integer weight;
-
+    /** 类型 */
     private Integer type;
-
+    /** 创建人ID */
     private String creatorUserId;
-
+    /** 是否显示 */
     private Boolean isShow;
-
+    /** 父ID */
     private String parentId;
 
     /** [VO] 角色ID */
