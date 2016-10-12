@@ -9,37 +9,54 @@ function initValidate() {
             element.after(error);
         },
         rules: {
-            name : {
-                required : true
-            },
-            permission : {
-                required : true,
-                maxlength : 20
-            },
-            description : {
+            nickname : {
                 required : true,
                 maxlength : 100
             },
-            weight : {
+            username : {
                 required : true,
-                number : true
+                maxlength : 100
+            },
+            password : {
+                accordingTo : true,
+                maxlength : 30,
+                minlength : 6
+
+            },
+            email : {
+                required : true,
+                maxlength : 100
+            },
+            mobilePhone : {
+                required : true,
+                number : true,
+                maxlength : 11,
+                minlength : 11
             }
         },
         messages : {
-            name : {
-                required : "必填"
-            },
-            permission : {
-                required : "必填",
-                maxlength : "最长20个字符"
-            },
-            description : {
+            nickname : {
                 required : "必填",
                 maxlength : "最长100个字符"
             },
-            weight : {
+            username : {
                 required : "必填",
-                number : "只能填数字"
+                maxlength : "最长100个字符"
+            },
+            password : {
+                maxlength : "最长30个字符",
+                minlength : "最短6个字符",
+                accordingTo : "必填"
+            },
+            email : {
+                required : "必填",
+                maxlength : "最长100个字符"
+            },
+            mobilePhone : {
+                required : "必填",
+                number : "只能填数字",
+                maxlength : "最长11个字符",
+                minlength : "最短11个字符"
             }
         },
         submitHandler : form => {
@@ -62,52 +79,25 @@ function buildJqGridGenerator() {
     return jqGridFactory.generate({
         tableSelector : "#data-table-1",
         pager : "pager-table-1",
-        url : "/system/permission/list.json",
-        caption:"菜单权限管理",
-        colNames : ["名称", "权限", "图标", "URL", "权重", "是否显示","类型", "描述", "创建人","创建时间" ],
+        url : "/system/user/list.json",
+        caption:"系统用户列表",
+        colNames : ["昵称", "用户名", "邮箱", "手机", "创建时间" ],
         colModel : [
             {
-                name : "name",
-                index : "name"
+                name : "nickname",
+                index : "nickname"
             },
             {
-                name : "permission",
-                index : "permission"
+                name : "username",
+                index : "username"
             },
             {
-                name : "icon",
-                index : "icon",
+                name : "email",
+                index : "email",
             },
             {
-                name : "url",
-                index : "url"
-            },
-            {
-                name : "weight",
-                index : "weight"
-            },
-            {
-                name : "isShow",
-                index : "isShow",
-                formatter : (cellValue, options, row) => {
-                    return cellValue ? "是" : "否";
-                }
-            },
-            {
-                name : "type",
-                index : "type",
-                formatter : (cellValue, options, row) => {
-                    // todo 这里是个梗，无法使用自定义的字典标签。return "<span th:dict='StatusEnum' value='1'></span>"
-                    return meaningOfPermissionType(cellValue);
-                }
-            },
-            {
-                name : "description",
-                index : "description"
-            },
-            {
-                name : "creatorUserNickname",
-                index : "creatorUserNickname"
+                name : "mobilePhone",
+                index : "mobilePhone"
             },
             {
                 name : "createTime",
@@ -145,8 +135,8 @@ function meaningOfPermissionType(value) {
  * 添加模板，模态框
  */
 function addFuncDiaglog(id) {
-    $("#parentId").val(id);
     $("#id").val();
+    $("#edit-form #username").prop("disabled", false);
 }
 
 /**
@@ -155,7 +145,8 @@ function addFuncDiaglog(id) {
  * @param id 数据ID
  */
 function editFuncDiaglog(entity) {
-    console.log(JSON.stringify(entity));
+    $("#edit-form #password").val("");
+    $("#edit-form #username").prop("disabled", true);
 }
 
 /**

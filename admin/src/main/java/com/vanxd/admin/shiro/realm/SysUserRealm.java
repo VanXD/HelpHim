@@ -1,6 +1,6 @@
 package com.vanxd.admin.shiro.realm;
 
-import com.vanxd.admin.service.user.impl.SysUserServiceImpl;
+import com.vanxd.admin.service.user.SysUserService;
 import com.vanxd.admin.shiro.authc.CustomCredentialsMatcher;
 import com.vanxd.data.entity.user.SysUser;
 import org.apache.shiro.authc.*;
@@ -19,7 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class SysUserRealm extends AuthorizingRealm {
 
     @Autowired
-    private SysUserServiceImpl sysUserService;
+    private SysUserService sysUserServiceImpl;
     @Autowired
     private CustomCredentialsMatcher customCredentialsMatcher;
 
@@ -32,11 +32,11 @@ public class SysUserRealm extends AuthorizingRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         String username = (String) getAvailablePrincipal(principals);
-        SysUser sysUser = sysUserService.getByUsername(username);
+        SysUser sysUser = sysUserServiceImpl.getByUsername(username);
         //获取用户的所有资源
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-        info.setRoles(sysUserService.getRoleIdentities(sysUser));
-        info.setStringPermissions(sysUserService.getPermissionIdentities(sysUser));
+        info.setRoles(sysUserServiceImpl.getRoleIdentities(sysUser));
+        info.setStringPermissions(sysUserServiceImpl.getPermissionIdentities(sysUser));
         return info;
     }
 
@@ -51,7 +51,7 @@ public class SysUserRealm extends AuthorizingRealm {
         UsernamePasswordToken usernamePasswordToken = (UsernamePasswordToken) token;
         String username = usernamePasswordToken.getUsername().trim();
 
-        SysUser sysUser = sysUserService.getByUsername(username);
+        SysUser sysUser = sysUserServiceImpl.getByUsername(username);
         if(sysUser == null){
             throw new UnknownAccountException();//账号没找到
         }

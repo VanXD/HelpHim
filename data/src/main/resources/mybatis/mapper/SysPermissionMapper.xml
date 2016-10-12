@@ -205,6 +205,7 @@
       <if test="conditions.parentId != null and conditions.parentId != ''">
         AND sp.parent_id = #{conditions.parentId}
       </if>
+      AND sp.status != -9
     </where>
   </sql>
 
@@ -224,7 +225,6 @@
         <include refid="Common-Conditions"></include>
       </otherwise>
     </choose>
-    AND sp.status != -9
     ORDER BY
     sp.create_time DESC
     <include refid="page.limit"/>
@@ -246,6 +246,5 @@
         <include refid="Common-Conditions"></include>
       </otherwise>
     </choose>
-    AND sp.status != -9
   </select>
 </mapper>

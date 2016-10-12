@@ -1,5 +1,6 @@
 package com.vanxd.admin.service.user.impl;
 
+import com.vanxd.admin.exception.BusinessException;
 import com.vanxd.admin.service.BaseServiceImpl;
 import com.vanxd.admin.service.user.SysUserService;
 import com.vanxd.admin.shiro.authc.PasswordService;
@@ -14,6 +15,7 @@ import com.vanxd.data.util.VanStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -40,42 +42,34 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, SysUserMapper> 
         return sysUserMapper;
     }
 
-    /**
-     * 根据用户名获得用户数据
-     * @param username 用户名
-     * @return  用户对象
-     */
     public SysUser getByUsername(String username) {
         return sysUserMapper.selectByUsername(username);
     }
 
-    /**
-     * 添加用户
-     * @param sysUser   系统用户
-     * @return
-     * @throws Exception
-     */
-    public boolean add(SysUser sysUser) {
-        sysUser.setId(VanStringUtils.uuid());
-        sysUser.randomSalt();
-        try {
-            sysUser.setPassword(passwordService.encryptPassword(sysUser.getUsername(),sysUser.getPassword(), sysUser.getSalt()));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        sysUser.setCreateTime(new Date());
-        sysUser.setStatus(StatusEnum.NEW.getCode());
-        return save(sysUser) > 0;
+    @Override
+    public int save(SysUser entity) {
+        entity.setId(VanStringUtils.uuid());
+        entity.randomSalt();
+        encryptPassword(entity);
+        entity.setCreateTime(new Date());
+        entity.setStatus(StatusEnum.NEW.getCode());
+        return super.save(entity);
     }
 
-    /**
-     * todo 改为一条sql
-     *
-     * 获得用户的所有角色识别码
-     *
-     * @param sysUser 用户对象
-     * @return set 角色识别码列表
-     */
+    @Override
+    public int updateByPrimaryKeySelective(SysUser entity) {
+        SysUser dbSysUser = sysUserMapper.selectByPrimaryKey(entity.getId());
+        if(null == dbSysUser) {
+            throw new BusinessException("用户不存在！");
+        }
+        entity.setSalt(dbSysUser.getSalt());
+        entity.setUsername(dbSysUser.getUsername());
+        encryptPassword(entity);
+        return super.updateByPrimaryKeySelective(entity);
+    }
+
+
+    @Override
     public Set<String> getRoleIdentities(SysUser sysUser) {
         Set<String> rolesIdentities = new HashSet<String>();
         SysRole roleConditions = new SysRole();
@@ -87,12 +81,7 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, SysUserMapper> 
         return rolesIdentities;
     }
 
-    /**
-     * todo 改为一条SQL
-     * 获得用户的所有权限识别码
-     * @param sysUser 用户对象
-     * @return set 权限识别码列表
-     */
+    @Override
     public Set<String> getPermissionIdentities(SysUser sysUser) {
         Set<String> permissionIdentities = new HashSet<String>();
         SysRole roleConditions = new SysRole();
@@ -109,5 +98,19 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, SysUserMapper> 
             }
         }
         return permissionIdentities;
+    }
+
+    /**
+     * 密码加密
+     * @param entity 用户对象
+     */
+    private void encryptPassword(SysUser entity) {
+        try {
+            if(!StringUtils.isEmpty(entity.getPassword())) {
+                entity.setPassword(passwordService.encryptPassword(entity.getUsername(),entity.getPassword(), entity.getSalt()));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

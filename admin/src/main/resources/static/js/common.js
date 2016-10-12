@@ -12,7 +12,33 @@ $(function () {
     initMenu();
     dateFormatterRegister();
     bindIChecks();
+    initCustomValidateMethod();
 });
+
+/**
+ * 初始化自定义表单校验方法
+ * todo 分离到其他文件
+ */
+function initCustomValidateMethod() {
+    /**
+     * 根据#{according-to}的值进行校验
+     * 1.如果{according-data}为true，则指定的标签有值就校验通过
+     * 2.如果不为true，则{according-data}的值与{according-to}标签的值相同才校验通过
+     */
+    $.validator.addMethod("accordingTo", function (value, ele, params) {
+        var accordingObjData = $("#" + $(ele).data("according-to")).val();
+        var accordingPropertyValue = $(ele).data("according-data");
+        if(accordingPropertyValue == true) {
+            if(accordingObjData) {
+                return true;
+            } else {
+                return !!value;
+            }
+        } else {
+            return accordingObjData == $(ele).data("according-data");
+        }
+    }, "必填");
+}
 
 
 function bindIChecks() {

@@ -130,6 +130,7 @@
       <if test="conditions.userId != null and conditions.userId != ''">
         AND sur.user_id = #{conditions.userId}
       </if>
+      AND sr.status != -9
     </where>
   </sql>
 
@@ -149,7 +150,6 @@
         <include refid="Common-Conditions"></include>
       </otherwise>
     </choose>
-    AND sr.status != -9
     ORDER BY
     sr.create_time DESC
     <include refid="page.limit"/>
@@ -171,6 +171,5 @@
         <include refid="Common-Conditions"></include>
       </otherwise>
     </choose>
-    AND sr.status != -9
   </select>
 </mapper>

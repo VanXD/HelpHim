@@ -32,6 +32,7 @@
                     </otherwise>
                 </choose>
             </foreach>
+            AND ${jqFilter.pojoTableAlias}.status != -9
         </where>
     </sql>
 </mapper>

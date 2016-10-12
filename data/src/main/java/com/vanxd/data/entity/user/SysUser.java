@@ -1,14 +1,9 @@
 package com.vanxd.data.entity.user;
 
-import com.sun.xml.internal.rngom.parse.host.Base;
 import com.vanxd.data.entity.BaseEntity;
 import org.apache.commons.lang.RandomStringUtils;
 
-import java.util.Date;
-
 public class SysUser extends BaseEntity{
-    private Boolean admin;
-
     private String email;
 
     private String nickname;
@@ -20,14 +15,6 @@ public class SysUser extends BaseEntity{
     private String salt;
 
     private String username;
-
-    public Boolean getAdmin() {
-        return admin;
-    }
-
-    public void setAdmin(Boolean admin) {
-        this.admin = admin;
-    }
 
     public String getEmail() {
         return email;

@@ -5,7 +5,6 @@
     <id column="id" jdbcType="VARCHAR" property="id" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="status" jdbcType="INTEGER" property="status" />
-    <result column="admin" jdbcType="BIT" property="admin" />
     <result column="email" jdbcType="VARCHAR" property="email" />
     <result column="nickname" jdbcType="VARCHAR" property="nickname" />
     <result column="mobile_phone" jdbcType="VARCHAR" property="mobilePhone" />
@@ -14,7 +13,7 @@
     <result column="username" jdbcType="VARCHAR" property="username" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, create_time, status, admin, email, nickname, mobile_phone,
+    id, create_time, status, email, nickname, mobile_phone,
     password, salt, username
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
@@ -29,11 +28,11 @@
   </delete>
   <insert id="insert" parameterType="com.vanxd.data.entity.user.SysUser">
     insert into sys_user (id, create_time, status,
-      admin, email,
+      email,
       nickname, mobile_phone, password,
       salt, username)
     values (#{id,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER},
-      #{admin,jdbcType=BIT}, #{email,jdbcType=VARCHAR},
+      #{email,jdbcType=VARCHAR},
       #{nickname,jdbcType=VARCHAR}, #{mobilePhone,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
       #{salt,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR})
   </insert>
@@ -48,9 +47,6 @@
       </if>
       <if test="status != null">
         status,
-      </if>
-      <if test="admin != null">
-        admin,
       </if>
       <if test="email != null">
         email,
@@ -81,9 +77,6 @@
       <if test="status != null">
         #{status,jdbcType=INTEGER},
       </if>
-      <if test="admin != null">
-        #{admin,jdbcType=BIT},
-      </if>
       <if test="email != null">
         #{email,jdbcType=VARCHAR},
       </if>
@@ -113,9 +106,6 @@
       <if test="status != null">
         status = #{status,jdbcType=INTEGER},
       </if>
-      <if test="admin != null">
-        admin = #{admin,jdbcType=BIT},
-      </if>
       <if test="email != null">
         email = #{email,jdbcType=VARCHAR},
       </if>
@@ -125,7 +115,7 @@
       <if test="mobilePhone != null">
         mobile_phone = #{mobilePhone,jdbcType=VARCHAR},
       </if>
-      <if test="password != null">
+      <if test="password != null and password != ''">
         password = #{password,jdbcType=VARCHAR},
       </if>
       <if test="salt != null">
@@ -141,7 +131,6 @@
     update sys_user
     set create_time = #{createTime,jdbcType=TIMESTAMP},
       status = #{status,jdbcType=INTEGER},
-      admin = #{admin,jdbcType=BIT},
       email = #{email,jdbcType=VARCHAR},
       nickname = #{nickname,jdbcType=VARCHAR},
       mobile_phone = #{mobilePhone,jdbcType=VARCHAR},
@@ -157,5 +146,47 @@
     <include refid="Base_Column_List" />
     from sys_user
     where username = #{username,jdbcType=VARCHAR}
+  </select>
+
+  <!-- 公共查询条件 -->
+  <sql id="Common-Conditions">
+    <where>
+      AND su.status != -9
+    </where>
+  </sql>
+
+  <!--分页查询记录-->
+  <select id="page" resultMap="BaseResultMap" >
+    SELECT
+    <include refid="Base_Column_List"></include>
+    FROM
+    sys_user su
+    <choose>
+      <when test="jqFilter != null">
+        <include refid="page.Filter-Conditions"></include>
+      </when>
+      <otherwise>
+        <include refid="Common-Conditions"></include>
+      </otherwise>
+    </choose>
+    ORDER BY
+    su.create_time DESC
+    <include refid="page.limit"/>
+  </select>
+
+  <!-- 获取未删除的所有的记录 -->
+  <select id="count" resultType="long">
+    SELECT
+    count(1)
+    FROM
+    sys_user su
+    <choose>
+      <when test="jqFilter != null">
+        <include refid="page.Filter-Conditions"></include>
+      </when>
+      <otherwise>
+        <include refid="Common-Conditions"></include>
+      </otherwise>
+    </choose>
   </select>
 </mapper>

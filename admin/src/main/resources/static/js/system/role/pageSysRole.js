@@ -57,7 +57,7 @@ function buildJqGridGenerator() {
         tableSelector : "#data-table-1",
         pager : "pager-table-1",
         url : "/system/role/list.json",
-        caption:"菜单管理",
+        caption:"角色列表",
         colNames : ["名称", "标识", "描述", "创建人","创建时间" ],
         colModel : [
             {

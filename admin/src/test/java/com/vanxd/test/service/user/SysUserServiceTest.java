@@ -21,12 +21,11 @@ public class SysUserServiceTest extends SpringTestParent{
     public void testAdd() {
         SysUser sysUser = new SysUser();
         sysUser.setCreateTime(new Date());
-        sysUser.setAdmin(true);
         sysUser.setEmail("123");
         sysUser.setNickname("123");
         sysUser.setMobilePhone("123");
         sysUser.setPassword("123");
         sysUser.setUsername("123");
-        sysUserServiceImpl.add(sysUser);
+        sysUserServiceImpl.save(sysUser);
     }
 }
