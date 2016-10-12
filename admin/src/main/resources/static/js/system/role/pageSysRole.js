@@ -10,12 +10,30 @@ function initValidate() {
         },
         rules: {
             name : {
-                required : true
+                required : true,
+                maxlength : 100
+            },
+            role : {
+                required : true,
+                maxlength : 100
+            },
+            description : {
+                required : true,
+                maxlength : 300
             }
         },
         messages : {
             name : {
-                required : "必填"
+                required : "必填",
+                maxlength : "最长100个字符"
+            },
+            role : {
+                required : "必填",
+                maxlength : "最长100个字符"
+            },
+            description : {
+                required : "必填",
+                maxlength : "最长300个字符"
             }
         },
         submitHandler : form => {
@@ -78,7 +96,6 @@ function buildJqGridGenerator() {
  * 添加模板，模态框
  */
 function addFuncDiaglog(id) {
-    $("#parentId").val(id);
     $("#id").val();
 }
 
