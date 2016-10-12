@@ -22,3 +22,6 @@
     1.  可传实体属性作为参数查询。
     2.  可传filters参数，参数值符合jqGrid多条件查询的json字符串格式，具体可看Filter类
     3.  以上两个参数都存在时，只会使用filters参数。当然，这个取决于mapper.xml中的判断
+2.  列表页(例，接口：/system/permission/page)
+    1.  将会返回/views/system/permission/pageSysPermission.html该页面，可在子控制器重写pageView()来指定页面。
+    2.  列表页中使用jqGrid以ajax请求list.json接口获得列表数据。
