@@ -6,7 +6,7 @@ import com.vanxd.admin.service.BaseService;
 import com.vanxd.data.component.PageResult;
 import com.vanxd.data.component.Pagination;
 import com.vanxd.data.component.RespJSON;
-import com.vanxd.data.component.jqgrid.Filter;
+import com.vanxd.data.component.jqgrid.JqFilter;
 import com.vanxd.data.entity.BaseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,9 +35,21 @@ public abstract class BaseController<T extends BaseEntity, Service extends BaseS
     @RequestMapping("/list.json")
     @ResponseBody
     public PageResult<T> list(T condition, String filters, Pagination pagination) {
-        Filter filter = JSON.parseObject(filters, Filter.class);
-        PageResult<T> pageResult = getService().page(condition, filter, pagination);
+        JqFilter jqFilter = JSON.parseObject(filters, JqFilter.class);
+        setPoJoClazz(condition, jqFilter);
+        PageResult<T> pageResult = getService().page(condition, jqFilter, pagination);
         return pageResult;
+    }
+
+    /**
+     * 如果传了filter参数，则设置POJO的CLASS到Filter中，以便于设置表别名进行条件查询
+     * @param condition POJO的对象
+     * @param jqFilter    jqGrid过滤器
+     */
+    private void setPoJoClazz(T condition, JqFilter jqFilter) {
+        if(jqFilter != null) {
+            jqFilter.setPojoClazz(condition.getClass());
+        }
     }
 
     /**

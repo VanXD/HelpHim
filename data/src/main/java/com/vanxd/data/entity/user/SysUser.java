@@ -7,8 +7,6 @@ import org.apache.commons.lang.RandomStringUtils;
 import java.util.Date;
 
 public class SysUser extends BaseEntity{
-    private Date createTime;
-
     private Boolean admin;
 
     private String email;
@@ -22,14 +20,6 @@ public class SysUser extends BaseEntity{
     private String salt;
 
     private String username;
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
 
     public Boolean getAdmin() {
         return admin;

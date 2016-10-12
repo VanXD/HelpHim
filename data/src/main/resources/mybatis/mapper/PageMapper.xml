@@ -11,7 +11,7 @@
     <!-- jqgrid的过滤器查询条件 -->
     <sql id="Filter-Conditions">
         <where>
-            <foreach collection="filter.rules" item="item" index="index" separator="AND " >
+            <foreach collection="jqFilter.rules" item="item" index="index" separator="AND " >
                 ${item.dbFiled}
                 ${item.dbOp}
                 <choose>
@@ -31,9 +31,7 @@
                         #{item.data}
                     </otherwise>
                 </choose>
-
             </foreach>
-            AND status != -9
         </where>
     </sql>
 </mapper>

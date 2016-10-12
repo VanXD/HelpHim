@@ -6,19 +6,21 @@
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="status" jdbcType="INTEGER" property="status" />
     <result column="description" jdbcType="VARCHAR" property="description" />
-    <result column="isshow" jdbcType="BIT" property="isshow" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="role" jdbcType="VARCHAR" property="role" />
+    <result column="creator_user_id" jdbcType="VARCHAR" property="creatorUserId" />
   </resultMap>
   <resultMap id="VOResultMap" extends="BaseResultMap" type="com.vanxd.data.entity.user.SysRole">
     <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="creator_user_nickname" jdbcType="VARCHAR" property="creatorUserNickname" />
   </resultMap>
 
   <sql id="Base_Column_List">
-    id, create_time, status, description, isshow, name, role
+    id, create_time, status, description, name, role, creator_user_id
   </sql>
   <sql id="VO_Column_List">
-    <include refid="Base_Column_List"/>, user_id
+    sr.id, sr.create_time, sr.status, sr.description, sr.name, sr.role, sr.creator_user_id,
+    sur.user_id, su.nickname creator_user_nickname
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select
@@ -32,11 +34,11 @@
   </delete>
   <insert id="insert" parameterType="com.vanxd.data.entity.user.SysRole">
     insert into sys_role (id, create_time, status, 
-      description, isshow, name, 
-      role)
+      description, name,
+      role, creator_user_id)
     values (#{id,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}, 
-      #{description,jdbcType=VARCHAR}, #{isshow,jdbcType=BIT}, #{name,jdbcType=VARCHAR}, 
-      #{role,jdbcType=VARCHAR})
+      #{description,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
+      #{role,jdbcType=VARCHAR}, #{creatorUserId,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.vanxd.data.entity.user.SysRole">
     insert into sys_role
@@ -53,14 +55,14 @@
       <if test="description != null">
         description,
       </if>
-      <if test="isshow != null">
-        isshow,
-      </if>
       <if test="name != null">
         name,
       </if>
       <if test="role != null">
         role,
+      </if>
+      <if test="creatorUserId != null">
+        creator_user_id,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -76,14 +78,14 @@
       <if test="description != null">
         #{description,jdbcType=VARCHAR},
       </if>
-      <if test="isshow != null">
-        #{isshow,jdbcType=BIT},
-      </if>
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
       </if>
       <if test="role != null">
         #{role,jdbcType=VARCHAR},
+      </if>
+      <if test="creatorUserId != null">
+        #{creatorUserId,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -99,14 +101,14 @@
       <if test="description != null">
         description = #{description,jdbcType=VARCHAR},
       </if>
-      <if test="isshow != null">
-        isshow = #{isshow,jdbcType=BIT},
-      </if>
       <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
       </if>
       <if test="role != null">
         role = #{role,jdbcType=VARCHAR},
+      </if>
+      <if test="creatorUserId != null">
+        creator_user_id = #{creatorUserId,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
@@ -116,9 +118,9 @@
     set create_time = #{createTime,jdbcType=TIMESTAMP},
       status = #{status,jdbcType=INTEGER},
       description = #{description,jdbcType=VARCHAR},
-      isshow = #{isshow,jdbcType=BIT},
       name = #{name,jdbcType=VARCHAR},
-      role = #{role,jdbcType=VARCHAR}
+      role = #{role,jdbcType=VARCHAR},
+      creator_user_id = #{creatorUserId,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 
@@ -126,9 +128,8 @@
   <sql id="Common-Conditions">
     <where>
       <if test="conditions.userId != null and conditions.userId != ''">
-        AND user_id = #{conditions.userId}
+        AND sur.user_id = #{conditions.userId}
       </if>
-      AND status != -9
     </where>
   </sql>
 
@@ -138,14 +139,20 @@
     <include refid="VO_Column_List"></include>
     FROM
     sys_role sr
-    LEFT JOIN sys_user_role sur ON sr.id = sur.user_id
-    <include refid="Common-Conditions"></include>
+    LEFT JOIN sys_user_role sur ON sr.id = sur.role_id
+    LEFT JOIN sys_user su ON su.id = sr.creator_user_id
+    <choose>
+      <when test="jqFilter != null">
+        <include refid="page.Filter-Conditions"></include>
+      </when>
+      <otherwise>
+        <include refid="Common-Conditions"></include>
+      </otherwise>
+    </choose>
+    AND sr.status != -9
     ORDER BY
-    create_time DESC
-    <if test="pagination != null">
-      LIMIT
-      #{pagination.start},#{pagination.pageSize}
-    </if>
+    sr.create_time DESC
+    <include refid="page.limit"/>
   </select>
 
   <!-- 获取未删除的所有的记录 -->
@@ -154,7 +161,16 @@
     count(1)
     FROM
     sys_role sr
-    LEFT JOIN sys_user_role sur ON sr.id = sur.user_id
-    <include refid="Common-Conditions"></include>
+    LEFT JOIN sys_user_role sur ON sr.id = sur.role_id
+    LEFT JOIN sys_user su ON su.id = sr.creator_user_id
+    <choose>
+      <when test="jqFilter != null">
+        <include refid="page.Filter-Conditions"></include>
+      </when>
+      <otherwise>
+        <include refid="Common-Conditions"></include>
+      </otherwise>
+    </choose>
+    AND sr.status != -9
   </select>
 </mapper>

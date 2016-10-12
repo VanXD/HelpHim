@@ -18,13 +18,15 @@
   </resultMap>
   <resultMap id="VOResultMap" type="com.vanxd.data.entity.user.SysPermission" extends="BaseResultMap">
     <result column="role_id" jdbcType="VARCHAR" property="roleId" />
+    <result column="creator_user_nickname" jdbcType="VARCHAR" property="creatorUserNickname" />
   </resultMap>
   <sql id="Base_Column_List">
     id, create_time, status, description, permission, name, url, icon, weight, type, 
     creator_user_id, is_show, parent_id
   </sql>
   <sql id="VO_Column_List">
-    <include refid="Base_Column_List"/>, srp.role_id
+    sp.id, sp.create_time, sp.status, sp.description, sp.permission, sp.name, sp.url, sp.icon, sp.weight, sp.type, sp.creator_user_id, sp.is_show, sp.parent_id,
+    srp.role_id, su.nickname creator_user_nickname
   </sql>
 
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
@@ -198,12 +200,11 @@
   <sql id="Common-Conditions">
     <where>
       <if test="conditions.roleId != null and conditions.roleId != ''">
-        AND role_id = #{conditions.roleId}
+        AND srp.role_id = #{conditions.roleId}
       </if>
       <if test="conditions.parentId != null and conditions.parentId != ''">
-        AND parent_id = #{conditions.parentId}
+        AND sp.parent_id = #{conditions.parentId}
       </if>
-      AND status != -9
     </where>
   </sql>
 
@@ -214,16 +215,18 @@
     FROM
     sys_permission sp
     LEFT JOIN sys_role_permission srp ON sp.id = srp.permission_id
+    LEFT JOIN sys_user su ON su.id = sp.creator_user_id
     <choose>
-      <when test="filter != null">
+      <when test="jqFilter != null">
         <include refid="page.Filter-Conditions"></include>
       </when>
       <otherwise>
         <include refid="Common-Conditions"></include>
       </otherwise>
     </choose>
+    AND sp.status != -9
     ORDER BY
-    create_time DESC
+    sp.create_time DESC
     <include refid="page.limit"/>
   </select>
 
@@ -234,13 +237,15 @@
     FROM
     sys_permission sp
     LEFT JOIN sys_role_permission srp ON sp.id = srp.role_id
+    LEFT JOIN sys_user su ON su.id = sp.creator_user_id
     <choose>
-      <when test="filter != null">
+      <when test="jqFilter != null">
         <include refid="page.Filter-Conditions"></include>
       </when>
       <otherwise>
         <include refid="Common-Conditions"></include>
       </otherwise>
     </choose>
+    AND sp.status != -9
   </select>
 </mapper>

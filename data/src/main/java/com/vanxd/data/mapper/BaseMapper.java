@@ -1,7 +1,7 @@
 package com.vanxd.data.mapper;
 
 import com.vanxd.data.component.Pagination;
-import com.vanxd.data.component.jqgrid.Filter;
+import com.vanxd.data.component.jqgrid.JqFilter;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -22,7 +22,7 @@ public interface BaseMapper<T> {
 
     int updateByPrimaryKey(T entity);
 
-    List<T> page(@Param("conditions")T t, @Param("filter") Filter filter, @Param("pagination")Pagination pagination);
+    List<T> page(@Param("conditions")T t, @Param("jqFilter") JqFilter jqFilter, @Param("pagination")Pagination pagination);
 
-    Long count(@Param("conditions")T t, @Param("filter") Filter filter);
+    Long count(@Param("conditions")T t, @Param("jqFilter") JqFilter jqFilter);
 }

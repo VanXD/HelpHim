@@ -1,29 +1,45 @@
 package com.vanxd.data.entity.user;
 
+import com.vanxd.data.annotation.TableAlias;
 import com.vanxd.data.entity.BaseEntity;
 
 import java.util.Date;
 
+/**
+ * 系统角色
+ */
+@TableAlias(alias = "sr")
 public class SysRole extends BaseEntity{
-    private Date createTime;
-
+    /** 描述 */
     private String description;
-
-    private Boolean isshow;
-
+    /** 角色名 */
     private String name;
-
+    /** 角色标识 */
     private String role;
+    /** 创建人ID */
+    private String creatorUserId;
 
     /** [VO]用户ID */
+    @TableAlias(alias = "sur")
     private String userId;
+    /** [VO]创建人昵称 */
+    @TableAlias(alias = "su")
+    private String creatorUserNickname;
 
-    public Date getCreateTime() {
-        return createTime;
+    public String getCreatorUserNickname() {
+        return creatorUserNickname;
     }
 
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
+    public void setCreatorUserNickname(String creatorUserNickname) {
+        this.creatorUserNickname = creatorUserNickname;
+    }
+
+    public String getCreatorUserId() {
+        return creatorUserId;
+    }
+
+    public void setCreatorUserId(String creatorUserId) {
+        this.creatorUserId = creatorUserId;
     }
 
     public String getDescription() {
@@ -32,14 +48,6 @@ public class SysRole extends BaseEntity{
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public Boolean getIsshow() {
-        return isshow;
-    }
-
-    public void setIsshow(Boolean isshow) {
-        this.isshow = isshow;
     }
 
     public String getName() {

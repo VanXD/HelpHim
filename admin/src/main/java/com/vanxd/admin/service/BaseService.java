@@ -2,8 +2,8 @@ package com.vanxd.admin.service;
 
 import com.vanxd.data.component.PageResult;
 import com.vanxd.data.component.Pagination;
+import com.vanxd.data.component.jqgrid.JqFilter;
 import com.vanxd.data.entity.BaseEntity;
-import com.vanxd.data.component.jqgrid.Filter;
 import com.vanxd.data.mapper.BaseMapper;
 
 import java.util.List;
@@ -19,14 +19,14 @@ public interface BaseService<T extends BaseEntity, Mapper extends BaseMapper<T>>
      * @param pagination 必须 分页对象
      * @return 分页对象结果
      */
-    PageResult<T> page(T conditions, Filter filter, Pagination pagination);
+    PageResult<T> page(T conditions, JqFilter jqFilter, Pagination pagination);
 
     /**
      * 将实体当作筛选条件，获得总数
      * @param conditions 实体
      * @return 总数
      */
-    Long count(T conditions, Filter filter);
+    Long count(T conditions, JqFilter jqFilter);
 
     /**
      * 将实体当作筛选条件，进行分页查询
@@ -35,7 +35,7 @@ public interface BaseService<T extends BaseEntity, Mapper extends BaseMapper<T>>
      * @param pagination 可为空 分页对象
      * @return 分页后的数据列表
      */
-    List<T> list(T conditions, Filter filter, Pagination pagination);
+    List<T> list(T conditions, JqFilter jqFilter, Pagination pagination);
 
     /**
      * 由具体类实现，获得相应实体的Mapper对象

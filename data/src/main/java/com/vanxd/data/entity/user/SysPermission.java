@@ -1,11 +1,11 @@
 package com.vanxd.data.entity.user;
 
+import com.vanxd.data.annotation.TableAlias;
 import com.vanxd.data.entity.BaseEntity;
 
 import java.util.Date;
-
+@TableAlias(alias = "sp")
 public class SysPermission extends BaseEntity{
-    private Date createTime;
 
     private String description;
 
@@ -28,7 +28,19 @@ public class SysPermission extends BaseEntity{
     private String parentId;
 
     /** [VO] 角色ID */
+    @TableAlias (alias = "srp")
     private String roleId;
+    /** [VO]创建人昵称 */
+    @TableAlias (alias = "su")
+    private String creatorUserNickname;
+
+    public String getCreatorUserNickname() {
+        return creatorUserNickname;
+    }
+
+    public void setCreatorUserNickname(String creatorUserNickname) {
+        this.creatorUserNickname = creatorUserNickname;
+    }
 
     public String getRoleId() {
         return roleId;
@@ -44,14 +56,6 @@ public class SysPermission extends BaseEntity{
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
     }
 
     public String getDescription() {
