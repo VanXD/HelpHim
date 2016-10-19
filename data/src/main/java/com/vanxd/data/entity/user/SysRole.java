@@ -19,12 +19,23 @@ public class SysRole extends BaseEntity{
     /** 创建人ID */
     private String creatorUserId;
 
-    /** [VO]用户ID */
+    /** [VO] 用户ID */
     @TableAlias(alias = "sur")
     private String userId;
-    /** [VO]创建人昵称 */
+    /** [VO] 创建人昵称 */
     @TableAlias(alias = "su")
     private String creatorUserNickname;
+    /** [VO] 是否已关联 */
+    @TableAlias(isRequire = false)
+    private boolean isChecked;
+
+    public boolean isChecked() {
+        return isChecked;
+    }
+
+    public void setChecked(boolean checked) {
+        isChecked = checked;
+    }
 
     public String getCreatorUserNickname() {
         return creatorUserNickname;

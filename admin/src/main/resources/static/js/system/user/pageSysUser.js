@@ -76,9 +76,11 @@ function initValidate() {
 
 
 function buildJqGridGenerator() {
+    var tableSelector = "#data-table-1",
+        pager = "pager-table-1";
     return jqGridFactory.generate({
-        tableSelector : "#data-table-1",
-        pager : "pager-table-1",
+        tableSelector : tableSelector,
+        pager : pager,
         url : "/system/user/list.json",
         caption:"系统用户列表",
         colNames : ["昵称", "用户名", "邮箱", "手机", "创建时间" ],
@@ -112,7 +114,53 @@ function buildJqGridGenerator() {
                 }
             }
         ]
+    }).navButtonAdd('#pager-table-1',{
+        caption : "",
+        title : "关联角色",
+        buttonicon : "ui-icon-shuffle",
+        onClickButton : releationRoles
     });
+}
+
+function releationRoles() {
+    var dataId = iJqGrid.jqGrid('getGridParam','selrow');
+    if(!dataId) {
+        alert("请选择需要关联角色的用户！");
+        return ;
+    }
+    $.ajax({
+        type : "GET",
+        url  : "/system/role/listAndChecked.json",
+        data : {
+            userId : dataId
+        },
+        success : result => {
+            if(isRequestSuccess(result)) {
+                var data = result.result;
+                var roleTmpl = `
+                        <% for(var i = 0, j = result.length; i < j ; i++) { %>
+                        <tr>
+                            <td><%=i+1%></td>
+                            <td><%=result[i].name%></td>
+                            <td><%=result[i].description%></td>
+                            <td>
+                                <label class="i-checks" id="is-show-checks">
+                                    <input <%= result[i].checked ? "checked" : "" %> class="role-icheck" type="checkbox" value="<%=result[i].id%>"/>
+                                </label>
+                            </td>
+                        </tr>
+                        <% } %>
+                    `;
+                var html = template.compile(roleTmpl)(result);
+                $("#roles").html(html);
+                bindIChecks(".role-icheck");
+            } else {
+                handleRequestFail(result);
+            }
+        }
+    });
+    $("#releation-role-form").modal();
+
 }
 
 /**

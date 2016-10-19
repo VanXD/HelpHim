@@ -11,6 +11,7 @@ public class PageResult<T> extends Pagination implements Serializable{
     private Long records = 0l;
     /** 总页数 */
     private Long total = 0l;
+    /** 数据 */
     private List<T> rows = null;
     private int startPage = 1;
     private int endPage = 1;

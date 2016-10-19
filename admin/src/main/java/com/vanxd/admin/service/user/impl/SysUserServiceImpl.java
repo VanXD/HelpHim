@@ -70,10 +70,10 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, SysUserMapper> 
 
 
     @Override
-    public Set<String> getRoleIdentities(SysUser sysUser) {
+    public Set<String> getRoleIdentitiesByUserId(String userId) {
         Set<String> rolesIdentities = new HashSet<String>();
         SysRole roleConditions = new SysRole();
-        roleConditions.setUserId(sysUser.getId());
+        roleConditions.setUserId(userId);
         List<SysRole> sysRoles = sysRoleMapper.page(roleConditions, null, null);
         for(SysRole sysRole : sysRoles) {
             rolesIdentities.add(sysRole.getRole());
@@ -82,10 +82,10 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, SysUserMapper> 
     }
 
     @Override
-    public Set<String> getPermissionIdentities(SysUser sysUser) {
+    public Set<String> getPermissionIdentitiesByUserId(String userId) {
         Set<String> permissionIdentities = new HashSet<String>();
         SysRole roleConditions = new SysRole();
-        roleConditions.setUserId(sysUser.getId());
+        roleConditions.setUserId(userId);
         List<SysRole> sysRoles = sysRoleMapper.page(roleConditions, null, null);
         List<SysPermission> sysPermissions = null;
         SysPermission sysPermissionCondition = null;

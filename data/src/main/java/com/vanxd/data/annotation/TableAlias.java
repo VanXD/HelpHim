@@ -11,5 +11,8 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface TableAlias {
+    /** 表别名 */
     String alias() default "";
+    /** 是否必须 */
+    boolean isRequire() default true;
 }

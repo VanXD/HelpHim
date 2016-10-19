@@ -143,7 +143,9 @@ public class RespJSON<T> {
 
         FAIL(0, "操作失败"),
 
-        DATA_EMPTY(-1, "未获取到数据");
+        DATA_EMPTY(-1, "未获取到数据"),
+
+        PARAM_ILLEAGUE(-2, "参数不合法");
 
         /**
          * 响应代码.

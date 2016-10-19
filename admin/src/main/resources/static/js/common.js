@@ -40,11 +40,18 @@ function initCustomValidateMethod() {
     }, "必填");
 }
 
-
-function bindIChecks() {
-    var iChecks = $('.i-checks');
+/**
+ * 生成icheck组件
+ * @param selector 可为空 为空使用默认的，否则只为{selector}生成组件
+ */
+function bindIChecks(selector) {
+    var doSelector = ".i-checks";
+    if(selector) {
+        doSelector = selector;
+    }
+    var iChecks = $(doSelector);
     if(0 < iChecks.length) {
-        $('.i-checks').iCheck({
+        $(doSelector).iCheck({
             checkboxClass: 'icheckbox_square-green',
             radioClass: 'iradio_square-green',
         });

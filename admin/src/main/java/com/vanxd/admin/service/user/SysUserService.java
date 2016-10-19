@@ -21,18 +21,18 @@ public interface SysUserService extends BaseService<SysUser, SysUserMapper>{
     /**
      * todo 改为一条SQL
      * 获得用户的所有权限识别码
-     * @param sysUser 用户对象
+     * @param userId 用户ID
      * @return set 权限识别码列表
      */
-    Set<String> getPermissionIdentities(SysUser sysUser);
+    Set<String> getPermissionIdentitiesByUserId(String userId);
 
     /**
      * todo 改为一条sql
      *
      * 获得用户的所有角色识别码
      *
-     * @param sysUser 用户对象
+     * @param userId 用户ID
      * @return set 角色识别码列表
      */
-    Set<String> getRoleIdentities(SysUser sysUser);
+    Set<String> getRoleIdentitiesByUserId(String userId);
 }

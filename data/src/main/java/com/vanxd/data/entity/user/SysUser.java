@@ -3,6 +3,8 @@ package com.vanxd.data.entity.user;
 import com.vanxd.data.entity.BaseEntity;
 import org.apache.commons.lang.RandomStringUtils;
 
+import java.util.Set;
+
 public class SysUser extends BaseEntity{
     private String email;
 
@@ -15,6 +17,27 @@ public class SysUser extends BaseEntity{
     private String salt;
 
     private String username;
+
+    /** [VO] 角色标识 */
+    private Set<String> roleIdentities;
+    /** [VO] 权限标识 */
+    private Set<String> permissionIdentities;
+
+    public Set<String> getRoleIdentities() {
+        return roleIdentities;
+    }
+
+    public void setRoleIdentities(Set<String> roleIdentities) {
+        this.roleIdentities = roleIdentities;
+    }
+
+    public Set<String> getPermissionIdentities() {
+        return permissionIdentities;
+    }
+
+    public void setPermissionIdentities(Set<String> permissionIdentities) {
+        this.permissionIdentities = permissionIdentities;
+    }
 
     public String getEmail() {
         return email;

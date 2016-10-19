@@ -26,7 +26,7 @@
         </div>
     </div>
 </div>
-<!-- 添加模板模态框 -->
+<!-- 编辑模态框 start -->
 <div id="edit-modal-form" class="modal fade" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -70,6 +70,52 @@
         </div>
     </div>
 </div>
+<!-- 编辑模态框 end -->
+<!-- 关联角色模态框 start -->
+<div id="releation-role-form" class="modal fade" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12 b-r">
+                        <h3 class="m-t-none m-b">关联角色</h3>
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>角色名</th>
+                                <th>角色描述</th>
+                                <th>是否关联</th>
+                            </tr>
+                            </thead>
+                            <tbody id="roles">
+                            <tr>
+                                <td>1</td>
+                                <td><span class="pie" style="display: none;">0.52,1.041</span><svg class="peity" height="16" width="16"><path d="M 8 8 L 8 0 A 8 8 0 0 1 14.933563796318165 11.990700825968545 Z" fill="#1ab394"></path><path d="M 8 8 L 14.933563796318165 11.990700825968545 A 8 8 0 1 1 7.999999999999998 0 Z" fill="#d7d7d7"></path></svg></td>
+                                <td>Samantha</td>
+                                <td class="text-navy"> <i class="fa fa-level-up"></i> 40% </td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td><span class="pie" style="display: none;">226,134</span><svg class="peity" height="16" width="16"><path d="M 8 8 L 8 0 A 8 8 0 1 1 2.2452815972907922 13.55726696367198 Z" fill="#1ab394"></path><path d="M 8 8 L 2.2452815972907922 13.55726696367198 A 8 8 0 0 1 7.999999999999998 0 Z" fill="#d7d7d7"></path></svg></td>
+                                <td>Jacob</td>
+                                <td class="text-warning"> <i class="fa fa-level-down"></i> -20% </td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td><span class="pie" style="display: none;">0.52/1.561</span><svg class="peity" height="16" width="16"><path d="M 8 8 L 8 0 A 8 8 0 0 1 14.933563796318165 11.990700825968545 Z" fill="#1ab394"></path><path d="M 8 8 L 14.933563796318165 11.990700825968545 A 8 8 0 1 1 7.999999999999998 0 Z" fill="#d7d7d7"></path></svg></td>
+                                <td>Damien</td>
+                                <td class="text-navy"> <i class="fa fa-level-up"></i> 26% </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 关联角色模态框 end -->
 <div th:include="/common/onload_js :: onloadJS('/system/user/pageSysUser.js')"></div>
 </body>
 </html>

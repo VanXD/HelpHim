@@ -2,15 +2,20 @@ package com.vanxd.admin.shiro.realm;
 
 import com.vanxd.admin.service.user.SysUserService;
 import com.vanxd.admin.shiro.authc.CustomCredentialsMatcher;
+import com.vanxd.admin.util.GlobalKey;
 import com.vanxd.data.entity.user.SysUser;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authc.credential.CredentialsMatcher;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.Set;
 
 /**
  * 系统用户认证及授权
@@ -35,9 +40,28 @@ public class SysUserRealm extends AuthorizingRealm {
         SysUser sysUser = sysUserServiceImpl.getByUsername(username);
         //获取用户的所有资源
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-        info.setRoles(sysUserServiceImpl.getRoleIdentities(sysUser));
-        info.setStringPermissions(sysUserServiceImpl.getPermissionIdentities(sysUser));
+        Set<String> roleIdentities = sysUserServiceImpl.getRoleIdentitiesByUserId(sysUser.getId());
+        Set<String> permissionIdentities = sysUserServiceImpl.getPermissionIdentitiesByUserId(sysUser.getId());
+        info.setRoles(roleIdentities);
+        info.setStringPermissions(permissionIdentities);
+
+        setUserInSession(sysUser, roleIdentities, permissionIdentities);
+
         return info;
+    }
+
+    /**
+     * 将用户设置进缓存
+     * @param sysUser
+     * @param roleIdentities
+     * @param permissionIdentities
+     */
+    private void setUserInSession(SysUser sysUser, Set<String> roleIdentities, Set<String> permissionIdentities) {
+        sysUser.setRoleIdentities(roleIdentities);
+        sysUser.setPermissionIdentities(permissionIdentities);
+        Session session = SecurityUtils.getSubject().getSession();
+        session.setTimeout(10800000);//3小时
+        session.setAttribute(GlobalKey.SESSION_USER, sysUser);
     }
 
     /**
@@ -59,7 +83,7 @@ public class SysUserRealm extends AuthorizingRealm {
         SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(
                 sysUser.getUsername(), //用户名
                 sysUser.getPassword(), //密码
-                ByteSource.Util.bytes(sysUser.getUsername() + sysUser.getSalt()),//salt=username+salt
+                ByteSource.Util.bytes(sysUser.getSalt()),
                 getName()  //realm name
         );
         return authenticationInfo;

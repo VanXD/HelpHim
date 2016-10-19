@@ -6,6 +6,7 @@ import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.util.ByteSource;
 import org.springframework.stereotype.Service;
 
 /**
@@ -13,25 +14,6 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class PasswordService {
-
-
-    /**
-     * 对比输入的密码和服务器存的密码是否一致
-     * @param sysUser   系统用户
-     * @param password  密码
-     * @return
-     * @throws Exception
-     */
-    public boolean contrastPassword(SysUser sysUser, String password) throws Exception {
-    	if(sysUser.getPassword().equals(password)){
-    		return true;
-    	}
-        password = this.encryptPassword(sysUser.getUsername(), password, sysUser.getSalt());
-        if(password.equals(sysUser.getPassword())){
-            return true;
-        }
-        return false;
-    }
 
     /**
      * 对比输入的密码和服务器密码
@@ -43,8 +25,8 @@ public class PasswordService {
     public boolean contrastPassword(AuthenticationToken token, AuthenticationInfo info) throws Exception {
         UsernamePasswordToken t = (UsernamePasswordToken)token;
         SimpleAuthenticationInfo i = (SimpleAuthenticationInfo) info;
-        String salt = i.getCredentialsSalt().toBase64();
-        String password = this.encryptPassword(t.getUsername(), new String(i.getCredentials().toString()), salt);
+        String salt = new String(i.getCredentialsSalt().getBytes());
+        String password = this.encryptPassword(t.getUsername(), new String(t.getPassword()), salt);
         if(password.equals(info.getCredentials())){
             return true;
         }

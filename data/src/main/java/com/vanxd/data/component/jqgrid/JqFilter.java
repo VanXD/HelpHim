@@ -44,7 +44,7 @@ public class JqFilter {
             for(JqRule jqRule : rules) {
                 Field field = pojoClazz.getDeclaredField(jqRule.getField());
                 TableAlias fieldAnnotation = field.getAnnotation(TableAlias.class);
-                if(null != fieldAnnotation) {
+                if(null != fieldAnnotation && fieldAnnotation.isRequire()) {
                     jqRule.setTableAlias(fieldAnnotation.alias());
                 } else {
                     jqRule.setTableAlias(this.pojoTableAlias);
