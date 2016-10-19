@@ -25,3 +25,5 @@
 2.  列表页(例，接口：/system/permission/page)
     1.  将会返回/views/system/permission/pageSysPermission.html该页面，可在子控制器重写pageView()来指定页面。
     2.  列表页中使用jqGrid以ajax请求list.json接口获得列表数据。
+3.  checkbox和radio统一使用iCheck
+    1.common.js中的bindIChecks(selector)，之后优化放到其他文件
