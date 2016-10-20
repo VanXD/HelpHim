@@ -1,6 +1,6 @@
 package com.vanxd.admin.service.system;
 
-import com.vanxd.data.vo.MenuTreeVO;
+import com.vanxd.data.vo.system.MenuTreeVO;
 
 import java.util.List;
 

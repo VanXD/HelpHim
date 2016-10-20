@@ -1,4 +1,4 @@
-package com.vanxd.data.vo;
+package com.vanxd.data.vo.system;
 
 import com.vanxd.data.entity.user.SysPermission;
 

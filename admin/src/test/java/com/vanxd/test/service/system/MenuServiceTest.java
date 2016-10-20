@@ -1,7 +1,7 @@
 package com.vanxd.test.service.system;
 
 import com.vanxd.admin.service.system.MenuService;
-import com.vanxd.data.vo.MenuTreeVO;
+import com.vanxd.data.vo.system.MenuTreeVO;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import spring.SpringTestParent;

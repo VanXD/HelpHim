@@ -270,3 +270,25 @@ function isRequestSuccess(result) {
 function handleRequestFail(result) {
     alert(result.message);
 }
+
+/**
+ * 发起ajax请求
+ * @param ajaxObj
+ */
+function ajaxRequest(ajaxObj) {
+    $.ajax({
+        type : ajaxObj.type || "get",
+        url  : ajaxObj.url,
+        data : ajaxObj.data,
+        sync : ajaxObj.sync || true ,
+        success : result => {
+            if(isRequestSuccess(result)) {
+                if(ajaxObj.success) {
+                    ajaxObj.success(result);
+                }
+            } else {
+                handleRequestFail(result);
+            }
+        }
+    });
+}

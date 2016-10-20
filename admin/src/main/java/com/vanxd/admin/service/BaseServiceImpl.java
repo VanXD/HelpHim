@@ -7,8 +7,10 @@ import com.vanxd.data.component.jqgrid.JqFilter;
 import com.vanxd.data.dict.StatusEnum;
 import com.vanxd.data.entity.BaseEntity;
 import com.vanxd.data.mapper.BaseMapper;
+import com.vanxd.data.util.VanStringUtils;
 import org.springframework.util.StringUtils;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -66,6 +68,9 @@ public abstract class BaseServiceImpl<T extends BaseEntity, Mapper extends BaseM
 
     @Override
     public int save(T entity) {
+        entity.setId(VanStringUtils.uuid());
+        entity.setCreateTime(new Date());
+        entity.setStatus(StatusEnum.NEW.getCode());
         return getMapper().insert(entity);
     }
 

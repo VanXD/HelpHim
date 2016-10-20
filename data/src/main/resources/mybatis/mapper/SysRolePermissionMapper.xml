@@ -2,29 +2,53 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.vanxd.data.mapper.user.SysRolePermissionMapper">
   <resultMap id="BaseResultMap" type="com.vanxd.data.entity.user.SysRolePermission">
-    <id column="role_id" jdbcType="VARCHAR" property="roleId" />
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="role_id" jdbcType="VARCHAR" property="roleId" />
     <result column="permission_id" jdbcType="VARCHAR" property="permissionId" />
   </resultMap>
+
+  <resultMap id="VOResultMap" type="com.vanxd.data.entity.user.SysRolePermission" extends="BaseResultMap">
+    <result column="permission" jdbcType="VARCHAR" property="permission" />
+  </resultMap>
+
   <sql id="Base_Column_List">
-    role_id, permission_id
+    id, create_time, status, role_id, permission_id
+  </sql>
+
+  <sql id="VO_Column_List">
+    srp.id, srp.create_time, srp.status, srp.role_id, srp.permission_id,
+    sp.permission
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from sys_role_permission
-    where role_id = #{roleId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from sys_role_permission
-    where role_id = #{roleId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.vanxd.data.entity.user.SysRolePermission">
-    insert into sys_role_permission (role_id, permission_id)
-    values (#{roleId,jdbcType=VARCHAR}, #{permissionId,jdbcType=VARCHAR})
+    insert into sys_role_permission (id, create_time, status,
+    role_id, permission_id)
+    values (#{id,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER},
+    #{roleId,jdbcType=VARCHAR}, #{permissionId,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.vanxd.data.entity.user.SysRolePermission">
     insert into sys_role_permission
     <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
       <if test="roleId != null">
         role_id,
       </if>
@@ -33,6 +57,15 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
       <if test="roleId != null">
         #{roleId,jdbcType=VARCHAR},
       </if>
@@ -44,15 +77,81 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.vanxd.data.entity.user.SysRolePermission">
     update sys_role_permission
     <set>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="roleId != null">
+        role_id = #{roleId,jdbcType=VARCHAR},
+      </if>
       <if test="permissionId != null">
         permission_id = #{permissionId,jdbcType=VARCHAR},
       </if>
     </set>
-    where role_id = #{roleId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.vanxd.data.entity.user.SysRolePermission">
     update sys_role_permission
-    set permission_id = #{permissionId,jdbcType=VARCHAR}
-    where role_id = #{roleId,jdbcType=VARCHAR}
+    set create_time = #{createTime,jdbcType=TIMESTAMP},
+    status = #{status,jdbcType=INTEGER},
+    role_id = #{roleId,jdbcType=VARCHAR},
+    permission_id = #{permissionId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
   </update>
+
+
+  <!-- 公共查询条件 -->
+  <sql id="Common-Conditions">
+    <where>
+      <if test="conditions.permissionId != null and conditions.permissionId != ''">
+        AND srp.permission_id = #{conditions.permissionId,jdbcType=VARCHAR}
+      </if>
+      <if test="conditions.roleId != null and conditions.roleId != ''">
+        AND srp.role_id = #{conditions.roleId,jdbcType=VARCHAR}
+      </if>
+      AND srp.status != -9
+    </where>
+  </sql>
+
+  <!--分页查询记录-->
+  <select id="page" resultMap="VOResultMap" >
+    SELECT
+    <include refid="VO_Column_List"></include>
+    FROM
+    sys_role_permission srp
+    LEFT JOIN sys_permission sp ON sp.id = srp.permission_id
+    LEFT JOIN sys_role sr ON sr.id = srp.role_id
+    <choose>
+      <when test="jqFilter != null">
+        <include refid="page.Filter-Conditions"></include>
+      </when>
+      <otherwise>
+        <include refid="Common-Conditions"></include>
+      </otherwise>
+    </choose>
+    ORDER BY
+    srp.create_time DESC
+    <include refid="page.limit"/>
+  </select>
+
+  <!-- 获取未删除的所有的记录 -->
+  <select id="count" resultType="long">
+    SELECT
+    count(1)
+    FROM
+    sys_role_permission srp
+    LEFT JOIN sys_permission sp ON sp.id = srp.permission_id
+    LEFT JOIN sys_role sr ON sr.id = srp.role_id
+    <choose>
+      <when test="jqFilter != null">
+        <include refid="page.Filter-Conditions"></include>
+      </when>
+      <otherwise>
+        <include refid="Common-Conditions"></include>
+      </otherwise>
+    </choose>
+  </select>
+
 </mapper>

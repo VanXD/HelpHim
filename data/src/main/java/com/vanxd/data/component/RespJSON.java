@@ -83,6 +83,24 @@ public class RespJSON<T> {
     }
 
     /**
+     * 生成对象
+     * @param respCode
+     * @return
+     */
+    public static RespJSON generator(RespCode respCode) {
+        return new RespJSON(respCode);
+    }
+
+    /**
+     * 生成对象
+     * @param object
+     * @return
+     */
+    public static RespJSON generator(Object object) {
+        return new RespJSON(object);
+    }
+
+    /**
      * Gets the code.
      *
      * @return the code

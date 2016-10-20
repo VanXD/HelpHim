@@ -1,4 +1,4 @@
-package com.vanxd.admin.controller.user;
+package com.vanxd.admin.controller.system;
 
 import com.vanxd.admin.controller.BaseController;
 import com.vanxd.admin.service.user.SysPermissionService;

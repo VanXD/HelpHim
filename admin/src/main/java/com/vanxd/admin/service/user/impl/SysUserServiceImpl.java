@@ -4,20 +4,19 @@ import com.vanxd.admin.exception.BusinessException;
 import com.vanxd.admin.service.BaseServiceImpl;
 import com.vanxd.admin.service.user.SysUserService;
 import com.vanxd.admin.shiro.authc.PasswordService;
-import com.vanxd.data.dict.StatusEnum;
 import com.vanxd.data.entity.user.SysPermission;
-import com.vanxd.data.entity.user.SysRole;
+import com.vanxd.data.entity.user.SysRolePermission;
 import com.vanxd.data.entity.user.SysUser;
+import com.vanxd.data.entity.user.SysUserRole;
 import com.vanxd.data.mapper.user.SysPermissionMapper;
-import com.vanxd.data.mapper.user.SysRoleMapper;
+import com.vanxd.data.mapper.user.SysRolePermissionMapper;
 import com.vanxd.data.mapper.user.SysUserMapper;
-import com.vanxd.data.util.VanStringUtils;
+import com.vanxd.data.mapper.user.SysUserRoleMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -31,9 +30,9 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, SysUserMapper> 
     @Autowired
     private SysUserMapper sysUserMapper;
     @Autowired
-    private SysRoleMapper sysRoleMapper;
+    private SysUserRoleMapper sysUserRoleMapper;
     @Autowired
-    private SysPermissionMapper sysPermissionMapper;
+    private SysRolePermissionMapper sysRolePermissionMapper;
     @Autowired
     private PasswordService passwordService;
 
@@ -48,11 +47,8 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, SysUserMapper> 
 
     @Override
     public int save(SysUser entity) {
-        entity.setId(VanStringUtils.uuid());
         entity.randomSalt();
         encryptPassword(entity);
-        entity.setCreateTime(new Date());
-        entity.setStatus(StatusEnum.NEW.getCode());
         return super.save(entity);
     }
 
@@ -72,11 +68,11 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, SysUserMapper> 
     @Override
     public Set<String> getRoleIdentitiesByUserId(String userId) {
         Set<String> rolesIdentities = new HashSet<String>();
-        SysRole roleConditions = new SysRole();
-        roleConditions.setUserId(userId);
-        List<SysRole> sysRoles = sysRoleMapper.page(roleConditions, null, null);
-        for(SysRole sysRole : sysRoles) {
-            rolesIdentities.add(sysRole.getRole());
+        SysUserRole userRoleConditions = new SysUserRole();
+        userRoleConditions.setUserId(userId);
+        List<SysUserRole> sysUserRoles = sysUserRoleMapper.page(userRoleConditions, null, null);
+        for(SysUserRole userRole : sysUserRoles) {
+            rolesIdentities.add(userRole.getRole());
         }
         return rolesIdentities;
     }
@@ -84,16 +80,16 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, SysUserMapper> 
     @Override
     public Set<String> getPermissionIdentitiesByUserId(String userId) {
         Set<String> permissionIdentities = new HashSet<String>();
-        SysRole roleConditions = new SysRole();
-        roleConditions.setUserId(userId);
-        List<SysRole> sysRoles = sysRoleMapper.page(roleConditions, null, null);
-        List<SysPermission> sysPermissions = null;
-        SysPermission sysPermissionCondition = null;
-        for(SysRole sysRole : sysRoles) {
-            sysPermissionCondition = new SysPermission();
-            sysPermissionCondition.setRoleId(sysRole.getId());
-            sysPermissions = sysPermissionMapper.page(sysPermissionCondition, null, null);
-            for(SysPermission sysPermission : sysPermissions) {
+        SysUserRole userRoleConditions = new SysUserRole();
+        userRoleConditions.setUserId(userId);
+        List<SysUserRole> userRoles = sysUserRoleMapper.page(userRoleConditions, null, null);
+        List<SysRolePermission> sysRolePermissions = null;
+        SysRolePermission sysRolePerCondition = null;
+        for(SysUserRole userRole : userRoles) {
+            sysRolePerCondition = new SysRolePermission();
+            sysRolePerCondition.setRoleId(userRole.getRoleId());
+            sysRolePermissions = sysRolePermissionMapper.page(sysRolePerCondition, null, null);
+            for(SysRolePermission sysPermission : sysRolePermissions) {
                 permissionIdentities.add(sysPermission.getPermission());
             }
         }

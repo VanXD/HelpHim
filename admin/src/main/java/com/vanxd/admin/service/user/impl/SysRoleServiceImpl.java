@@ -26,8 +26,6 @@ import java.util.Set;
 public class SysRoleServiceImpl extends BaseServiceImpl<SysRole, SysRoleMapper> implements SysRoleService {
     @Autowired
     private SysRoleMapper sysRoleMapper;
-    @Autowired
-    private SysUserService sysUserServiceImpl;
 
 
     @Override
@@ -37,24 +35,7 @@ public class SysRoleServiceImpl extends BaseServiceImpl<SysRole, SysRoleMapper> 
 
     @Override
     public int save(SysRole entity) {
-        entity.setCreateTime(new Date());
-        entity.setStatus(StatusEnum.NEW.getCode());
         entity.setCreatorUserId(ShiroUtil.getSessionSysUser().getId());
-        entity.setId(VanStringUtils.uuid());
         return super.save(entity);
-    }
-
-    @Override
-    public List<SysRole> findByUserIdAndChecked(String userId) {
-        Set<String> userHasRoles = sysUserServiceImpl.getRoleIdentitiesByUserId(userId);
-        List<SysRole> list = list(new SysRole(), null, null);
-        for(SysRole role : list) {
-            for(String hadRoleIdentity : userHasRoles) {
-                if(role.getRole().equals(hadRoleIdentity)) {
-                    role.setChecked(true);
-                }
-            }
-        }
-        return list;
     }
 }

@@ -31,10 +31,7 @@ public class SysPermissionServiceImpl extends BaseServiceImpl<SysPermission, Sys
 
     @Override
     public int save(SysPermission entity) {
-        entity.setCreateTime(new Date());
-        entity.setStatus(StatusEnum.NEW.getCode());
         entity.setCreatorUserId(ShiroUtil.getSessionSysUser().getId());
-        entity.setId(VanStringUtils.uuid());
         if(null == entity.getIsShow()) {
             entity.setIsShow(false);
         }

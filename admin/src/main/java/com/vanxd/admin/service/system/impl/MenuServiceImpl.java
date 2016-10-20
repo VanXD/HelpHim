@@ -5,7 +5,7 @@ import com.vanxd.admin.util.GlobalKey;
 import com.vanxd.admin.util.ShiroUtil;
 import com.vanxd.data.entity.user.SysPermission;
 import com.vanxd.data.mapper.user.SysPermissionMapper;
-import com.vanxd.data.vo.MenuTreeVO;
+import com.vanxd.data.vo.system.MenuTreeVO;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;

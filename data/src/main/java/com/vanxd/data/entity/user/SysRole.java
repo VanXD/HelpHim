@@ -19,9 +19,6 @@ public class SysRole extends BaseEntity{
     /** 创建人ID */
     private String creatorUserId;
 
-    /** [VO] 用户ID */
-    @TableAlias(alias = "sur")
-    private String userId;
     /** [VO] 创建人昵称 */
     @TableAlias(alias = "su")
     private String creatorUserNickname;
@@ -75,13 +72,5 @@ public class SysRole extends BaseEntity{
 
     public void setRole(String role) {
         this.role = role;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
     }
 }

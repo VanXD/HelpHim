@@ -11,7 +11,6 @@
     <result column="creator_user_id" jdbcType="VARCHAR" property="creatorUserId" />
   </resultMap>
   <resultMap id="VOResultMap" extends="BaseResultMap" type="com.vanxd.data.entity.user.SysRole">
-    <result column="user_id" jdbcType="VARCHAR" property="userId" />
     <result column="creator_user_nickname" jdbcType="VARCHAR" property="creatorUserNickname" />
   </resultMap>
 
@@ -20,7 +19,7 @@
   </sql>
   <sql id="VO_Column_List">
     sr.id, sr.create_time, sr.status, sr.description, sr.name, sr.role, sr.creator_user_id,
-    sur.user_id, su.nickname creator_user_nickname
+    su.nickname creator_user_nickname
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select
@@ -140,7 +139,6 @@
     <include refid="VO_Column_List"></include>
     FROM
     sys_role sr
-    LEFT JOIN sys_user_role sur ON sr.id = sur.role_id
     LEFT JOIN sys_user su ON su.id = sr.creator_user_id
     <choose>
       <when test="jqFilter != null">
@@ -161,7 +159,6 @@
     count(1)
     FROM
     sys_role sr
-    LEFT JOIN sys_user_role sur ON sr.id = sur.role_id
     LEFT JOIN sys_user su ON su.id = sr.creator_user_id
     <choose>
       <when test="jqFilter != null">

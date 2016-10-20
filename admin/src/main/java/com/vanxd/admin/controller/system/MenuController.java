@@ -1,7 +1,7 @@
 package com.vanxd.admin.controller.system;
 
 import com.vanxd.admin.service.system.MenuService;
-import com.vanxd.data.vo.MenuTreeVO;
+import com.vanxd.data.vo.system.MenuTreeVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

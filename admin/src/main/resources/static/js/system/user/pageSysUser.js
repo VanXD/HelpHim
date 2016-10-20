@@ -118,11 +118,14 @@ function buildJqGridGenerator() {
         caption : "",
         title : "关联角色",
         buttonicon : "ui-icon-shuffle",
-        onClickButton : releationRoles
+        onClickButton : listRoles
     });
 }
 
-function releationRoles() {
+/**
+ * 显示所有角色，并标注该用户已关联的角色
+ */
+function listRoles() {
     var dataId = iJqGrid.jqGrid('getGridParam','selrow');
     if(!dataId) {
         alert("请选择需要关联角色的用户！");
@@ -130,13 +133,13 @@ function releationRoles() {
     }
     $.ajax({
         type : "GET",
-        url  : "/system/role/listAndChecked.json",
+        url  : "/system/userRole/listAndChecked.json",
         data : {
             userId : dataId
         },
         success : result => {
             if(isRequestSuccess(result)) {
-                var data = result.result;
+                result.userId = dataId;
                 var roleTmpl = `
                         <% for(var i = 0, j = result.length; i < j ; i++) { %>
                         <tr>
@@ -145,7 +148,10 @@ function releationRoles() {
                             <td><%=result[i].description%></td>
                             <td>
                                 <label class="i-checks" id="is-show-checks">
-                                    <input <%= result[i].checked ? "checked" : "" %> class="role-icheck" type="checkbox" value="<%=result[i].id%>"/>
+                                    <div class="icheckbox_square-green <%= result[i].checked ? "checked" : ''%>" style="position: relative;">
+                                        <input <%= result[i].checked ? 'checked=true' : ''%>" onchange="relation(this, '<%=result[i].id%>', '<%=userId%>')" class="role-icheck" type="checkbox" style="position: absolute; opacity: 0;">
+                                        <ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
+                                    </div>
                                 </label>
                             </td>
                         </tr>
@@ -153,14 +159,47 @@ function releationRoles() {
                     `;
                 var html = template.compile(roleTmpl)(result);
                 $("#roles").html(html);
-                bindIChecks(".role-icheck");
             } else {
                 handleRequestFail(result);
             }
         }
     });
-    $("#releation-role-form").modal();
+    $("#relation-role-form").modal();
+}
 
+/**
+ * 关联角色和用户
+ * @param ele       触发事件的checkbox
+ * @param roleId    角色ID
+ * @param userId    用户ID
+ */
+function relation(ele, roleId, userId) {
+    $(ele).parent().toggleClass("checked");
+    if(ele.checked) {
+        ajaxRequest({
+            type : "post",
+            url  : "/system/userRole/edit.json",
+            data : {
+                roleId : roleId,
+                userId : userId
+            },
+            success : result => {
+                console.log(JSON.stringify(result));
+            }
+        });
+    } else {
+        ajaxRequest({
+            type : "post",
+            url  : "/system/userRole/cancelRelation.json",
+            data : {
+                roleId : roleId,
+                userId : userId,
+                success : result => {
+                    console.log(JSON.stringify(result));
+                }
+            },
+        });
+    }
 }
 
 /**

@@ -1,9 +1,7 @@
-package com.vanxd.admin.controller.user;
+package com.vanxd.admin.controller.system;
 
 import com.vanxd.admin.controller.BaseController;
-import com.vanxd.admin.service.user.SysPermissionService;
 import com.vanxd.admin.service.user.SysUserService;
-import com.vanxd.data.entity.user.SysPermission;
 import com.vanxd.data.entity.user.SysUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

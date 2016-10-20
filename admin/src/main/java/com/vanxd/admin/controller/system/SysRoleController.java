@@ -1,4 +1,4 @@
-package com.vanxd.admin.controller.user;
+package com.vanxd.admin.controller.system;
 
 import com.vanxd.admin.controller.BaseController;
 import com.vanxd.admin.service.user.SysRoleService;
@@ -21,14 +21,5 @@ public class SysRoleController extends BaseController<SysRole, SysRoleService>{
     @Override
     protected SysRoleService getService() {
         return sysRoleServiceImpl;
-    }
-
-    @RequestMapping("/listAndChecked.json")
-    @ResponseBody
-    public RespJSON listAndChecked(String userId) {
-        if(StringUtils.isEmpty(userId)) {
-            return new RespJSON(RespJSON.RespCode.PARAM_ILLEAGUE);
-        }
-        return new RespJSON(sysRoleServiceImpl.findByUserIdAndChecked(userId));
     }
 }
