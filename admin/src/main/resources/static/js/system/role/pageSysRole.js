@@ -89,6 +89,11 @@ function buildJqGridGenerator() {
                 }
             }
         ]
+    }).navButtonAdd('#pager-table-1',{
+        caption : "",
+        title : "关联权限",
+        buttonicon : "ui-icon-shuffle",
+        onClickButton : listPermissions
     });
 }
 
@@ -105,7 +110,6 @@ function addFuncDiaglog(id) {
  * @param id 数据ID
  */
 function editFuncDiaglog(entity) {
-    console.log(JSON.stringify(entity));
 }
 
 /**
@@ -114,4 +118,45 @@ function editFuncDiaglog(entity) {
  * @param id 数据ID
  */
 function delFuncDiaglog(id) {
+}
+
+function listPermissions() {
+    var dataId = iJqGrid.jqGrid('getGridParam','selrow');
+    if(!dataId) {
+        alert("请选择需要关联权限的角色！");
+        return ;
+    }
+    $.ajax({
+        type : "GET",
+        url  : "/system/rolePermission/listChecked.json",
+        data : {
+            userId : dataId
+        },
+        success : result => {
+            if(isRequestSuccess(result)) {
+                result.userId = dataId;
+                var roleTmpl = `
+                        <% for(var i = 0, j = result.length; i < j ; i++) { %>
+                        <tr>
+                            <td><%=i+1%></td>
+                            <td><%=result[i].name%></td>
+                            <td><%=result[i].description%></td>
+                            <td>
+                                <label class="i-checks" id="is-show-checks">
+                                    <div class="icheckbox_square-green <%= result[i].checked ? "checked" : ''%>" style="position: relative;">
+                                        <input <%= result[i].checked ? 'checked=true' : ''%>" onchange="relation(this, '<%=result[i].id%>', '<%=userId%>')" class="role-icheck" type="checkbox" style="position: absolute; opacity: 0;">
+                                        <ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
+                                    </div>
+                                </label>
+                            </td>
+                        </tr>
+                        <% } %>
+                    `;
+                $("#roles").html(template.compile(roleTmpl)(result));
+            } else {
+                handleRequestFail(result);
+            }
+        }
+    });
+    $("#relation-role-form").modal();
 }

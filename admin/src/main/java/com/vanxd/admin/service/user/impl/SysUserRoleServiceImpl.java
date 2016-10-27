@@ -34,9 +34,6 @@ public class SysUserRoleServiceImpl extends BaseServiceImpl<SysUserRole, SysUser
 
     @Override
     public boolean cancelRelation(String userId, String roleId) {
-        SysUserRole sysUserRole = new SysUserRole();
-        sysUserRole.setUserId(userId);
-        sysUserRole.setRoleId(roleId);
         return sysUserRoleMapper.deleteByUserIdAndRoleId(userId, roleId) > 0;
     }
 

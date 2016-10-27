@@ -37,6 +37,17 @@ public class SysPermission extends BaseEntity{
     /** [VO]创建人昵称 */
     @TableAlias (alias = "su")
     private String creatorUserNickname;
+    /** [VO] 是否已关联 */
+    @TableAlias(isRequire = false)
+    private boolean isChecked;
+
+    public boolean isChecked() {
+        return isChecked;
+    }
+
+    public void setChecked(boolean checked) {
+        isChecked = checked;
+    }
 
     public String getCreatorUserNickname() {
         return creatorUserNickname;

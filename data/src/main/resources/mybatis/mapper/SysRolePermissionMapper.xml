@@ -31,6 +31,11 @@
     delete from sys_role_permission
     where id = #{id,jdbcType=VARCHAR}
   </delete>
+  <delete id="deleteByRoleIdAndPermissionId">
+    delete from sys_role_permission
+    where role_id = #{roleId,jdbcType=VARCHAR}
+    AND permission_id = #{permissionId,jdbcType=VARCHAR}
+  </delete>
   <insert id="insert" parameterType="com.vanxd.data.entity.user.SysRolePermission">
     insert into sys_role_permission (id, create_time, status,
     role_id, permission_id)

@@ -23,4 +23,6 @@ public class SysPermissionController extends BaseController<SysPermission, SysPe
     protected SysPermissionService getService() {
         return sysPermissionServiceImpl;
     }
+
+
 }

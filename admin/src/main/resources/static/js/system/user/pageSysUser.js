@@ -133,7 +133,7 @@ function listRoles() {
     }
     $.ajax({
         type : "GET",
-        url  : "/system/userRole/listAndChecked.json",
+        url  : "/system/userRole/listChecked.json",
         data : {
             userId : dataId
         },
@@ -157,8 +157,7 @@ function listRoles() {
                         </tr>
                         <% } %>
                     `;
-                var html = template.compile(roleTmpl)(result);
-                $("#roles").html(html);
+                $("#roles").html(template.compile(roleTmpl)(result));
             } else {
                 handleRequestFail(result);
             }
