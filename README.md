@@ -26,7 +26,7 @@
             i++;
         }
 ### 结论
->所以我们在使用的时候，需要把权限标识倒着写例如:system:role:page -> page:role:system
+>所以我们在使用的时候，全选就把父菜单的权限分配进数据库，否则只能分配子菜单的权限进数据库。
 
 ## thymeleaf
 ### 问题 在页面中使用\<script type="text/html">\</script>
