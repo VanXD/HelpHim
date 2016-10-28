@@ -62,6 +62,27 @@
         </div>
     </div>
 </div>
+<!-- 关联权限模态框 start -->
+<div id="relation-permission-form" class="modal fade" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12 b-r">
+                        <h3 class="m-t-none m-b">关联角色</h3>
+                        <div>
+                            <div class="dd" id="nestable2">
+                                <ol class="dd-list" id="permissions">
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 关联权限模态框 end -->
 <div th:include="/common/onload_js :: onloadJS('/system/role/pageSysRole.js')"></div>
 </body>
 </html>

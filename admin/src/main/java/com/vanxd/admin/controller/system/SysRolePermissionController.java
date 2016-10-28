@@ -47,11 +47,11 @@ public class SysRolePermissionController extends BaseController<SysRolePermissio
 
     @RequestMapping("/listChecked.json")
     @ResponseBody
-    public RespJSON listChecked(String userId) {
-        if(StringUtils.isEmpty(userId)) {
+    public RespJSON listChecked(String roleId) {
+        if(StringUtils.isEmpty(roleId)) {
             return new RespJSON(RespJSON.RespCode.PARAM_ILLEAGUE);
         }
-        return new RespJSON(sysRolePermissionServiceImpl.findByRoleIdAndChecked(userId));
+        return new RespJSON(sysRolePermissionServiceImpl.findByRoleIdAndChecked(roleId));
     }
 
 }

@@ -226,6 +226,7 @@
       </otherwise>
     </choose>
     ORDER BY
+    sp.parent_id ASC,
     sp.create_time DESC
     <include refid="page.limit"/>
   </select>

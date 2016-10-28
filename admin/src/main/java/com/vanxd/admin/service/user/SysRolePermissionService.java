@@ -14,5 +14,5 @@ import java.util.List;
 public interface SysRolePermissionService extends BaseService<SysRolePermission, SysRolePermissionMapper> {
     boolean cancelRelation(String roleId, String permissionId);
 
-    List<SysPermission> findByRoleIdAndChecked(String userId);
+    List<SysPermission> findByRoleIdAndChecked(String roleId);
 }

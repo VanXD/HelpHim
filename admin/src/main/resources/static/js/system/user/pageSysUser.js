@@ -181,9 +181,6 @@ function relation(ele, roleId, userId) {
             data : {
                 roleId : roleId,
                 userId : userId
-            },
-            success : result => {
-                console.log(JSON.stringify(result));
             }
         });
     } else {
@@ -192,11 +189,8 @@ function relation(ele, roleId, userId) {
             url  : "/system/userRole/cancelRelation.json",
             data : {
                 roleId : roleId,
-                userId : userId,
-                success : result => {
-                    console.log(JSON.stringify(result));
-                }
-            },
+                userId : userId
+            }
         });
     }
 }

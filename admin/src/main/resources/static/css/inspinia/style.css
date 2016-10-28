@@ -1,3 +1,6 @@
+/**
+ * 所有.dd-handle -> .dd-row, dd-handle是nestable用来判断是否可以拖动的，和样式耦合在一起不太方便控制
+ */
 h1,
 h2,
 h3,
@@ -2192,7 +2195,7 @@ div.dt-button-info {
   font-size: 13px;
   line-height: 20px;
 }
-.dd-handle {
+.dd-row {
   display: block;
   margin: 5px 0;
   padding: 5px 10px;
@@ -2205,10 +2208,10 @@ div.dt-button-info {
   box-sizing: border-box;
   -moz-box-sizing: border-box;
 }
-.dd-handle span {
+.dd-row span {
   font-weight: bold;
 }
-.dd-handle:hover {
+.dd-row:hover {
   background: #f0f0f0;
   cursor: pointer;
   font-weight: bold;
@@ -2280,10 +2283,10 @@ div.dt-button-info {
   z-index: 9999;
   pointer-events: none;
 }
-.dd-dragel > .dd-item .dd-handle {
+.dd-dragel > .dd-item .dd-row {
   margin-top: 0;
 }
-.dd-dragel .dd-handle {
+.dd-dragel .dd-row {
   -webkit-box-shadow: 2px 4px 6px 0 rgba(0, 0, 0, 0.1);
   box-shadow: 2px 4px 6px 0 rgba(0, 0, 0, 0.1);
 }
@@ -2313,13 +2316,13 @@ div.dt-button-info {
   box-sizing: border-box;
   -moz-box-sizing: border-box;
 }
-#nestable2 .dd-handle {
+#nestable2 .dd-row {
   color: inherit;
   border: 1px dashed #e7eaec;
   background: #f3f3f4;
   padding: 10px;
 }
-#nestable2 .dd-handle:hover {
+#nestable2 .dd-row:hover {
   /*background: #bbb;*/
 }
 #nestable2 span.label {

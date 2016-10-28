@@ -2,6 +2,7 @@ package com.vanxd.admin.service.user.impl;
 
 import com.vanxd.admin.service.BaseServiceImpl;
 import com.vanxd.admin.service.user.SysPermissionService;
+import com.vanxd.admin.util.GlobalKey;
 import com.vanxd.admin.util.ShiroUtil;
 import com.vanxd.data.dict.StatusEnum;
 import com.vanxd.data.entity.user.SysPermission;
@@ -36,7 +37,7 @@ public class SysPermissionServiceImpl extends BaseServiceImpl<SysPermission, Sys
             entity.setIsShow(false);
         }
         if(StringUtils.isEmpty(entity.getParentId())) {
-            entity.setParentId("0");
+            entity.setParentId(GlobalKey.MENU_MODULE_PARENT_ID);
         }
         return super.save(entity);
     }

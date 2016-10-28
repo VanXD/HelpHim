@@ -36,7 +36,7 @@ public class MenuServiceImpl implements MenuService {
         }
         Subject subject = SecurityUtils.getSubject();
 
-        List<SysPermission> modules = getMenuByParentId("0");
+        List<SysPermission> modules = getMenuByParentIdAndShow("0");
         List<SysPermission> subMenus = null;
         List<MenuTreeVO> moduleMenus = new ArrayList<MenuTreeVO>();
         List<MenuTreeVO> childrenMenus = null;
@@ -46,7 +46,7 @@ public class MenuServiceImpl implements MenuService {
                 continue;
             }
             menuTreeVO = new MenuTreeVO(sysPermission);
-            subMenus = getMenuByParentId(sysPermission.getId());
+            subMenus = getMenuByParentIdAndShow(sysPermission.getId());
             childrenMenus = new ArrayList<MenuTreeVO>();
             for(SysPermission subSysResource : subMenus) {
                 if(!subject.isPermitted(subSysResource.getPermission())) {
@@ -61,9 +61,10 @@ public class MenuServiceImpl implements MenuService {
         return moduleMenus;
     }
 
-    private List<SysPermission> getMenuByParentId(String parentId) {
+    private List<SysPermission> getMenuByParentIdAndShow(String parentId) {
         SysPermission sysPermission = new SysPermission();
         sysPermission.setParentId(parentId);
+        sysPermission.setIsShow(true);
         return sysPermissionMapper.page(sysPermission, null, null);
     }
 

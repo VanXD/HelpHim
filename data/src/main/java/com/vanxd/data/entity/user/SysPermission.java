@@ -3,6 +3,9 @@ package com.vanxd.data.entity.user;
 import com.vanxd.data.annotation.TableAlias;
 import com.vanxd.data.entity.BaseEntity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 用户菜单权限
  *
@@ -40,6 +43,17 @@ public class SysPermission extends BaseEntity{
     /** [VO] 是否已关联 */
     @TableAlias(isRequire = false)
     private boolean isChecked;
+    /** [VO] 该菜单的子菜单 */
+    @TableAlias(isRequire = false)
+    private List<SysPermission> subPermissions = new ArrayList<SysPermission>();
+
+    public List<SysPermission> getSubPermissions() {
+        return subPermissions;
+    }
+
+    public void setSubPermissions(List<SysPermission> subPermissions) {
+        this.subPermissions = subPermissions;
+    }
 
     public boolean isChecked() {
         return isChecked;
