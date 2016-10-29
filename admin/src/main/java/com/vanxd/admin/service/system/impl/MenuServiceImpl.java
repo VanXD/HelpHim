@@ -45,8 +45,8 @@ public class MenuServiceImpl implements MenuService {
 
         for(SysPermission sysPermission : modules) {
             menuTreeVO = new MenuTreeVO(sysPermission);
-            subMenus = getMenuByParentIdAndShow(sysPermission.getId());
             childrenMenus = new ArrayList<MenuTreeVO>();
+            subMenus = getMenuByParentIdAndShow(sysPermission.getId());
             hasChildren = false;
             for(SysPermission subSysResource : subMenus) {
                 if(subject.isPermitted(subSysResource.getPermission())) {

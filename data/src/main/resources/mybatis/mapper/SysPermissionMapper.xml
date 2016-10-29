@@ -225,6 +225,7 @@
         <include refid="Common-Conditions"></include>
       </otherwise>
     </choose>
+    GROUP BY sp.id
     ORDER BY
     sp.parent_id ASC,
     sp.create_time DESC
