@@ -51,7 +51,7 @@ function bindIChecks(selector) {
     }
     var iChecks = $(doSelector);
     if(0 < iChecks.length) {
-        $(doSelector).iCheck({
+        return $(doSelector).iCheck({
             checkboxClass: 'icheckbox_square-green',
             radioClass: 'iradio_square-green',
         });

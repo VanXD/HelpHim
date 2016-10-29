@@ -36,26 +36,28 @@ public class MenuServiceImpl implements MenuService {
         }
         Subject subject = SecurityUtils.getSubject();
 
-        List<SysPermission> modules = getMenuByParentIdAndShow("0");
         List<SysPermission> subMenus = null;
         List<MenuTreeVO> moduleMenus = new ArrayList<MenuTreeVO>();
         List<MenuTreeVO> childrenMenus = null;
         MenuTreeVO menuTreeVO = null;
+        boolean hasChildren = false;
+        List<SysPermission> modules = getMenuByParentIdAndShow(GlobalKey.MENU_MODULE_PARENT_ID);
+
         for(SysPermission sysPermission : modules) {
-            if(!subject.isPermitted(sysPermission.getPermission())) {
-                continue;
-            }
             menuTreeVO = new MenuTreeVO(sysPermission);
             subMenus = getMenuByParentIdAndShow(sysPermission.getId());
             childrenMenus = new ArrayList<MenuTreeVO>();
+            hasChildren = false;
             for(SysPermission subSysResource : subMenus) {
-                if(!subject.isPermitted(subSysResource.getPermission())) {
-                    continue;
+                if(subject.isPermitted(subSysResource.getPermission())) {
+                    hasChildren = true;
+                    childrenMenus.add(new MenuTreeVO(subSysResource));
                 }
-                childrenMenus.add(new MenuTreeVO(subSysResource));
             }
             menuTreeVO.setChildren(childrenMenus);
-            moduleMenus.add(menuTreeVO);
+            if(hasChildren) {
+                moduleMenus.add(menuTreeVO);
+            }
         }
         session.setAttribute(GlobalKey.THYMELEAF_MENU, moduleMenus);
         return moduleMenus;
