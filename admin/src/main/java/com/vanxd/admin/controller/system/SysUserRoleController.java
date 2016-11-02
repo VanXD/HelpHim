@@ -4,6 +4,7 @@ import com.vanxd.admin.controller.BaseController;
 import com.vanxd.admin.service.user.SysUserRoleService;
 import com.vanxd.data.component.RespJSON;
 import com.vanxd.data.entity.user.SysUserRole;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 @RequestMapping("/system/userRole")
+@RequiresPermissions("system:user")
 public class SysUserRoleController extends BaseController<SysUserRole, SysUserRoleService> {
     @Autowired
     private SysUserRoleService sysUserRoleServiceImpl;

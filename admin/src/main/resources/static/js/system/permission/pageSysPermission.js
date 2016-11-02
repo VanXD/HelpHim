@@ -14,7 +14,7 @@ function initValidate() {
             },
             permission : {
                 required : true,
-                maxlength : 20
+                maxlength : 50
             },
             description : {
                 required : true,
@@ -31,7 +31,7 @@ function initValidate() {
             },
             permission : {
                 required : "必填",
-                maxlength : "最长20个字符"
+                maxlength : "最长50个字符"
             },
             description : {
                 required : "必填",

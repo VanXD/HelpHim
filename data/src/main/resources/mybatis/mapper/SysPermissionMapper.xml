@@ -200,10 +200,13 @@
   <sql id="Common-Conditions">
     <where>
       <if test="conditions.roleId != null and conditions.roleId != ''">
-        AND srp.role_id = #{conditions.roleId}
+        AND srp.role_id = #{conditions.roleId,jdbcType=VARCHAR}
       </if>
       <if test="conditions.parentId != null and conditions.parentId != ''">
-        AND sp.parent_id = #{conditions.parentId}
+        AND sp.parent_id = #{conditions.parentId,jdbcType=VARCHAR}
+      </if>
+      <if test="conditions.isShow">
+        AND sp.is_show = #{conditions.isShow,jdbcType=BIT}
       </if>
       AND sp.status != -9
     </where>
@@ -227,7 +230,7 @@
     </choose>
     GROUP BY sp.id
     ORDER BY
-    sp.parent_id ASC,
+    sp.type ASC,
     sp.create_time DESC
     <include refid="page.limit"/>
   </select>

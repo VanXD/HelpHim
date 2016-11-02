@@ -5,6 +5,7 @@ import com.vanxd.admin.service.BaseServiceImpl;
 import com.vanxd.admin.service.user.SysRolePermissionService;
 import com.vanxd.admin.service.user.SysUserService;
 import com.vanxd.admin.util.GlobalKey;
+import com.vanxd.data.dict.SysPermissionTypeEnum;
 import com.vanxd.data.entity.user.SysPermission;
 import com.vanxd.data.entity.user.SysRole;
 import com.vanxd.data.entity.user.SysRolePermission;
@@ -46,29 +47,33 @@ public class SysRolePermissionServiceImpl extends BaseServiceImpl<SysRolePermiss
         List<SysRolePermission> roleHasPermissions = sysRolePermissionMapper.page(sysRolePermission, null, null);
         List<SysPermission> sysPermissions = sysPermissionMapper.page(new SysPermission(), null, null);
         Map<String, SysPermission> moduleMap = new HashMap<String, SysPermission>();
+        Map<String, SysPermission> menuMap = new HashMap<String, SysPermission>();
         SysPermission module = null;
         for(SysPermission sysPermission : sysPermissions) {
-            for(SysRolePermission rolePermission : roleHasPermissions) {
-                if(sysPermission.getPermission().equals(rolePermission.getPermission())) {
+            for(SysRolePermission roleHasPermission : roleHasPermissions) {
+                if(sysPermission.getPermission().equals(roleHasPermission.getPermission())) {
                     sysPermission.setChecked(true);
                     break;
                 }
             }
-            if(sysPermission.getParentId().equals(GlobalKey.MENU_MODULE_PARENT_ID)) {
+            if(sysPermission.getType() == SysPermissionTypeEnum.MODULE.getCode()) {
                 moduleMap.put(sysPermission.getId(), sysPermission);
-            } else {
-                module = moduleMap.get(sysPermission.getParentId());
-                if(null == module) {
-                    throw new BusinessException("权限菜单排序错误，模块菜单没有放在最前面！");
-                }
-                module.getSubPermissions().add(sysPermission);
+            } else if (sysPermission.getType() == SysPermissionTypeEnum.MENU.getCode()){
+                menuMap.put(sysPermission.getId(), sysPermission);
+            } else if (sysPermission.getType() == SysPermissionTypeEnum.FUNCTION.getCode()){
+                menuMap.get(sysPermission.getParentId()).getSubPermissions().add(sysPermission);
             }
-
         }
         List<SysPermission> result = new ArrayList<SysPermission>();
+        SysPermission modulePermission = null;
+        for(Map.Entry<String, SysPermission> entry : menuMap.entrySet()) {
+            modulePermission = moduleMap.get(entry.getValue().getParentId());
+            modulePermission.getSubPermissions().add(entry.getValue());
+        }
         for(Map.Entry<String, SysPermission> entry : moduleMap.entrySet()) {
             result.add(entry.getValue());
         }
+
         return result;
     }
 }

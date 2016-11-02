@@ -8,6 +8,7 @@ import com.vanxd.data.component.Pagination;
 import com.vanxd.data.component.RespJSON;
 import com.vanxd.data.component.jqgrid.JqFilter;
 import com.vanxd.data.entity.BaseEntity;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -32,6 +33,7 @@ public abstract class BaseController<T extends BaseEntity, Service extends BaseS
      * @param pagination    可为空 分页对象，为空查询全部
      * @return
      */
+    @RequiresPermissions(":page")
     @RequestMapping("/list.json")
     @ResponseBody
     public PageResult<T> list(T condition, String filters, Pagination pagination) {
@@ -59,6 +61,7 @@ public abstract class BaseController<T extends BaseEntity, Service extends BaseS
      * @param pagination
      * @return
      */
+    @RequiresPermissions(":page")
     @RequestMapping("/page")
     public ModelAndView page(ModelAndView mv, T condition, Pagination pagination) {
         pageView(mv, condition, pagination);
@@ -87,6 +90,7 @@ public abstract class BaseController<T extends BaseEntity, Service extends BaseS
      * @param entity    必须  实体数据
      * @return
      */
+    @RequiresPermissions(":edit")
     @RequestMapping(value = "/edit.json", method = RequestMethod.POST)
     @ResponseBody
     public RespJSON<RespJSON> edit(T entity) {
@@ -102,6 +106,7 @@ public abstract class BaseController<T extends BaseEntity, Service extends BaseS
      * @param id    必须 对象ID
      * @return
      */
+    @RequiresPermissions(":detail")
     @RequestMapping(value = "/getById.json", method = RequestMethod.GET)
     @ResponseBody
     public RespJSON getById(String id) {
@@ -121,6 +126,7 @@ public abstract class BaseController<T extends BaseEntity, Service extends BaseS
      * @param id    必须 对象ID
      * @return
      */
+    @RequiresPermissions(":delete")
     @RequestMapping(value = "/delete.json", method = RequestMethod.POST)
     @ResponseBody
     public RespJSON delete(String id) {
