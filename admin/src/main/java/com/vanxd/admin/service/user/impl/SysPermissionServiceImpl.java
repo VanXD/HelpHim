@@ -4,16 +4,20 @@ import com.vanxd.admin.service.BaseServiceImpl;
 import com.vanxd.admin.service.user.SysPermissionService;
 import com.vanxd.admin.util.GlobalKey;
 import com.vanxd.admin.util.ShiroUtil;
+import com.vanxd.data.component.PageResult;
 import com.vanxd.data.dict.StatusEnum;
 import com.vanxd.data.entity.user.SysPermission;
+import com.vanxd.data.entity.user.SysRolePermission;
 import com.vanxd.data.mapper.user.SysPermissionMapper;
 import com.vanxd.data.util.VanStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by wyd on 2016/8/25.
@@ -48,5 +52,33 @@ public class SysPermissionServiceImpl extends BaseServiceImpl<SysPermission, Sys
             entity.setIsShow(false);
         }
         return super.updateByPrimaryKeySelective(entity);
+    }
+
+    @Override
+    public List<SysPermission> getPermissionTreeAndMark(String parentId, List<SysRolePermission> roleHasPerms) {
+        SysPermission condition = new SysPermission();
+        condition.setParentId(parentId);
+        List<SysPermission> list = list(condition, null, null);
+        if( !CollectionUtils.isEmpty(list) ) {
+            for(SysPermission permission : list) {
+                markeHasPerm(permission, roleHasPerms);
+                getPermissionTreeAndMark(permission.getId(), roleHasPerms);
+                permission.setSubPermissions(getPermissionTreeAndMark(permission.getId(), roleHasPerms));
+            }
+        }
+        return list;
+    }
+
+    /**
+     * 标记角色已有的权限
+     * @param permission
+     * @param roleHasPerms
+     */
+    private void markeHasPerm(SysPermission permission, List<SysRolePermission> roleHasPerms) {
+        for(SysRolePermission rolePermission : roleHasPerms) {
+            if(permission.getPermission().equals(rolePermission.getPermission())) {
+                permission.setChecked(true);
+            }
+        }
     }
 }

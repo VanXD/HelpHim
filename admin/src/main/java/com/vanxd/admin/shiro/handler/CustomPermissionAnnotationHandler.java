@@ -77,13 +77,11 @@ public class CustomPermissionAnnotationHandler extends AuthorizingAnnotationHand
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
-
-
             if(null != classAnnotation) {
                 String[] classPerms = this.getAnnotationValue(classAnnotation);
-                subject.checkPermission(classPerms[0] + methodPerms[0]);
+                subject.isPermitted(classPerms[0] + methodPerms [0]);
             } else {
-                subject.checkPermission(methodPerms[0]);
+                subject.isPermitted(methodPerms[0]);
             }
         } else if(Logical.AND.equals(methodAnnotaion.logical())) {
             this.getSubject().checkPermissions(methodPerms);

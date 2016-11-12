@@ -2,6 +2,7 @@ package com.vanxd.admin.service.user.impl;
 
 import com.vanxd.admin.exception.BusinessException;
 import com.vanxd.admin.service.BaseServiceImpl;
+import com.vanxd.admin.service.user.SysPermissionService;
 import com.vanxd.admin.service.user.SysRolePermissionService;
 import com.vanxd.admin.service.user.SysUserService;
 import com.vanxd.admin.util.GlobalKey;
@@ -27,7 +28,7 @@ public class SysRolePermissionServiceImpl extends BaseServiceImpl<SysRolePermiss
     @Autowired
     private SysRolePermissionMapper sysRolePermissionMapper;
     @Autowired
-    private SysPermissionMapper sysPermissionMapper;
+    private SysPermissionService sysPermissionServiceImpl;
 
     @Override
     public SysRolePermissionMapper getMapper() {
@@ -42,38 +43,11 @@ public class SysRolePermissionServiceImpl extends BaseServiceImpl<SysRolePermiss
     // todo 待优化
     @Override
     public List<SysPermission> findByRoleIdAndChecked(String roleId) {
-        SysRolePermission sysRolePermission = new SysRolePermission();
-        sysRolePermission.setRoleId(roleId);
-        List<SysRolePermission> roleHasPermissions = sysRolePermissionMapper.page(sysRolePermission, null, null);
-        List<SysPermission> sysPermissions = sysPermissionMapper.page(new SysPermission(), null, null);
-        Map<String, SysPermission> moduleMap = new HashMap<String, SysPermission>();
-        Map<String, SysPermission> menuMap = new HashMap<String, SysPermission>();
-        SysPermission module = null;
-        for(SysPermission sysPermission : sysPermissions) {
-            for(SysRolePermission roleHasPermission : roleHasPermissions) {
-                if(sysPermission.getPermission().equals(roleHasPermission.getPermission())) {
-                    sysPermission.setChecked(true);
-                    break;
-                }
-            }
-            if(sysPermission.getType() == SysPermissionTypeEnum.MODULE.getCode()) {
-                moduleMap.put(sysPermission.getId(), sysPermission);
-            } else if (sysPermission.getType() == SysPermissionTypeEnum.MENU.getCode()){
-                menuMap.put(sysPermission.getId(), sysPermission);
-            } else if (sysPermission.getType() == SysPermissionTypeEnum.FUNCTION.getCode()){
-                menuMap.get(sysPermission.getParentId()).getSubPermissions().add(sysPermission);
-            }
-        }
-        List<SysPermission> result = new ArrayList<SysPermission>();
-        SysPermission modulePermission = null;
-        for(Map.Entry<String, SysPermission> entry : menuMap.entrySet()) {
-            modulePermission = moduleMap.get(entry.getValue().getParentId());
-            modulePermission.getSubPermissions().add(entry.getValue());
-        }
-        for(Map.Entry<String, SysPermission> entry : moduleMap.entrySet()) {
-            result.add(entry.getValue());
-        }
+        SysRolePermission rolePermCondition = new SysRolePermission();
+        rolePermCondition.setRoleId(roleId);
+        List<SysRolePermission> roleHasPerms = sysRolePermissionMapper.page(rolePermCondition, null, null);
 
-        return result;
+        List<SysPermission> permissionTree = sysPermissionServiceImpl.getPermissionTreeAndMark(GlobalKey.MENU_MODULE_PARENT_ID, roleHasPerms);
+        return permissionTree;
     }
 }
