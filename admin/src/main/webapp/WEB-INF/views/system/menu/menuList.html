@@ -32,7 +32,7 @@
                     <span class="fa arrow"></span>
                 </a>
                 <ul class="nav nav-second-level">
-                    <li th:each="subMenu, subIterStat : ${menu.children}">
+                    <li th:each="subMenu, subIterStat : ${menu.subPermissions}">
                         <a th:href="${subMenu.url}" th:text="${subMenu.name}" th:attr="data-parent-id=${menu.id}"></a>
                     </li>
                     <!--<li><a href="dashboard_5.html">Dashboard v.5 <span class="label label-primary pull-right">NEW</span></a></li>-->

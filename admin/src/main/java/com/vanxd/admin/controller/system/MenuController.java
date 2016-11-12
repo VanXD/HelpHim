@@ -1,6 +1,7 @@
 package com.vanxd.admin.controller.system;
 
 import com.vanxd.admin.service.system.MenuService;
+import com.vanxd.data.entity.user.SysPermission;
 import com.vanxd.data.vo.system.MenuTreeVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,8 +21,8 @@ public class MenuController {
 
     @RequestMapping("list")
     public String menu(Map map) {
-        List<MenuTreeVO> menus = menuServiceImpl.getMenu();
+        List<SysPermission> menus = menuServiceImpl.getMenu();
         map.put("menus", menus);
-        return "/system/menu/list";
+        return "/system/menu/menuList";
     }
 }

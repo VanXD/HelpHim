@@ -17,7 +17,5 @@ public class MenuServiceTest extends SpringTestParent{
 
     @Test
     public void test() {
-        List<MenuTreeVO> menu = menuServiceImpl.getMenu();
-        int a = 1;
     }
 }

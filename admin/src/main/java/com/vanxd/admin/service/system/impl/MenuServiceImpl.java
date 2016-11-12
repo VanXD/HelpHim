@@ -11,8 +11,10 @@ import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -28,41 +30,56 @@ public class MenuServiceImpl implements MenuService {
      * todo 待优化
      * @return
      */
-    public List<MenuTreeVO> getMenu() {
+    public List<SysPermission> getMenu() {
         Session session = ShiroUtil.getSession();
         Object thymeleafMenu = session.getAttribute(GlobalKey.THYMELEAF_MENU);
         if(null != thymeleafMenu) {
-            return (List<MenuTreeVO>) thymeleafMenu;
+            return (List<SysPermission>) thymeleafMenu;
         }
         Subject subject = SecurityUtils.getSubject();
+        List<SysPermission> modulePermissions = getMenuByParentIdAndShow(GlobalKey.MENU_MODULE_PARENT_ID);
 
-        List<SysPermission> subMenus = null;
-        List<MenuTreeVO> moduleMenus = new ArrayList<MenuTreeVO>();
-        List<MenuTreeVO> childrenMenus = null;
-        MenuTreeVO menuTreeVO = null;
-        boolean hasChildren = false;
-        List<SysPermission> modules = getMenuByParentIdAndShow(GlobalKey.MENU_MODULE_PARENT_ID);
-
-        for(SysPermission sysPermission : modules) {
-            menuTreeVO = new MenuTreeVO(sysPermission);
-            childrenMenus = new ArrayList<MenuTreeVO>();
-            subMenus = getMenuByParentIdAndShow(sysPermission.getId());
-            hasChildren = false;
-            for(SysPermission subSysResource : subMenus) {
-                if(subject.isPermitted(subSysResource.getPermission())) {
-                    hasChildren = true;
-                    childrenMenus.add(new MenuTreeVO(subSysResource));
-                }
-            }
-            menuTreeVO.setChildren(childrenMenus);
-            if(hasChildren) {
-                moduleMenus.add(menuTreeVO);
+        Iterator<SysPermission> iterator = modulePermissions.iterator();
+        while (iterator.hasNext()) {
+            SysPermission next = iterator.next();
+            getSubMenu(subject, next);
+            if(CollectionUtils.isEmpty(next.getSubPermissions())) {
+                iterator.remove();
             }
         }
-        session.setAttribute(GlobalKey.THYMELEAF_MENU, moduleMenus);
-        return moduleMenus;
+        session.setAttribute(GlobalKey.THYMELEAF_MENU, modulePermissions);
+        return modulePermissions;
     }
 
+    /**
+     * 获得菜单下标记为已显示的子菜单，并根据权限进行判断
+     *
+     * @param subject   已登陆有丧尸
+     * @param parent    父菜单
+     */
+    private void getSubMenu(Subject subject, SysPermission parent) {
+        List<SysPermission> subPermissions = getMenuByParentIdAndShow(parent.getId());
+        if(CollectionUtils.isEmpty(subPermissions)) {
+            return ;
+        }
+        if(subject.isPermitted(parent.getPermission())) {
+            parent.setSubPermissions(subPermissions);
+        } else {
+            List<SysPermission> hasSubPermissions = parent.getSubPermissions();
+            for ( SysPermission permission : subPermissions ) {
+                if(subject.isPermitted(permission.getPermission())) {
+                    hasSubPermissions.add(permission);
+                }
+            }
+        }
+    }
+
+
+    /**
+     * 通过父ID获得标记为已显示的菜单
+     * @param parentId  父ID
+     * @return  菜单列表
+     */
     private List<SysPermission> getMenuByParentIdAndShow(String parentId) {
         SysPermission sysPermission = new SysPermission();
         sysPermission.setParentId(parentId);
