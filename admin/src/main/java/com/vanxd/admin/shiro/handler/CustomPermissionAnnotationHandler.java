@@ -79,9 +79,9 @@ public class CustomPermissionAnnotationHandler extends AuthorizingAnnotationHand
             }
             if(null != classAnnotation) {
                 String[] classPerms = this.getAnnotationValue(classAnnotation);
-                subject.isPermitted(classPerms[0] + methodPerms [0]);
+                subject.checkPermission(classPerms[0] + methodPerms [0]);
             } else {
-                subject.isPermitted(methodPerms[0]);
+                subject.checkPermission(methodPerms[0]);
             }
         } else if(Logical.AND.equals(methodAnnotaion.logical())) {
             this.getSubject().checkPermissions(methodPerms);
