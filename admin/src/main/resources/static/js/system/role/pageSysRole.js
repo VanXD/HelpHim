@@ -123,6 +123,9 @@ function editFuncDiaglog(entity) {
 function delFuncDiaglog(id) {
 }
 
+/**
+ * 所有权限列表
+ */
 function listPermissions() {
     var roleId = iJqGrid.jqGrid('getGridParam','selrow');
     if(!roleId) {
@@ -140,12 +143,12 @@ function listPermissions() {
                 result.roleId = roleId;
                 var permissionTmpl = `
                     <% for(var i = 0, j = result.length; i < j ; i++) { %>
-                    <li class="dd-item dd-collapsed" id="module-<%=result[i].id%>">
+                    <li class="dd-item dd-collapsed">
                         <button data-action="collapse" type="button" style="display: none;">Collapse</button>
                         <button data-action="expand" type="button">Expand</button>
                         <div class="dd-row">
                             <span class="pull-right">
-                                <input <%=result[i].checked ? 'checked=true' : ''%> id="<%=result[i].id%>" class="parent-permission-icheck" type="checkbox">
+                                <input <%=result[i].checked ? 'checked=true' : ''%> id="<%=result[i].id%>" class="permission-icheck" type="checkbox">
                             </span>
                             <span class="label label-info"><i class="fa <%=result[i].icon%>"></i></span> <%=result[i].name%>
                         </div>
@@ -156,7 +159,7 @@ function listPermissions() {
                                 <button data-action="expand" type="button">Expand</button>
                                 <div class="dd-row">
                                     <span class="pull-right">
-                                        <input <%=result[i].subPermissions[k].checked ? 'checked=true' : ''%> id="<%=result[i].subPermissions[k].id%>" class="parent-permission-icheck" type="checkbox">
+                                        <input <%=result[i].subPermissions[k].checked ? 'checked=true' : ''%> id="<%=result[i].subPermissions[k].id%>" data-parent-id="<%=result[i].id%>" class="permission-icheck" type="checkbox">
                                     </span>
                                     <span class="label label-info"><i class="fa <%=result[i].subPermissions[k].icon%>"></i></span> <%=result[i].subPermissions[k].name%>
                                 </div>
@@ -183,9 +186,6 @@ function listPermissions() {
                 bindIChecks(".permission-icheck").on("ifChecked ifUnchecked", event => {
                     relation(event.type, event.target, roleId);
                 });
-                bindIChecks(".parent-permission-icheck").on("ifChecked ifUnchecked", event => {
-                    relationAll(event.type, event.target, roleId);
-                });
             } else {
                 handleRequestFail(result);
             }
@@ -193,6 +193,7 @@ function listPermissions() {
     });
     $("#relation-permission-form").modal();
 }
+
 
 /**
  * 关联角色和权限
@@ -212,6 +213,12 @@ function relation(eventType, ele, roleId) {
                 permissionId : ele.id
             },
             success : result => {
+                // 找到当前元素的所有子权限全部全选
+                var subCheckbox = $("#sub-of-" + ele.id).find("input[data-parent-id=" + ele.id +"]");
+                if(subCheckbox.length > 0) {
+                    subCheckbox.iCheck("check");
+                }
+                // 找到当前元素的父权限的所有子权限，如果该父权限下的所有子权限被选中，则勾选父权限
                 var parentId = $(ele).data("parent-id");
                 if(parentId) {
                     var parentCheckbox = $("#" + parentId);
@@ -222,7 +229,6 @@ function relation(eventType, ele, roleId) {
                             parentCheckbox.iCheck("check");
                         }
                     }
-
                 }
             }
         });
@@ -235,52 +241,19 @@ function relation(eventType, ele, roleId) {
                 permissionId : ele.id
             },
             success : result => {
+                // 找到当前元素的所有子权限，如果所有子权限被选中，则反选所有子权限
+                var subCheckbox = $("#sub-of-" + ele.id + " input[type=checkbox]"),
+                    subCheckedCount = subCheckbox.length - subCheckbox.not(":checked").length;
+                if(subCheckedCount == subCheckbox.length) {
+                    subCheckbox.iCheck("uncheck");
+                }
+                // 如果当前元素的父权限被选中，反选父权限
                 var parentId = $(ele).data("parent-id");
                 if(parentId) {
                     var parentCheckbox = $("#" + parentId);
                     if(parentCheckbox.prop("checked")) {
                         parentCheckbox.iCheck("uncheck");
                     }
-                }
-            }
-        });
-    }
-}
-
-/**
- * 全选/反全选
- * 全选：将所有子菜单选中
- * 反全选：当所有子菜单被选中时才反选所有子菜单
- * @param eventType
- * @param ele
- * @param roleId
- */
-function relationAll(eventType, ele, roleId) {
-    if(eventType == "ifChecked") {
-        ajaxRequest({
-            type : "post",
-            url  : "/system/rolePermission/edit.json",
-            data : {
-                roleId : roleId,
-                permissionId : ele.id
-            },
-            success : result => {
-                $("#sub-of-" + ele.id + " input[type=checkbox]").iCheck("check");
-            }
-        });
-    } else if (eventType == "ifUnchecked") {
-        ajaxRequest({
-            type : "post",
-            url  : "/system/rolePermission/cancelRelation.json",
-            data : {
-                roleId : roleId,
-                permissionId : ele.id
-            },
-            success : result => {
-                var subCheckbox = $("#sub-of-" + ele.id + " input[type=checkbox]"),
-                    subCheckedCount = subCheckbox.length - subCheckbox.not(":checked").length;
-                if(subCheckedCount == subCheckbox.length) {
-                    $("#sub-of-" + ele.id + " input[type=checkbox]").iCheck("uncheck");
                 }
             }
         });
