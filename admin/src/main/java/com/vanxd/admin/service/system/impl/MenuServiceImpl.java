@@ -27,7 +27,6 @@ public class MenuServiceImpl implements MenuService {
 
     /**
      * 获得左侧导航栏，现在只有1级dropdown
-     * todo 待优化
      * @return
      */
     public List<SysPermission> getMenu() {
@@ -58,17 +57,28 @@ public class MenuServiceImpl implements MenuService {
      * @param parent    父菜单
      */
     private void getSubMenu(Subject subject, SysPermission parent) {
-        List<SysPermission> subPermissions = getMenuByParentIdAndShow(parent.getId());
-        if(CollectionUtils.isEmpty(subPermissions)) {
+        List<SysPermission> mens = getMenuByParentIdAndShow(parent.getId());
+        List<SysPermission> functions = null;
+        if(CollectionUtils.isEmpty(mens)) {
             return ;
         }
         if(subject.isPermitted(parent.getPermission())) {
-            parent.setSubPermissions(subPermissions);
+            parent.setSubPermissions(mens);
         } else {
-            List<SysPermission> hasSubPermissions = parent.getSubPermissions();
-            for ( SysPermission permission : subPermissions ) {
+            List<SysPermission> parentSubPermissions = parent.getSubPermissions();
+            for ( SysPermission permission : mens ) {
                 if(subject.isPermitted(permission.getPermission())) {
-                    hasSubPermissions.add(permission);
+                    parentSubPermissions.add(permission);
+                } else {
+                    functions = getMenuByParentIdAndShow(permission.getId());
+                    if ( !CollectionUtils.isEmpty(functions) ) {
+                        for( SysPermission function : functions ) {
+                            if(subject.isPermitted(function.getPermission())) {
+                                parentSubPermissions.add(permission);
+                                break;
+                            }
+                        }
+                    }
                 }
             }
         }

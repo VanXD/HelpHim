@@ -57,3 +57,5 @@
 3.  checkbox和radio统一使用iCheck
     1.common.js中的bindIChecks(selector)，之后优化放到其他文件
     2.iCheck获得事件源event.target
+4.  权限管理：菜单是由模块->菜单->功能 3级组成
+    1.  权限增加时如果是菜单级需要填写相应的URI
