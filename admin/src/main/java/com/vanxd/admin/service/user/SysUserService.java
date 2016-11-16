@@ -19,7 +19,6 @@ public interface SysUserService extends BaseService<SysUser, SysUserMapper>{
     SysUser getByUsername(String username);
 
     /**
-     * todo 改为一条SQL
      * 获得用户的所有权限识别码
      * @param userId 用户ID
      * @return set 权限识别码列表
