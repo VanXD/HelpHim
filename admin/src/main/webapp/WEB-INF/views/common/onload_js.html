@@ -1,24 +1,25 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<script src="../../../../resources/static/js/artTemplate.js"></script>
 <body>
 <!--
     uri  : 页面文件不含js目录的uri 例如文件: /js/user/dashboard.css，只用传/user/dashboard.js
  -->
 <div th:fragment="onloadJS(uri)">
     <script th:src="@{/js/common.js}"></script>
-    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/plugins/bootstrap.min.js}"></script>
     <script th:src="@{/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
     <script th:src="@{/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
-    <script th:src="@{/js/jquery.jqGrid.js}"></script>
-    <script th:src="@{/js/i18n/grid.locale-cn.js}"></script>
+    <script th:src="@{/js/plugins/jquery.jqGrid.js}"></script>
+    <script th:src="@{/js/plugins/i18n/grid.locale-cn.js}"></script>
     <script th:src="@{/js/plugins/iCheck/icheck.min.js}"></script>
     <script th:src="@{/js/plugins/validate/jquery.validate.min.js}"></script>
     <script th:src="@{/js/plugins/form/jquery.form.min.js}"></script>
     <script th:src="@{/js/plugins/datepick/bootstrap-datetimepicker.min.js}"></script>
     <script th:src="@{/js/plugins/datepick/bootstrap-datetimepicker.zh-CN.js}"></script>
     <script th:src="@{/js/plugins/nestable/jquery.nestable.js}"></script>
-    <script th:src="@{/js/inspinia.js}"></script>
-    <script th:src="@{/js/artTemplate.js}"></script>
+    <script th:src="@{/js/plugins/inspinia.js}"></script>
+    <script th:src="@{/js/plugins/artTemplate.js}"></script>
     <script th:src="@{'/js' + ${uri}}" th:if="${!#strings.isEmpty(uri)}"></script>
 </div>
 
