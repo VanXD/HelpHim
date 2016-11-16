@@ -79,20 +79,7 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, SysUserMapper> 
 
     @Override
     public Set<String> getPermissionIdentitiesByUserId(String userId) {
-        Set<String> permissionIdentities = new HashSet<String>();
-        SysUserRole userRoleConditions = new SysUserRole();
-        userRoleConditions.setUserId(userId);
-        List<SysUserRole> userRoles = sysUserRoleMapper.page(userRoleConditions, null, null);
-        List<SysRolePermission> sysRolePermissions = null;
-        SysRolePermission sysRolePerCondition = null;
-        for(SysUserRole userRole : userRoles) {
-            sysRolePerCondition = new SysRolePermission();
-            sysRolePerCondition.setRoleId(userRole.getRoleId());
-            sysRolePermissions = sysRolePermissionMapper.page(sysRolePerCondition, null, null);
-            for(SysRolePermission sysPermission : sysRolePermissions) {
-                permissionIdentities.add(sysPermission.getPermission());
-            }
-        }
+        Set<String> permissionIdentities = sysUserRoleMapper.selectPermissionsByUserId(userId);
         return permissionIdentities;
     }
 
