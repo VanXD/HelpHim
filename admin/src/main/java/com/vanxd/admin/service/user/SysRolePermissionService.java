@@ -14,5 +14,10 @@ import java.util.List;
 public interface SysRolePermissionService extends BaseService<SysRolePermission, SysRolePermissionMapper> {
     boolean cancelRelation(String roleId, String permissionId);
 
+    /**
+     * 获得所有权限列表，标记{roleId}已拥有的权限
+     * @param roleId
+     * @return
+     */
     List<SysPermission> findByRoleIdAndChecked(String roleId);
 }

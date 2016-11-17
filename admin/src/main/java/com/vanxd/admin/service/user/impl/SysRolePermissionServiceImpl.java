@@ -40,13 +40,11 @@ public class SysRolePermissionServiceImpl extends BaseServiceImpl<SysRolePermiss
         return sysRolePermissionMapper.deleteByRoleIdAndPermissionId(roleId, permissionId) > 0;
     }
 
-    // todo 待优化
     @Override
     public List<SysPermission> findByRoleIdAndChecked(String roleId) {
         SysRolePermission rolePermCondition = new SysRolePermission();
         rolePermCondition.setRoleId(roleId);
         List<SysRolePermission> roleHasPerms = sysRolePermissionMapper.page(rolePermCondition, null, null);
-
         List<SysPermission> permissionTree = sysPermissionServiceImpl.getPermissionTreeAndMark(GlobalKey.MENU_MODULE_PARENT_ID, roleHasPerms);
         return permissionTree;
     }
