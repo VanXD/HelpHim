@@ -58,4 +58,9 @@ public class LoginController {
         SecurityUtils.getSubject().logout();
         return "redirect:login";
     }
+
+    @RequestMapping("/dashboard")
+    public String dashboard() {
+        return "dashboard";
+    }
 }

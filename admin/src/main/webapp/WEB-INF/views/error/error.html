@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="/common/common_head :: commonHeader('错误', '')"></head>
+
+<body class="gray-bg">
+
+<div class="middle-box text-center animated fadeInDown">
+    <h1>500</h1>
+    <h3 class="font-bold">服务器错误</h3>
+
+    <div class="error-desc">
+        非常的抱歉，服务器发生不可预知的错误！<br/>
+        可以点击按钮回到首页。<br/>
+        <a href="/dashboard" class="btn btn-primary m-t">首页</a>
+    </div>
+</div>
+
+<!-- Mainly scripts -->
+<script th:src="@{/js/plugins/jquery-2.1.1.js}"></script>
+<script th:src="@{/js/plugins/bootstrap.min.js}"></script>
+
+</body>
+
+</html>

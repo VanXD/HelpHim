@@ -4,6 +4,7 @@ import com.google.common.base.Throwables;
 import com.vanxd.admin.exception.AuthException;
 import com.vanxd.admin.exception.BusinessException;
 import com.vanxd.admin.exception.ParameterException;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -32,7 +33,7 @@ public abstract class HandlerController {
 	/** 分页变量名 */
 	protected static final String pageName = "page";
 
-	protected final org.slf4j.Logger logger = LoggerFactory.getLogger(getClass());
+	protected final Logger logger = LoggerFactory.getLogger(getClass());
 
     /**
 	 * 全局异常处理类，错误页面。.
@@ -46,13 +47,9 @@ public abstract class HandlerController {
     @ExceptionHandler
     protected String handleException(HttpServletRequest request, Exception ex) {
     	String message = Throwables.getStackTraceAsString(ex);
-    	String description = ex.getMessage();
     	logger.error(message);
-		request.setAttribute("description", description);
-		request.setAttribute("simpleName", Throwables.getRootCause(ex).getClass().getName());
-		request.setAttribute("message", message);
 //		todo 保存到数据库
-//		LogUtils.saveSysLog(request,  null, ex, ex.getMessage());
+//		LogUtils.saveSyswLog(request,  null, ex, ex.getMessage());
 		if(ex instanceof AuthException){
 			return "redirect:/login";
 		} else if (ex instanceof BusinessException) {
@@ -60,9 +57,6 @@ public abstract class HandlerController {
 		} else if (ex instanceof ParameterException) {
 			return "error/error-parameter";
 		} else {
-			request.setAttribute("description", description);
-			request.setAttribute("simpleName", Throwables.getRootCause(ex).getClass().getName());
-			request.setAttribute("message", "异常！");
 			return "error/error";
 		}
     }

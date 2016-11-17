@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="/common/common_head :: commonHeader('错误', '')"></head>
+
+<body class="gray-bg">
+
+
+<div class="middle-box text-center animated fadeInDown">
+    <h1>404</h1>
+    <h3 class="font-bold">Page Not Found</h3>
+
+    <div class="error-desc">
+        很抱歉，页面未找到！
+    </div>
+</div>
+<!-- Mainly scripts -->
+<script th:src="@{/js/plugins/jquery-2.1.1.js}"></script>
+<script th:src="@{/js/plugins/bootstrap.min.js}"></script>
+
+</body>
+
+</html>
