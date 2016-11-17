@@ -26,8 +26,6 @@ public interface SysUserService extends BaseService<SysUser, SysUserMapper>{
     Set<String> getPermissionIdentitiesByUserId(String userId);
 
     /**
-     * todo 改为一条sql
-     *
      * 获得用户的所有角色识别码
      *
      * @param userId 用户ID

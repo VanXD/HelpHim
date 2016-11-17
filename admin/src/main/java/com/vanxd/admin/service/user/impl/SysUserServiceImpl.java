@@ -32,8 +32,6 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, SysUserMapper> 
     @Autowired
     private SysUserRoleMapper sysUserRoleMapper;
     @Autowired
-    private SysRolePermissionMapper sysRolePermissionMapper;
-    @Autowired
     private PasswordService passwordService;
 
     @Override
@@ -67,20 +65,12 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, SysUserMapper> 
 
     @Override
     public Set<String> getRoleIdentitiesByUserId(String userId) {
-        Set<String> rolesIdentities = new HashSet<String>();
-        SysUserRole userRoleConditions = new SysUserRole();
-        userRoleConditions.setUserId(userId);
-        List<SysUserRole> sysUserRoles = sysUserRoleMapper.page(userRoleConditions, null, null);
-        for(SysUserRole userRole : sysUserRoles) {
-            rolesIdentities.add(userRole.getRole());
-        }
-        return rolesIdentities;
+        return sysUserRoleMapper.selectRolesByUserId(userId);
     }
 
     @Override
     public Set<String> getPermissionIdentitiesByUserId(String userId) {
-        Set<String> permissionIdentities = sysUserRoleMapper.selectPermissionsByUserId(userId);
-        return permissionIdentities;
+        return sysUserRoleMapper.selectPermissionsByUserId(userId);
     }
 
     /**

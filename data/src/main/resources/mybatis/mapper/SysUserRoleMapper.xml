@@ -169,4 +169,14 @@
     JOIN sys_permission sp ON srp.permission_id = sp.id
     WHERE sur.user_id = #{userId,jdbcType=VARCHAR}
   </select>
+
+  <!-- 根据用户ID获得所有角色标识 -->
+  <select id="selectRolesByUserId" parameterType="java.lang.String" resultType="java.lang.String">
+    SELECT
+	sr.role
+    FROM
+        sys_user_role sur
+    LEFT JOIN sys_role sr ON sur.role_id = sr.id
+    WHERE sur.user_id = #{userId,jdbcType=VARCHAR}
+  </select>
 </mapper>

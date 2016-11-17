@@ -22,4 +22,11 @@ public interface SysUserRoleMapper extends BaseMapper<SysUserRole> {
      * @return
      */
     Set<String> selectPermissionsByUserId(String userId);
+
+    /**
+     * 根据用户ID，获得所有用户的角色标识
+     * @param userId    用户ID
+     * @return
+     */
+    Set<String> selectRolesByUserId(String userId);
 }
