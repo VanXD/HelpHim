@@ -1,5 +1,6 @@
 # SpringBoot项目脚手架
 ## 集成框架
+0.  Java 8， ES6
 1.  SpringBoot1.3.5.RELEASE
 2.  spring-boot-starter-thymeleaf1.4.0.RELEASE
 3.  MyBatis3.4.1
