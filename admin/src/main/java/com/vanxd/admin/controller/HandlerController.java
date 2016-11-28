@@ -20,7 +20,7 @@ import java.util.Date;
  * 基类控制器.
  */
 public abstract class HandlerController {
-	@Autowired
+	@Autowired(required = false)
 	private HttpServletRequest request;
 
 	/** The Constant ERROR. */

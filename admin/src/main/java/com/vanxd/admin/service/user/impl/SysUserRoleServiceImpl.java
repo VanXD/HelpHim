@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author wyd on 2016/10/20.
@@ -41,13 +42,12 @@ public class SysUserRoleServiceImpl extends BaseServiceImpl<SysUserRole, SysUser
     public List<SysRole> findByUserIdAndChecked(String userId) {
         Set<String> userHasRoles = sysUserServiceImpl.getRoleIdentitiesByUserId(userId);
         List<SysRole> list = sysRoleMapper.page(new SysRole(), null, null);
-        for(SysRole role : list) {
-            for(String hadRoleIdentity : userHasRoles) {
-                if(role.getRole().equals(hadRoleIdentity)) {
-                    role.setChecked(true);
-                }
+        list.stream().filter(ele -> {
+            if( userHasRoles.contains(ele.getRole()) ) {
+                ele.setChecked(true);
             }
-        }
+            return true;
+        }).collect(Collectors.toList());
         return list;
     }
 }
