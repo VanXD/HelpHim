@@ -2,6 +2,7 @@ package com.vanxd.admin.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.vanxd.admin.exception.BusinessException;
+import com.vanxd.admin.exception.ParameterException;
 import com.vanxd.admin.service.BaseService;
 import com.vanxd.data.component.PageResult;
 import com.vanxd.data.component.Pagination;
@@ -111,7 +112,7 @@ public abstract class BaseController<T extends BaseEntity, Service extends BaseS
     @ResponseBody
     public RespJSON getById(String id) {
         if(StringUtils.isEmpty(id)) {
-            throw new BusinessException("参数不正确！");
+            throw new ParameterException("参数不正确！");
         }
         T entity = (T) getService().findByPrimaryKey(id);
         if(null == entity) {
@@ -131,7 +132,7 @@ public abstract class BaseController<T extends BaseEntity, Service extends BaseS
     @ResponseBody
     public RespJSON delete(String id) {
         if(StringUtils.isEmpty(id)) {
-            throw new BusinessException("参数不正确！");
+            throw new ParameterException("参数不正确！");
         }
         if(getService().deleteSoftlyByPrimaryKey(id) > 0) {
             return new RespJSON(RespJSON.RespCode.SUCCESS);
