@@ -44,11 +44,11 @@ public abstract class HandlerController {
 	 *            异常。
 	 * @return 异常显示视图。
 	 */
-    @ExceptionHandler
+//    @ExceptionHandler
     protected String handleException(HttpServletRequest request, Exception ex) {
     	String message = Throwables.getStackTraceAsString(ex);
     	logger.error(message);
-//		todo 保存到数据库
+//		todo 保存到数据库，可能删掉，将在AppErrorController中处理异常
 //		LogUtils.saveSyswLog(request,  null, ex, ex.getMessage());
 		if(ex instanceof AuthException){
 			return "redirect:/login";
