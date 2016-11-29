@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 /**
+ *  11
  * 当找不到页面时，spring会去请求/error这个路径
  *
  * @author wyd on 2016/11/17.
