@@ -17,6 +17,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
+ * 抽象Controller的公共接口和权限
+ * 接口名                权限名            备注
+ * /page                :page             打开列表页面
+ * /list.json           :page             列表页ajax获取数据的接口
+ * /edit.json           :edit             编辑接口：新增或修改
+ * /getById.json        :detail           详情接口
+ * /delete.json         :delete           删除接口
  * @author wyd on 2016/9/9.
  */
 public abstract class BaseController<T extends BaseEntity, Service extends BaseService> extends HandlerController {

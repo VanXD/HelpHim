@@ -6,6 +6,8 @@ import java.lang.reflect.Field;
 import java.util.List;
 
 /**
+ * JqGrid的过滤器，用于条件搜索
+ *
  * @author wyd on 2016/10/10.
  */
 public class JqFilter {
@@ -41,9 +43,10 @@ public class JqFilter {
      */
     private void fillAliasToRules() {
         try {
+            TableAlias fieldAnnotation = null;
             for(JqRule jqRule : rules) {
                 Field field = pojoClazz.getDeclaredField(jqRule.getField());
-                TableAlias fieldAnnotation = field.getAnnotation(TableAlias.class);
+                fieldAnnotation = field.getAnnotation(TableAlias.class);
                 if(null != fieldAnnotation && fieldAnnotation.isRequire()) {
                     jqRule.setTableAlias(fieldAnnotation.alias());
                 } else {
