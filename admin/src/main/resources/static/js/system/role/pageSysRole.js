@@ -7,10 +7,7 @@ $(function () {
 });
 
 function initValidate() {
-    $("#edit-form").validate({
-        errorPlacement: (error, element) => {
-            element.after(error);
-        },
+    editFormValidator({
         rules: {
             name : {
                 required : true,
@@ -38,18 +35,6 @@ function initValidate() {
                 required : "必填",
                 maxlength : "最长300个字符"
             }
-        },
-        submitHandler : form => {
-            $(form).ajaxSubmit({
-                success : result => {
-                    if(200 == result.code) {
-                        $(iJqGrid).trigger("reloadGrid");
-                        $("#edit-modal-form").modal("hide");
-                    } else {
-                        alert(result.message);
-                    }
-                }
-            });
         }
     });
 }

@@ -4,10 +4,7 @@ $(function () {
 });
 
 function initValidate() {
-    $("#edit-form").validate({
-        errorPlacement: (error, element) => {
-            element.after(error);
-        },
+    editFormValidator({
         rules: {
             nickname : {
                 required : true,
@@ -58,18 +55,6 @@ function initValidate() {
                 maxlength : "最长11个字符",
                 minlength : "最短11个字符"
             }
-        },
-        submitHandler : form => {
-            $(form).ajaxSubmit({
-                success : result => {
-                    if(200 == result.code) {
-                        $(iJqGrid).trigger("reloadGrid");
-                        $("#edit-modal-form").modal("hide");
-                    } else {
-                        alert(result.message);
-                    }
-                }
-            });
         }
     });
 }
