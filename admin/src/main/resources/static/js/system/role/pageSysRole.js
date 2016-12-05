@@ -170,9 +170,9 @@ function listPermissions() {
             bindIChecks(".permission-icheck").on("ifChecked ifUnchecked", event => {
                 relation(event.type, event.target, roleId);
             });
+            $("#relation-permission-form").modal();
         }
     });
-    $("#relation-permission-form").modal();
 }
 
 

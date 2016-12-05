@@ -273,22 +273,52 @@ function handleRequestFail(result) {
 
 /**
  * 发起ajax请求
- * @param ajaxObj
+ * @param ajaxObj   jQuery发起ajax请求的参数
  */
 function ajaxRequest(ajaxObj) {
-    $.ajax({
-        type : ajaxObj.type || "get",
-        url  : ajaxObj.url,
-        data : ajaxObj.data,
-        sync : ajaxObj.sync || true ,
-        success : result => {
-            if(isRequestSuccess(result)) {
-                if(ajaxObj.success) {
-                    ajaxObj.success(result);
+    var ajaxPromise = new Promise((resolve, reject) => {
+        $.ajax({
+            type : ajaxObj.type || "get",
+            url  : ajaxObj.url,
+            data : ajaxObj.data,
+            sync : ajaxObj.sync || true ,
+            success : result => {
+                if(isRequestSuccess(result)) {
+                    resolve(result);
+                } else {
+                    reject(result);
                 }
-            } else {
-                handleRequestFail(result);
             }
+        });
+    }).then(result => {
+        if(ajaxObj.success) {
+            ajaxObj.success(result);
+        }
+    }).catch(result => {
+        handleRequestFail(result);
+    });
+    return ajaxPromise;
+}
+
+function editFormValidator(validate) {
+    var formSelector = validate.formSelector || "#edit-modal-form";
+    $("#edit-form").validate({
+        errorPlacement: (error, element) => {
+            element.after(error);
+        },
+        rules: validate.rules ,
+        messages : validate.messages ,
+        submitHandler : form => {
+            $(form).ajaxSubmit({
+                success : result => {
+                    if(isRequestSuccess(result)) {
+                        $(iJqGrid).trigger("reloadGrid");
+                        $(formSelector).modal("hide");
+                    } else {
+                        handleRequestFail(result);
+                    }
+                }
+            });
         }
     });
 }

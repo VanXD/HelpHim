@@ -143,9 +143,9 @@ function listRoles() {
                     <% } %>
                 `;
             $("#roles").html(template.compile(roleTmpl)(result));
+            $("#relation-role-form").modal();
         }
     });
-    $("#relation-role-form").modal();
 }
 
 /**
