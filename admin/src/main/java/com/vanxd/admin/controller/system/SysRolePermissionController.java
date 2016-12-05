@@ -35,15 +35,15 @@ public class SysRolePermissionController extends BaseController<SysRolePermissio
     @ResponseBody
     public RespJSON cancelRelation(String roleId, String permissionId) {
         if(StringUtils.isEmpty(roleId)) {
-            return RespJSON.generator(RespJSON.RespCode.PARAM_ILLEAGUE);
+            return RespJSON.respCode(RespJSON.RespCode.PARAM_ILLEAGUE);
         }
         if(StringUtils.isEmpty(permissionId)) {
-            return RespJSON.generator(RespJSON.RespCode.PARAM_ILLEAGUE);
+            return RespJSON.respCode(RespJSON.RespCode.PARAM_ILLEAGUE);
         }
         if(sysRolePermissionServiceImpl.cancelRelation(roleId, permissionId)) {
-            return RespJSON.generator(RespJSON.RespCode.SUCCESS);
+            return RespJSON.respCode(RespJSON.RespCode.SUCCESS);
         } else {
-            return RespJSON.generator(RespJSON.RespCode.FAIL);
+            return RespJSON.respCode(RespJSON.RespCode.FAIL);
         }
     }
 
@@ -53,7 +53,7 @@ public class SysRolePermissionController extends BaseController<SysRolePermissio
         if(StringUtils.isEmpty(roleId)) {
             return new RespJSON(RespJSON.RespCode.PARAM_ILLEAGUE);
         }
-        return new RespJSON(sysRolePermissionServiceImpl.findByRoleIdAndChecked(roleId));
+        return RespJSON.successData(sysRolePermissionServiceImpl.findByRoleIdAndChecked(roleId));
     }
 
 }

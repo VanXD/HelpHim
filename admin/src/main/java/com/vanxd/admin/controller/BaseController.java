@@ -1,7 +1,6 @@
 package com.vanxd.admin.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.vanxd.admin.exception.BusinessException;
 import com.vanxd.admin.exception.ParameterException;
 import com.vanxd.admin.service.BaseService;
 import com.vanxd.data.component.PageResult;
@@ -103,9 +102,9 @@ public abstract class BaseController<T extends BaseEntity, Service extends BaseS
     @ResponseBody
     public RespJSON<RespJSON> edit(T entity) {
         if(getService().edit(entity)) {
-            return new RespJSON<RespJSON>(RespJSON.RespCode.SUCCESS);
+            return RespJSON.respCode(RespJSON.RespCode.SUCCESS);
         } else {
-            return new RespJSON<RespJSON>(RespJSON.RespCode.FAIL);
+            return RespJSON.respCode(RespJSON.RespCode.FAIL);
         }
     }
 
@@ -123,9 +122,9 @@ public abstract class BaseController<T extends BaseEntity, Service extends BaseS
         }
         T entity = (T) getService().findByPrimaryKey(id);
         if(null == entity) {
-            return new RespJSON(RespJSON.RespCode.DATA_EMPTY);
+            return RespJSON.respCode(RespJSON.RespCode.DATA_EMPTY);
         } else {
-            return new RespJSON(entity);
+            return RespJSON.successData(entity);
         }
     }
 
@@ -142,9 +141,9 @@ public abstract class BaseController<T extends BaseEntity, Service extends BaseS
             throw new ParameterException("参数不正确！");
         }
         if(getService().deleteSoftlyByPrimaryKey(id) > 0) {
-            return new RespJSON(RespJSON.RespCode.SUCCESS);
+            return RespJSON.respCode(RespJSON.RespCode.SUCCESS);
         } else {
-            return new RespJSON(RespJSON.RespCode.FAIL);
+            return RespJSON.respCode(RespJSON.RespCode.FAIL);
         }
     }
 }

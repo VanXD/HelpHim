@@ -36,15 +36,15 @@ public class SysUserRoleController extends BaseController<SysUserRole, SysUserRo
     @ResponseBody
     public RespJSON cancelRelation(String userId, String roleId) {
         if(StringUtils.isEmpty(userId)) {
-            return RespJSON.generator(RespJSON.RespCode.PARAM_ILLEAGUE);
+            return RespJSON.respCode(RespJSON.RespCode.PARAM_ILLEAGUE);
         }
         if(StringUtils.isEmpty(roleId)) {
-            return RespJSON.generator(RespJSON.RespCode.PARAM_ILLEAGUE);
+            return RespJSON.respCode(RespJSON.RespCode.PARAM_ILLEAGUE);
         }
         if(sysUserRoleServiceImpl.cancelRelation(userId, roleId)) {
-            return RespJSON.generator(RespJSON.RespCode.SUCCESS);
+            return RespJSON.respCode(RespJSON.RespCode.SUCCESS);
         } else {
-            return RespJSON.generator(RespJSON.RespCode.FAIL);
+            return RespJSON.respCode(RespJSON.RespCode.FAIL);
         }
     }
 
@@ -54,6 +54,6 @@ public class SysUserRoleController extends BaseController<SysUserRole, SysUserRo
         if(StringUtils.isEmpty(userId)) {
             return new RespJSON(RespJSON.RespCode.PARAM_ILLEAGUE);
         }
-        return new RespJSON(sysUserRoleServiceImpl.findByUserIdAndChecked(userId));
+        return RespJSON.successData(sysUserRoleServiceImpl.findByUserIdAndChecked(userId));
     }
 }

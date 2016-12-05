@@ -1,10 +1,12 @@
 package com.vanxd.admin.controller;
 
+import com.vanxd.data.component.RespJSON;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.web.BasicErrorController;
 import org.springframework.boot.autoconfigure.web.ErrorAttributes;
 import org.springframework.boot.autoconfigure.web.ErrorProperties;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -33,11 +35,12 @@ public class AppErrorController extends BasicErrorController {
     @Override
     public ResponseEntity<Map<String, Object>> error(HttpServletRequest request) {
         ResponseEntity<Map<String, Object>> error = super.error(request);
+        ResponseEntity result = new ResponseEntity(RespJSON.exception(error), HttpStatus.EXPECTATION_FAILED);
         // todo 异常保存到数据库
 //        if(error.getStatusCode().is5xxServerError()) {
 //
 //            logger.error((String) error.getBody().get("message"));
 //        }
-        return error;
+        return result;
     }
 }

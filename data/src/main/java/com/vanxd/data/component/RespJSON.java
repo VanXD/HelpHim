@@ -53,51 +53,45 @@ public class RespJSON<T> {
     }
 
     /**
-     * 生成错误消息.
+     * 返回指定相应码
      *
-     * @param message 错误消息体
-     */
-    public RespJSON(String message) {
-        this(new Exception(message));
-    }
-
-    /**
-     * 生成错误消息.
-     *
-     * @param exception 抛出的异常
-     */
-    public RespJSON(Exception exception) {
-        this.code = RespCode.FAIL.getCode();
-        this.message = exception.getMessage();
-    }
-
-    /**
-     * 生成成功消息.
-     *
-     * @param result 返回数据
-     */
-    public RespJSON(T result) {
-        this.code = RespCode.SUCCESS.getCode();
-        this.message = RespCode.SUCCESS.getMeaning();
-        this.result = result;
-    }
-
-    /**
-     * 生成对象
      * @param respCode
      * @return
      */
-    public static RespJSON generator(RespCode respCode) {
+    public static RespJSON respCode(RespCode respCode) {
         return new RespJSON(respCode);
     }
 
     /**
-     * 生成对象
-     * @param object
+     * 返回成功
      * @return
      */
-    public static RespJSON generator(Object object) {
-        return new RespJSON(object);
+    public static RespJSON success() {
+        return new RespJSON(RespCode.SUCCESS);
+    }
+
+    /**
+     * 返回成功，且返回数据
+     *
+     * @param object    成功返回的对象
+     * @return
+     */
+    public static RespJSON successData(Object object) {
+        RespJSON<Object> respJSON = new RespJSON(RespCode.SUCCESS);
+        respJSON.setResult(object);
+        return respJSON;
+    }
+
+    /**
+     * 返回异常错误码和异常信息
+     *
+     * @param exception 异常对象
+     * @return
+     */
+    public static RespJSON exception(Object exception) {
+        RespJSON<Object> respJSON = new RespJSON(RespCode.EXCEPTION);
+        respJSON.setResult(exception);
+        return respJSON;
     }
 
     /**
@@ -163,7 +157,9 @@ public class RespJSON<T> {
 
         DATA_EMPTY(-1, "未获取到数据"),
 
-        PARAM_ILLEAGUE(-2, "参数不合法");
+        PARAM_ILLEAGUE(-2, "参数不合法"),
+
+        EXCEPTION(-3, "发生异常"),;
 
         /**
          * 响应代码.
