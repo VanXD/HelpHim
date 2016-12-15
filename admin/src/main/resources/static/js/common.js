@@ -1,8 +1,8 @@
 /**
  * todo 这个文件里的各个功能分到其他文件去
  */
-var iJqGrid = null;
-
+var iJqGrid = undefined,
+    normalIChecks = undefined;
 
 $(window).bind('resize', function () {
     bindJqGridResize();
@@ -11,7 +11,7 @@ $(window).bind('resize', function () {
 $(function () {
     initMenu();
     dateFormatterRegister();
-    bindIChecks();
+    normalIChecks = bindIChecks();
     initCustomValidateMethod();
 });
 
@@ -319,6 +319,20 @@ function editFormValidator(validate) {
                     }
                 }
             });
+        }
+    });
+}
+
+/**
+ * 绑定ICheck的基本事件，设置事件源的值，在使用$.ajaxSubmit提交表单时要用
+ */
+function bindNormalICheckEvents() {
+    normalIChecks.on("ifChecked ifUnchecked", event => {
+        var target = event.target;
+        if(target.checked) {
+            target.value = true;
+        } else {
+            target.value = false;
         }
     });
 }

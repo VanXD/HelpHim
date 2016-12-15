@@ -1,8 +1,8 @@
 $(function () {
     buildJqGridGenerator();
     initValidate();
+    bindNormalICheckEvents();
 });
-
 function initValidate() {
     editFormValidator({
         rules: {

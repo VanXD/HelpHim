@@ -55,8 +55,10 @@
 2.  列表页(例，接口：/system/permission/page)
     1.  将会返回/views/system/permission/pageSysPermission.html该页面，可在子控制器重写pageView()来指定页面。
     2.  列表页中使用jqGrid以ajax请求list.json接口获得列表数据。
-3.  checkbox和radio统一使用iCheck
-    1.common.js中的bindIChecks(selector)，之后优化放到其他文件
-    2.iCheck获得事件源event.target
+3.  checkbox和radio统一使用iCheck：
+    1.  common.js中的bindIChecks(selector)，之后优化放到其他文件
+    2.  iCheck获得事件源event.target
+    3.  $.ajaxSubmit提交含有ICheck的表单时，$.ajaxSubmit是直接提交form表单，所以用的都是value值，而ICheck是不会改变checkbox的value的，所以需要定义事件我们自己去改变(@see common.js 的 bindNormalICheckEvents()方法)
+    
 4.  权限管理：菜单是由模块->菜单->功能 3级组成
     1.  权限增加时如果是菜单级需要填写相应的URI
