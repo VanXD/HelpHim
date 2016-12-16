@@ -1,5 +1,6 @@
 package com.vanxd.admin.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.vanxd.data.component.RespJSON;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,6 +36,7 @@ public class AppErrorController extends BasicErrorController {
     @Override
     public ResponseEntity<Map<String, Object>> error(HttpServletRequest request) {
         ResponseEntity<Map<String, Object>> error = super.error(request);
+        logger.error(JSONObject.toJSONString(error));
         ResponseEntity result = new ResponseEntity(RespJSON.exception(error), HttpStatus.EXPECTATION_FAILED);
         // todo 异常保存到数据库
 //        if(error.getStatusCode().is5xxServerError()) {
