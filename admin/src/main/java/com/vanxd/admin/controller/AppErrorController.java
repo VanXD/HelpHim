@@ -39,16 +39,11 @@ public class AppErrorController extends BasicErrorController {
         ResponseEntity<Map<String, Object>> error = super.error(request);
         logger.error(JSONObject.toJSONString(error));
         RespJSON exceptionRespJson = RespJSON.exception(error);
-        if( error.getStatusCode() == HttpStatus.NOT_FOUND )  {
-            return new ResponseEntity(exceptionRespJson, HttpStatus.EXPECTATION_FAILED);
-        }
-        setExceptionMsg(error, exceptionRespJson);
 
-        // todo 异常保存到数据库
-//        if(error.getStatusCode().is5xxServerError()) {
-//
-//            logger.error((String) error.getBody().get("message"));
-//        }
+        switch (error.getStatusCode()) {
+            case INTERNAL_SERVER_ERROR :
+                setExceptionMsg(error, exceptionRespJson);
+        }
         return new ResponseEntity(exceptionRespJson, HttpStatus.EXPECTATION_FAILED);
     }
 
