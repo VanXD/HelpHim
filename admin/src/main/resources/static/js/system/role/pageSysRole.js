@@ -112,7 +112,7 @@ function delFuncDiaglog(id) {
  * 所有权限列表
  */
 function listPermissions() {
-    var roleId = iJqGrid.jqGrid('getGridParam','selrow');
+    var roleId = DEFAULT_JQ_GRID.jqGrid('getGridParam','selrow');
     if(!roleId) {
         alert("请选择需要关联权限的角色！");
         return ;

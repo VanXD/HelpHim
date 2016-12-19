@@ -1,8 +1,8 @@
 /**
  * todo 这个文件里的各个功能分到其他文件去
  */
-var iJqGrid = undefined,
-    normalIChecks = undefined;
+var DEFAULT_JQ_GRID = undefined,
+    DEFAULT_ICHECK_LIST = undefined;
 
 $(window).bind('resize', function () {
     bindJqGridResize();
@@ -11,7 +11,7 @@ $(window).bind('resize', function () {
 $(function () {
     initMenu();
     dateFormatterRegister();
-    normalIChecks = bindIChecks();
+    DEFAULT_ICHECK_LIST = bindIChecks();
     initCustomValidateMethod();
 });
 
@@ -156,7 +156,7 @@ function getUriWithParamsByUrl(url) {
  */
 var jqGridFactory = {
     generate : function (data) {
-        iJqGrid = $(data.tableSelector).jqGrid({
+        DEFAULT_JQ_GRID = $(data.tableSelector).jqGrid({
             url : data.url,
             mtype : data.mtype || "get",
             datatype : "json",
@@ -209,7 +209,7 @@ var jqGridFactory = {
                         },
                         success : result => {
                             if(isRequestSuccess(result)) {
-                                $(iJqGrid).trigger("reloadGrid");
+                                $(DEFAULT_JQ_GRID).trigger("reloadGrid");
                             } else {
                                 handleRequestFail(result);
                             }
@@ -221,7 +221,7 @@ var jqGridFactory = {
                 multipleSearch : true
             }
         );
-        return iJqGrid;
+        return DEFAULT_JQ_GRID;
     }
 };
 
@@ -312,7 +312,7 @@ function editFormValidator(validate) {
             $(form).ajaxSubmit({
                 success : result => {
                     if(isRequestSuccess(result)) {
-                        $(iJqGrid).trigger("reloadGrid");
+                        $(DEFAULT_JQ_GRID).trigger("reloadGrid");
                         $(formSelector).modal("hide");
                     } else {
                         handleRequestFail(result);
@@ -327,7 +327,7 @@ function editFormValidator(validate) {
  * 绑定ICheck的基本事件，设置事件源的值，在使用$.ajaxSubmit提交表单时要用
  */
 function bindNormalICheckEvents() {
-    normalIChecks.on("ifChecked ifUnchecked", event => {
+    DEFAULT_ICHECK_LIST.on("ifChecked ifUnchecked", event => {
         var target = event.target;
         if(target.checked) {
             target.value = true;

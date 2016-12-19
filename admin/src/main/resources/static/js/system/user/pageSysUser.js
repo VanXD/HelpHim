@@ -111,7 +111,7 @@ function buildJqGridGenerator() {
  * 显示所有角色，并标注该用户已关联的角色
  */
 function listRoles() {
-    var dataId = iJqGrid.jqGrid('getGridParam','selrow');
+    var dataId = DEFAULT_JQ_GRID.jqGrid('getGridParam','selrow');
     if(!dataId) {
         alert("请选择需要关联角色的用户！");
         return ;
