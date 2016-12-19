@@ -317,6 +317,10 @@ function editFormValidator(validate) {
                     } else {
                         handleRequestFail(result);
                     }
+                },
+                error : result => {
+                    let responseText = JSON.parse(result.responseText);
+                    alert(responseText.message);
                 }
             });
         }

@@ -23,6 +23,7 @@ import java.util.Map;
  */
 public class AppErrorController extends BasicErrorController {
     private final Logger logger = LoggerFactory.getLogger(getClass());
+    private static final String myExceptionPackage = "com.vanxd.admin.exception.";
 
     public AppErrorController(ErrorAttributes errorAttributes, ErrorProperties errorProperties) {
         super(errorAttributes, errorProperties);
@@ -37,12 +38,27 @@ public class AppErrorController extends BasicErrorController {
     public ResponseEntity<Map<String, Object>> error(HttpServletRequest request) {
         ResponseEntity<Map<String, Object>> error = super.error(request);
         logger.error(JSONObject.toJSONString(error));
-        ResponseEntity result = new ResponseEntity(RespJSON.exception(error), HttpStatus.EXPECTATION_FAILED);
+        RespJSON exceptionRespJson = RespJSON.exception(error);
+        setExceptionMsg(error, exceptionRespJson);
+
         // todo 异常保存到数据库
 //        if(error.getStatusCode().is5xxServerError()) {
 //
 //            logger.error((String) error.getBody().get("message"));
 //        }
-        return result;
+        return new ResponseEntity(exceptionRespJson, HttpStatus.EXPECTATION_FAILED);
+    }
+
+    /**
+     * 如果是我们自己的异常，就把异常消息设我们想显示的消息
+     * @param error                 系统发生的错误
+     * @param exceptionRespJson     返回的异常JSON对象
+     */
+    private void setExceptionMsg(ResponseEntity<Map<String, Object>> error, RespJSON exceptionRespJson) {
+        Map<String, Object> errorBody = error.getBody();
+        String exceptionMessage = errorBody.get("exception").toString();
+        if ( exceptionMessage.contains(myExceptionPackage) ) {
+            exceptionRespJson.setMessage(errorBody.get("message").toString());
+        }
     }
 }

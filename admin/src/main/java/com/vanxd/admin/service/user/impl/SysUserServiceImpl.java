@@ -4,12 +4,7 @@ import com.vanxd.admin.exception.BusinessException;
 import com.vanxd.admin.service.BaseServiceImpl;
 import com.vanxd.admin.service.user.SysUserService;
 import com.vanxd.admin.shiro.authc.PasswordService;
-import com.vanxd.data.entity.user.SysPermission;
-import com.vanxd.data.entity.user.SysRolePermission;
 import com.vanxd.data.entity.user.SysUser;
-import com.vanxd.data.entity.user.SysUserRole;
-import com.vanxd.data.mapper.user.SysPermissionMapper;
-import com.vanxd.data.mapper.user.SysRolePermissionMapper;
 import com.vanxd.data.mapper.user.SysUserMapper;
 import com.vanxd.data.mapper.user.SysUserRoleMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -45,9 +38,22 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, SysUserMapper> 
 
     @Override
     public int save(SysUser entity) {
+        if ( isUsernameExist(entity) ) {
+            throw new BusinessException("用户名已存在！");
+        }
         entity.randomSalt();
         encryptPassword(entity);
         return super.save(entity);
+    }
+
+    /**
+     * 判断新增的用户名是否已存在
+     * @param entity
+     */
+    private boolean isUsernameExist(SysUser entity) {
+        SysUser condition = new SysUser();
+        condition.setUsername(entity.getUsername());
+        return count(condition, null) > 0;
     }
 
     @Override
