@@ -94,6 +94,18 @@ function bindJqGridResize() {
 }
 
 /**
+ * 高亮当前的菜单
+ * @param choosedMenu
+ */
+function highLightChoosedMenu(choosedMenu) {
+    if (choosedMenu) {
+        $(choosedMenu).parent().addClass("active");
+        var topParentId = choosedMenu.data("parent-id");
+        $("#menu_" + topParentId).addClass("active").trigger("click");
+    }
+}
+
+/**
  * 初始化菜单，没找到thymeleaf怎么include一个url，只能用这种方式了，感觉好蠢。
  */
 function initMenu() {
@@ -109,11 +121,7 @@ function initMenu() {
                     var navbar = $("#navbar");
                     navbar.find(".active").removeClass("active");
                     var choosedMenu = getChoosedMenu(navbar);
-                    if(choosedMenu) {
-                        $(choosedMenu).parent().addClass("active");
-                        var topParentId = choosedMenu.data("parent-id");
-                        $("#menu_" + topParentId).addClass("active").trigger("click");
-                    }
+                    highLightChoosedMenu(choosedMenu);
                 }
             }
         });
