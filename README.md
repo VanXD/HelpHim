@@ -62,3 +62,10 @@
     
 4.  权限管理：菜单是由模块->菜单->功能 3级组成
     1.  权限增加时如果是菜单级需要填写相应的URI
+    
+## 框架尝试
+### RequireJS
+尝试重构了一下common.js，就导致我每个html文件自己的JS会变成这样：
+
+    require(["/js/common.js","/js/jqGridFactory.js", "/js/ajaxUtils.js", "/js/plugins/artTemplate.js", "/js/iCheckFactory.js"] , function (common, jqGridFactory, ajaxUtils, template) {
+实在恶心，还没有我直接使用Themeleaf的引入方便，虽然HTML上会有很多\<script\>。所以，放弃使用RequireJS进行JS模块化编程。
