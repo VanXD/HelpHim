@@ -2,7 +2,8 @@
  * todo 这个文件里的各个功能分到其他文件去
  */
 var DEFAULT_JQ_GRID = undefined,
-    DEFAULT_ICHECK_LIST = undefined;
+    DEFAULT_ICHECK_LIST = undefined,
+    PAGE = {};
 
 $(window).bind('resize', function () {
     bindJqGridResize();

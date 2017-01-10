@@ -7,6 +7,7 @@
 4.  MySQL
 5.  Shiro1.2.5
 6.  前端基于Bootstrap3的框架：Inspinia2.5， 这个出2.6了，修复了2.5在移动端的BUG等等，之后有时间再升级。
+7.  Vue-2.1.8.js
 
 ##  shiro
 ### 问题 subject.isPermitted(String permission) 权限验证的逻辑
@@ -69,3 +70,70 @@
 
     require(["/js/common.js","/js/jqGridFactory.js", "/js/ajaxUtils.js", "/js/plugins/artTemplate.js", "/js/iCheckFactory.js"] , function (common, jqGridFactory, ajaxUtils, template) {
 实在恶心，还没有我直接使用Themeleaf的引入方便，虽然HTML上会有很多\<script\>。所以，放弃使用RequireJS进行JS模块化编程。
+
+
+### artTemplate.js
+我们使用该渲染框架来进行页面模板的渲染，比如：用户关联角色 的列表。但是因为Thymleaf的原因，会报各种各样的html语法错误。
+所以最后是将模板写在js文件中的，类似这样：
+
+    var roleTmpl = `
+        <% for(var i = 0, j = result.length; i < j ; i++) { %>
+        <tr>
+            <td><%=i+1%></td>
+            <td><%=result[i].name%></td>
+            <td><%=result[i].description%></td>
+            <td>
+                <label class="i-checks" id="is-show-checks">
+                    <div class="icheckbox_square-green <%= result[i].checked ? "checked" : ''%>" style="position: relative;">
+                        <input <%= result[i].checked ? 'checked=true' : ''%>" onchange="relation(this, '<%=result[i].id%>', '<%=userId%>')" class="role-icheck" type="checkbox" style="position: absolute; opacity: 0;">
+                        <ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
+                    </div>
+                </label>
+            </td>
+        </tr>
+        <% } %>
+    `;
+    $("#roles").html(template.compile(roleTmpl)(result));
+    
+看着就打恶心，所以尝试了Vue.js
+
+### Vue.js
+为了解决上面那个框架出现的问题，引入了Vue.js，官方文档非常健全，很快上手。
+
+上面的代码变成这样：
+
+
+HTML部分:v-on:change可以缩写成@change，但是thymeleaf的语法检查让我异常。
+    
+    <tr v-for="(entity, index) of entities" >
+        <td>{{ index+1 }}</td>
+        <td>{{ entity.name }}</td>
+        <td>{{ entity.description }}</td>
+        <td>
+            <label class="">
+                <div :class="['icheckbox_square-green' , entity.checked ? 'checked' : '' ]" style="position: relative;">
+                    <input v-on:change="relation($event, entity.id, userId)" :checked="entity.checked" class="role-icheck" type="checkbox" style="position: absolute; opacity: 0;" />
+                    <ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
+                </div>
+            </label>
+        </td>
+    </tr>
+    
+JS部分：因为我这里会重复创建Vue对象，所以自己做了判断，之后看有什么好办法没有，然后改掉这里。
+
+    if ( !PAGE.rolesVue ) {
+        PAGE.rolesVue = new Vue({
+            el: '#roles',
+            data: {
+                userId : dataId,
+                entities: result.result
+            },
+            methods : {
+                relation : (event, roleId, userId) => {
+                    relation(event.target, roleId, userId);
+                }
+            }
+        });
+    }
+    
+瞬间比artTemplate.js舒服多了~

@@ -88,7 +88,22 @@
                                 <th>是否关联</th>
                             </tr>
                             </thead>
-                            <tbody id="roles"></tbody>
+                            <tbody id="roles">
+                                <tr v-for="(entity, index) of entities" >
+                                    <td>{{ index+1 }}</td>
+                                    <td>{{ entity.name }}</td>
+                                    <td>{{ entity.description }}</td>
+                                    <td>
+                                        <label class="">
+                                            <div :class="['icheckbox_square-green' , entity.checked ? 'checked' : '' ]" style="position: relative;">
+                                                <input v-on:change="relation($event, entity.id, userId)" :checked="entity.checked" class="role-icheck" type="checkbox" style="position: absolute; opacity: 0;" />
+                                                <ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins>
+                                            </div>
+                                        </label>
+                                    </td>
+                                </tr>
+                            </tbody>
+
                         </table>
                     </div>
                 </div>
