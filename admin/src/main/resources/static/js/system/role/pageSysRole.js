@@ -125,48 +125,13 @@ function listPermissions() {
         },
         success : result => {
             result.roleId = roleId;
-            var permissionTmpl = `
-                <% for(var i = 0, j = result.length; i < j ; i++) { %>
-                <li class="dd-item dd-collapsed">
-                    <button data-action="collapse" type="button" style="display: none;">Collapse</button>
-                    <button data-action="expand" type="button">Expand</button>
-                    <div class="dd-row">
-                        <span class="pull-right">
-                            <input <%=result[i].checked ? 'checked=true' : ''%> id="<%=result[i].id%>" class="permission-icheck" type="checkbox">
-                        </span>
-                        <span class="label label-info"><i class="fa <%=result[i].icon%>"></i></span> <%=result[i].name%>
-                    </div>
-                    <ol class="dd-list" style="display: none;" id="sub-of-<%=result[i].id%>">
-                        <% for(var k = 0, l = result[i].subPermissions.length; k < l ; k++) { %>
-                        <li class="dd-item dd-collapsed" id="1">
-                            <button data-action="collapse" type="button" style="display: none;">Collapse</button>
-                            <button data-action="expand" type="button">Expand</button>
-                            <div class="dd-row">
-                                <span class="pull-right">
-                                    <input <%=result[i].subPermissions[k].checked ? 'checked=true' : ''%> id="<%=result[i].subPermissions[k].id%>" data-parent-id="<%=result[i].id%>" class="permission-icheck" type="checkbox">
-                                </span>
-                                <span class="label label-info"><i class="fa <%=result[i].subPermissions[k].icon%>"></i></span> <%=result[i].subPermissions[k].name%>
-                            </div>
-                            <ol class="dd-list" style="display: none;" id="sub-of-<%=result[i].subPermissions[k].id%>">
-                                <% for(var m = 0,  n = result[i].subPermissions[k].subPermissions.length; m < n ; m++) { %>
-                                <li class="dd-item" data-id="2">
-                                    <div class="dd-row">
-                                        <span class="pull-right">
-                                            <input id="<%=result[i].subPermissions[k].subPermissions[m].id%>" <%=result[i].subPermissions[k].subPermissions[m].checked ? 'checked=true' : ''%>" onchange="relation(this, '<%=roleId%>', '<%=result[i].subPermissions[k].subPermissions[m].id%>')" data-parent-id="<%=result[i].subPermissions[k].id%>" class="permission-icheck" type="checkbox">
-                                        </span>
-                                        <span class="label label-info"></span> <%=result[i].subPermissions[k].subPermissions[m].name%>
-                                    </div>
-                                </li>
-                                <% } %>
-                            </ol>
-                        </li>
-                        <% } %>
-                    </ol>
-                </li>
-                <% } %>
-            `;
-            // 检查子菜单是否被全选
-            $("#permissions").html(template.compile(permissionTmpl)(result));
+            PAGE.permsValue = new Vue({
+                el : '#permissions',
+                data : {
+                    roleId : roleId,
+                    entities : result.result
+                }
+            });
             bindIChecks(".permission-icheck").on("ifChecked ifUnchecked", event => {
                 relation(event.type, event.target, roleId);
             });

@@ -73,6 +73,34 @@
                         <div>
                             <div class="dd" id="nestable2">
                                 <ol class="dd-list" id="permissions">
+                                    <li v-for="entity of entities" class="dd-item">
+                                        <div class="dd-row">
+                                            <span class="pull-right">
+                                                <input :checked="entity.checked" :id="entity.id" class="permission-icheck" type="checkbox"/>
+                                            </span>
+                                            <span class="label label-info"><i :class="['fa', entity.icon]"></i></span> {{ entity.name }}
+                                        </div>
+                                        <ol class="dd-list" :id="'sub-of-' + entity.id">
+                                            <li v-for="menu of entity.subPermissions" class="dd-item" id="1">
+                                                <div class="dd-row">
+                                                    <span class="pull-right">
+                                                        <input :checked="menu.checked" :id="menu.id" :data-parent-id="entity.id" class="permission-icheck" type="checkbox"/>
+                                                    </span>
+                                                    <span class="label label-info"><i :class="['fa', 'menu.icon']"></i></span> {{ menu.name }}
+                                                </div>
+                                                <ol class="dd-list" :id="'sub-of-' + menu.id">
+                                                    <li v-for="subPerms of menu.subPermissions" class="dd-item" data-id="2">
+                                                        <div class="dd-row">
+                                                        <span class="pull-right">
+                                                            <input :id="subPerms.id" :checked="subPerms.checked" v-on:change="relation(this, 'roleId', 'subPerms.id')" :data-parent-id="menu.id" class="permission-icheck" type="checkbox"/>
+                                                        </span>
+                                                        <span class="label label-info"></span> {{ subPerms.name }}
+                                                        </div>
+                                                    </li>
+                                                </ol>
+                                            </li>
+                                        </ol>
+                                    </li>
                                 </ol>
                             </div>
                         </div>
