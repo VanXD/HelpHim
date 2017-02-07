@@ -59,6 +59,9 @@ public class AppErrorController extends BasicErrorController {
         HandlerMethod controllerHandler = (HandlerMethod) servletContext.getAttribute(GlobalKey.REQUEST_METHOD);
         Method method = controllerHandler.getMethod();
         RequiresPermissions  clazzAnotation = (RequiresPermissions) controllerClazz.getAnnotation(RequiresPermissions.class);
+        if ( null == clazzAnotation ) {
+            return;
+        }
         RequiresPermissions methodAnnotation = method.getAnnotation(RequiresPermissions.class);
         String permAnnotation = clazzAnotation.value()[0] + methodAnnotation.value()[0];
     }

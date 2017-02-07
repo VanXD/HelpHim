@@ -18,7 +18,7 @@
                         <li><a href="contacts.html">Contacts</a></li>
                         <li><a href="mailbox.html">Mailbox</a></li>
                         <li class="divider"></li>
-                        <li><a href="login.html">Logout</a></li>
+                        <li><a href="/logout">Logout</a></li>
                     </ul>
                 </div>
                 <div class="logo-element">
@@ -35,7 +35,6 @@
                     <li th:each="subMenu, subIterStat : ${menu.subPermissions}">
                         <a th:href="${subMenu.url}" th:text="${subMenu.name}" th:attr="data-parent-id=${menu.id}"></a>
                     </li>
-                    <!--<li><a href="dashboard_5.html">Dashboard v.5 <span class="label label-primary pull-right">NEW</span></a></li>-->
                 </ul>
             </li>
         </ul>

@@ -1,5 +1,6 @@
 package com.vanxd.admin.shiro.handler;
 
+import com.vanxd.admin.exception.BusinessException;
 import org.apache.shiro.aop.AnnotationHandler;
 import org.apache.shiro.aop.AnnotationResolver;
 import org.apache.shiro.aop.MethodInvocation;
@@ -29,11 +30,11 @@ public class CustomPermissionAnnotationMethodInterceptor extends AuthorizingAnno
                 ((AuthorizingAnnotationHandler) handler).assertAuthorized(this.getAnnotation(mi));
             }
         } catch (AuthorizationException e) {
-            if(e.getCause() == null) {
+            throw new BusinessException("当前用户无该操作权限！");
+            /*if(e.getCause() == null) {
                 e.initCause(new AuthorizationException("Not authorized to invoke method: " + mi.getMethod()));
             }
-
-            throw e;
+            throw e;*/
         }
     }
 
