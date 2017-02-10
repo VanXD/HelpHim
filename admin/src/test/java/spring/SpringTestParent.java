@@ -1,12 +1,11 @@
 package spring;
 
-import com.vanxd.admin.start.Start;
+
 import org.junit.runner.RunWith;
-import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.context.annotation.Role;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.transaction.TransactionConfiguration;
-import org.springframework.transaction.annotation.Transactional;
+
+import javax.transaction.Transactional;
 
 /**
  * Spring测试基类
@@ -14,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
  * Created by wyd on 2016/6/30.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = Start.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Transactional
 public class SpringTestParent {
 }

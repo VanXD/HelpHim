@@ -1,12 +1,14 @@
 package com.vanxd.admin.start;
 
 import com.alibaba.druid.pool.DruidDataSource;
+import com.vanxd.admin.config.DataSourceProperties;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.mapper.MapperScannerConfigurer;
+import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
+import org.springframework.core.env.Environment;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
@@ -22,20 +24,31 @@ import javax.sql.DataSource;
  */
 @Configuration
 @EnableTransactionManagement
-public class MyBatisConfig implements TransactionManagementConfigurer {
+public class MyBatisConfig implements TransactionManagementConfigurer, EnvironmentAware {
+    private Environment environment;
+    private DataSourceProperties dsProperties;
+
+    @Override
+    public void setEnvironment(Environment environment) {
+        this.environment = environment;
+        this.dsProperties = new DataSourceProperties(environment.getProperty("datasource.username"),
+                                                     environment.getProperty("datasource.password"),
+                                                     environment.getProperty("datasource.driverClass"),
+                                                     environment.getProperty("datasource.url"));
+    }
 
     /**
      * 设置数据源
      * todo 设置druid的其他属性
      * @return
      */
-    @Bean( name = "dataSource", destroyMethod = "close")
+    @Bean (name = "dataSource", destroyMethod = "close")
     public DataSource getDataSource() {
         DruidDataSource dataSource = new DruidDataSource();
-        dataSource.setUsername("root");
-        dataSource.setPassword("");
-        dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/helphim?useUnicode=true&characterEncoding=UTF-8");
+        dataSource.setUsername(dsProperties.getUsername());
+        dataSource.setPassword(dsProperties.getPassword());
+        dataSource.setDriverClassName(dsProperties.getDriverClass());
+        dataSource.setUrl(dsProperties.getUrl());
         return dataSource;
     }
 
@@ -80,5 +93,4 @@ public class MyBatisConfig implements TransactionManagementConfigurer {
         mapperScannerConfigurer.setBasePackage("com.vanxd.data.mapper");
         return mapperScannerConfigurer;
     }
-
 }

@@ -1,0 +1,13 @@
+spring:
+  profiles:
+    active: dev
+  output:
+    ansi:
+      enabled: always
+  thymeleaf:
+    cache: false
+    prefix: /WEB-INF/views/
+    suffix: .html
+
+server:
+  port: 5014
