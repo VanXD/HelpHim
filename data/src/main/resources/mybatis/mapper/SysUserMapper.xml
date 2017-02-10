@@ -152,6 +152,9 @@
   <sql id="Common-Conditions">
     <where>
       AND su.status != -9
+      <if test="conditions.username != null and conditions.username != ''">
+        AND su.username = #{conditions.username, jdbcType=VARCHAR}
+      </if>
     </where>
   </sql>
 
