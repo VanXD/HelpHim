@@ -11,34 +11,6 @@
     <modelVersion>4.0.0</modelVersion>
     <artifactId>admin</artifactId>
 
-    <profiles>
-        <profile>
-            <!-- 本地开发环境 -->
-            <id>dev</id>
-            <properties>
-                <profilesActive>dev</profilesActive>
-                <spring.profiles.active>dev</spring.profiles.active>
-            </properties>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-        </profile>
-        <profile>
-            <!-- 测试环境 -->
-            <id>test</id>
-            <properties>
-                <profilesActive>test</profilesActive>
-            </properties>
-        </profile>
-        <profile>
-            <!-- 生产环境 -->
-            <id>pro</id>
-            <properties>
-                <profilesActive>pro</profilesActive>
-            </properties>
-        </profile>
-    </profiles>
-
     <dependencies>
         <dependency>
             <groupId>com.vanxd</groupId>
@@ -141,9 +113,6 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
                     <mainClass>com.vanxd.admin.start.Start</mainClass>
-                    <profiles>
-                        <profile>${profilesActive}</profile>
-                    </profiles>
                 </configuration>
             </plugin>
             <plugin>
