@@ -13,13 +13,15 @@ import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
  * Created by wejoy-a on 2016/6/27.
  */
+@Configuration
 @EnableAutoConfiguration
 @ComponentScan(basePackages = "com.vanxd.admin")
-@Configuration
+@EnableTransactionManagement
 public class Start {
     @Autowired
     private ServerProperties properties;

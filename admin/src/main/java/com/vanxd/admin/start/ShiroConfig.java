@@ -17,20 +17,31 @@ import java.util.Map;
  * Created by wyd on 2016/6/30.
  */
 @Configuration
-public class ShiroConfig {
+public class ShiroConfig{
+    private EhCacheManager ehCacheManager;
 
     @Bean
     public EhCacheManager getEhCacheManager() {
-        EhCacheManager em = new EhCacheManager();
-        em.setCacheManagerConfigFile("classpath:ehcache-shiro.xml");
-        return em;
+        if ( null != ehCacheManager ) {
+            return ehCacheManager;
+        }
+        ehCacheManager = new EhCacheManager();
+        ehCacheManager.setCacheManagerConfigFile("classpath:ehcache-shiro.xml");
+        return ehCacheManager;
     }
 
-    @Bean(name = "myShiroRealm")
-    public SysUserRealm myShiroRealm(EhCacheManager cacheManager) {
+    public SysUserRealm myShiroRealm() {
         SysUserRealm realm = new SysUserRealm();
-        realm.setCacheManager(cacheManager);
+        realm.setCacheManager(getEhCacheManager());
         return realm;
+    }
+
+    @Bean(name = "securityManager")
+    public DefaultWebSecurityManager getDefaultWebSecurityManager(EhCacheManager ehCacheManager) {
+        DefaultWebSecurityManager dwsm = new DefaultWebSecurityManager();
+        dwsm.setRealm(myShiroRealm());
+        dwsm.setCacheManager(ehCacheManager);
+        return dwsm;
     }
 
     @Bean
@@ -38,14 +49,6 @@ public class ShiroConfig {
         DefaultAdvisorAutoProxyCreator daap = new DefaultAdvisorAutoProxyCreator();
         daap.setProxyTargetClass(true);
         return daap;
-    }
-
-    @Bean(name = "securityManager")
-    public DefaultWebSecurityManager getDefaultWebSecurityManager(SysUserRealm sysUserRealm) {
-        DefaultWebSecurityManager dwsm = new DefaultWebSecurityManager();
-        dwsm.setRealm(sysUserRealm);
-        dwsm.setCacheManager(getEhCacheManager());
-        return dwsm;
     }
 
     @Bean
@@ -61,6 +64,7 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/css/**", "anon");
         filterChainDefinitionMap.put("/img/**", "anon");
         filterChainDefinitionMap.put("/login", "anon");
+        filterChainDefinitionMap.put("/test/**", "anon");
         filterChainDefinitionMap.put("/**", "authc");
 
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
@@ -82,5 +86,4 @@ public class ShiroConfig {
         loadShiroFilterChain(shiroFilterFactoryBean);
         return shiroFilterFactoryBean;
     }
-
 }

@@ -12,9 +12,6 @@ import org.springframework.core.env.Environment;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
-import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.transaction.annotation.TransactionManagementConfigurer;
 
 import javax.sql.DataSource;
 
@@ -23,8 +20,7 @@ import javax.sql.DataSource;
  * @author wyd on 2016/9/7.
  */
 @Configuration
-@EnableTransactionManagement
-public class MyBatisConfig implements TransactionManagementConfigurer, EnvironmentAware {
+public class MyBatisConfig implements EnvironmentAware {
     private Environment environment;
     private DataSourceProperties dsProperties;
 
@@ -57,10 +53,10 @@ public class MyBatisConfig implements TransactionManagementConfigurer, Environme
      * @return
      */
     @Bean(name = "sqlSessionFactory")
-    public SqlSessionFactory sqlSessionFactoryBean() {
+    public SqlSessionFactory sqlSessionFactoryBean(DataSource dataSource) {
 
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
-        bean.setDataSource(getDataSource());
+        bean.setDataSource(dataSource);
         bean.setTypeAliasesPackage("com.vanxd.data.entity");
 
         //添加XML目录
@@ -75,14 +71,12 @@ public class MyBatisConfig implements TransactionManagementConfigurer, Environme
     }
 
     /**
-     * 事务管理,具体使用在service层加入@Transactional注解
+     * 配置事务管理器
      */
     @Bean(name = "transactionManager")
-    @Override
-    public PlatformTransactionManager annotationDrivenTransactionManager() {
-        return new DataSourceTransactionManager(getDataSource());
+    public DataSourceTransactionManager transactionManager(DataSource dataSource) throws Exception {
+        return new DataSourceTransactionManager(dataSource);
     }
-
     /**
      * 扫描mapper 接口文件
      * @return
