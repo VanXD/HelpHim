@@ -23,7 +23,6 @@ import java.util.*;
  * @author wyd on 2016/10/27.
  */
 @Service
-@Transactional
 public class SysRolePermissionServiceImpl extends BaseServiceImpl<SysRolePermission, SysRolePermissionMapper> implements SysRolePermissionService {
     @Autowired
     private SysRolePermissionMapper sysRolePermissionMapper;

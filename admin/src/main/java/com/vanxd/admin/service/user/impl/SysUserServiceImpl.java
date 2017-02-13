@@ -15,9 +15,9 @@ import org.springframework.util.StringUtils;
 import java.util.Set;
 
 /**
+ * 系统用户业务实现类
  * Created by wyd on 2016/6/30.
  */
-@Transactional
 @Service
 public class SysUserServiceImpl extends BaseServiceImpl<SysUser, SysUserMapper> implements SysUserService {
     @Autowired
@@ -43,7 +43,11 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, SysUserMapper> 
         }
         entity.randomSalt();
         encryptPassword(entity);
-        return super.save(entity);
+        int save = super.save(entity);
+        if ( null != entity ) {
+            throw new RuntimeException("");
+        }
+        return save;
     }
 
     /**

@@ -4,6 +4,7 @@ import com.vanxd.admin.service.BaseService;
 import com.vanxd.data.entity.user.SysRole;
 import com.vanxd.data.entity.user.SysUserRole;
 import com.vanxd.data.mapper.user.SysUserRoleMapper;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -17,6 +18,7 @@ public interface SysUserRoleService extends BaseService<SysUserRole, SysUserRole
      * @param roleId 必须 角色ID
      * @return
      */
+    @Transactional
     boolean cancelRelation(String userId, String roleId);
 
     /**

@@ -22,7 +22,6 @@ import java.util.Set;
  * Created by wyd on 2016/8/25.
  */
 @Service
-@Transactional
 public class SysRoleServiceImpl extends BaseServiceImpl<SysRole, SysRoleMapper> implements SysRoleService {
     @Autowired
     private SysRoleMapper sysRoleMapper;

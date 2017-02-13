@@ -23,7 +23,6 @@ import java.util.List;
  * Created by wyd on 2016/8/25.
  */
 @Service
-@Transactional
 public class SysPermissionServiceImpl extends BaseServiceImpl<SysPermission, SysPermissionMapper> implements SysPermissionService {
     @Autowired
     private SysPermissionMapper sysPermissionMapper;

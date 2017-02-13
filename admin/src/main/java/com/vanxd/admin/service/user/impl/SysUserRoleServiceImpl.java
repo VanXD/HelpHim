@@ -19,7 +19,6 @@ import java.util.stream.Collectors;
  * @author wyd on 2016/10/20.
  */
 @Service
-@Transactional
 public class SysUserRoleServiceImpl extends BaseServiceImpl<SysUserRole, SysUserRoleMapper> implements SysUserRoleService {
     @Autowired
     private SysUserRoleMapper sysUserRoleMapper;

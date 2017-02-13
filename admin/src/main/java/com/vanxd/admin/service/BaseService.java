@@ -5,6 +5,7 @@ import com.vanxd.data.component.Pagination;
 import com.vanxd.data.component.jqgrid.JqFilter;
 import com.vanxd.data.entity.BaseEntity;
 import com.vanxd.data.mapper.BaseMapper;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -43,18 +44,24 @@ public interface BaseService<T extends BaseEntity, Mapper extends BaseMapper<T>>
      */
     Mapper getMapper();
 
+    @Transactional
     int deleteByPrimaryKey(String id);
 
+    @Transactional
     int save(T entity);
 
+    @Transactional
     int saveSelective(T entity);
 
     T findByPrimaryKey(String id);
 
+    @Transactional
     int updateByPrimaryKeySelective(T entity);
 
+    @Transactional
     int updateByPrimaryKey(T entity);
 
+    @Transactional
     boolean edit(T entity);
 
     /**
@@ -62,5 +69,6 @@ public interface BaseService<T extends BaseEntity, Mapper extends BaseMapper<T>>
      * @param id    主键
      * @return
      */
+    @Transactional
     int deleteSoftlyByPrimaryKey(String id);
 }
