@@ -21,12 +21,10 @@ import javax.sql.DataSource;
  */
 @Configuration
 public class MyBatisConfig implements EnvironmentAware {
-    private Environment environment;
     private DataSourceProperties dsProperties;
 
     @Override
     public void setEnvironment(Environment environment) {
-        this.environment = environment;
         this.dsProperties = new DataSourceProperties(environment.getProperty("datasource.username"),
                                                      environment.getProperty("datasource.password"),
                                                      environment.getProperty("datasource.driverClass"),
