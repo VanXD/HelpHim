@@ -164,14 +164,7 @@
     <include refid="Base_Column_List"></include>
     FROM
     sys_user su
-    <choose>
-      <when test="jqFilter != null">
-        <include refid="page.Filter-Conditions"></include>
-      </when>
-      <otherwise>
-        <include refid="Common-Conditions"></include>
-      </otherwise>
-    </choose>
+    <include refid="page.Where-Condition"/>
     ORDER BY
     su.create_time DESC
     <include refid="page.limit"/>
@@ -183,13 +176,6 @@
     count(1)
     FROM
     sys_user su
-    <choose>
-      <when test="jqFilter != null">
-        <include refid="page.Filter-Conditions"></include>
-      </when>
-      <otherwise>
-        <include refid="Common-Conditions"></include>
-      </otherwise>
-    </choose>
+    <include refid="page.Where-Condition"/>
   </select>
 </mapper>

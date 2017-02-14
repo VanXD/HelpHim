@@ -220,14 +220,7 @@
     sys_permission sp
     LEFT JOIN sys_role_permission srp ON sp.id = srp.permission_id
     LEFT JOIN sys_user su ON su.id = sp.creator_user_id
-    <choose>
-      <when test="jqFilter != null">
-        <include refid="page.Filter-Conditions"></include>
-      </when>
-      <otherwise>
-        <include refid="Common-Conditions"></include>
-      </otherwise>
-    </choose>
+    <include refid="page.Where-Condition"/>
     GROUP BY sp.id
     ORDER BY
     sp.type ASC,
@@ -243,13 +236,6 @@
     sys_permission sp
     LEFT JOIN sys_role_permission srp ON sp.id = srp.role_id
     LEFT JOIN sys_user su ON su.id = sp.creator_user_id
-    <choose>
-      <when test="jqFilter != null">
-        <include refid="page.Filter-Conditions"></include>
-      </when>
-      <otherwise>
-        <include refid="Common-Conditions"></include>
-      </otherwise>
-    </choose>
+    <include refid="page.Where-Condition"/>
   </select>
 </mapper>

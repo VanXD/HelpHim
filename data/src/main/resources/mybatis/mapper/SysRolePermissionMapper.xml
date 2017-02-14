@@ -128,14 +128,7 @@
     sys_role_permission srp
     LEFT JOIN sys_permission sp ON sp.id = srp.permission_id
     LEFT JOIN sys_role sr ON sr.id = srp.role_id
-    <choose>
-      <when test="jqFilter != null">
-        <include refid="page.Filter-Conditions"></include>
-      </when>
-      <otherwise>
-        <include refid="Common-Conditions"></include>
-      </otherwise>
-    </choose>
+    <include refid="page.Where-Condition"/>
     ORDER BY
     srp.create_time DESC
     <include refid="page.limit"/>
@@ -149,14 +142,7 @@
     sys_role_permission srp
     LEFT JOIN sys_permission sp ON sp.id = srp.permission_id
     LEFT JOIN sys_role sr ON sr.id = srp.role_id
-    <choose>
-      <when test="jqFilter != null">
-        <include refid="page.Filter-Conditions"></include>
-      </when>
-      <otherwise>
-        <include refid="Common-Conditions"></include>
-      </otherwise>
-    </choose>
+    <include refid="page.Where-Condition"/>
   </select>
 
 </mapper>

@@ -1,10 +1,12 @@
 package com.vanxd.data.entity.user;
 
+import com.vanxd.data.annotation.TableAlias;
 import com.vanxd.data.entity.BaseEntity;
 import org.apache.commons.lang.RandomStringUtils;
 
 import java.util.Set;
 
+@TableAlias(alias = "su")
 public class SysUser extends BaseEntity{
     private String email;
 
@@ -19,8 +21,10 @@ public class SysUser extends BaseEntity{
     private String username;
 
     /** [VO] 角色标识 */
+    @TableAlias(isRequire = false)
     private Set<String> roleIdentities;
     /** [VO] 权限标识 */
+    @TableAlias(isRequire = false)
     private Set<String> permissionIdentities;
 
     public Set<String> getRoleIdentities() {

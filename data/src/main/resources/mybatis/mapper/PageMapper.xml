@@ -35,4 +35,16 @@
             AND ${jqFilter.pojoTableAlias}.status != -9
         </where>
     </sql>
+
+    <!-- 统一的查询条件加载项 -->
+    <sql id="Where-Condition">
+        <choose>
+            <when test="jqFilter != null">
+                <include refid="page.Filter-Conditions"></include>
+            </when>
+            <otherwise>
+                <include refid="Common-Conditions"></include>
+            </otherwise>
+        </choose>
+    </sql>
 </mapper>

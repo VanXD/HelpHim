@@ -140,14 +140,7 @@
     FROM
     sys_role sr
     LEFT JOIN sys_user su ON su.id = sr.creator_user_id
-    <choose>
-      <when test="jqFilter != null">
-        <include refid="page.Filter-Conditions"></include>
-      </when>
-      <otherwise>
-        <include refid="Common-Conditions"></include>
-      </otherwise>
-    </choose>
+    <include refid="page.Where-Condition"/>
     ORDER BY
     sr.create_time DESC
     <include refid="page.limit"/>
@@ -160,13 +153,6 @@
     FROM
     sys_role sr
     LEFT JOIN sys_user su ON su.id = sr.creator_user_id
-    <choose>
-      <when test="jqFilter != null">
-        <include refid="page.Filter-Conditions"></include>
-      </when>
-      <otherwise>
-        <include refid="Common-Conditions"></include>
-      </otherwise>
-    </choose>
+    <include refid="page.Where-Condition"/>
   </select>
 </mapper>
