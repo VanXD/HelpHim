@@ -1,9 +1,10 @@
 package com.vanxd.admin.shiro.realm;
 
-import com.vanxd.admin.service.user.SysUserService;
 import com.vanxd.admin.shiro.authc.CustomCredentialsMatcher;
 import com.vanxd.admin.util.GlobalKey;
 import com.vanxd.data.entity.user.SysUser;
+import com.vanxd.data.mapper.user.SysUserMapper;
+import com.vanxd.data.mapper.user.SysUserRoleMapper;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authc.credential.CredentialsMatcher;
@@ -24,9 +25,11 @@ import java.util.Set;
 public class SysUserRealm extends AuthorizingRealm {
 
     @Autowired
-    private SysUserService sysUserServiceImpl;
-    @Autowired
     private CustomCredentialsMatcher customCredentialsMatcher;
+    @Autowired
+    private SysUserMapper sysUserMapper;
+    @Autowired
+    private SysUserRoleMapper sysUserRoleMapper;
 
 
     /**
@@ -37,11 +40,11 @@ public class SysUserRealm extends AuthorizingRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         String username = (String) getAvailablePrincipal(principals);
-        SysUser sysUser = sysUserServiceImpl.getByUsername(username);
+        SysUser sysUser = sysUserMapper.selectByUsername(username);
         //获取用户的所有资源
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-        Set<String> roleIdentities = sysUserServiceImpl.getRoleIdentitiesByUserId(sysUser.getId());
-        Set<String> permissionIdentities = sysUserServiceImpl.getPermissionIdentitiesByUserId(sysUser.getId());
+        Set<String> roleIdentities = sysUserRoleMapper.selectRolesByUserId(sysUser.getId());
+        Set<String> permissionIdentities = sysUserRoleMapper.selectPermissionsByUserId(sysUser.getId());
         info.setRoles(roleIdentities);
         info.setStringPermissions(permissionIdentities);
 
@@ -74,8 +77,7 @@ public class SysUserRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         UsernamePasswordToken usernamePasswordToken = (UsernamePasswordToken) token;
         String username = usernamePasswordToken.getUsername().trim();
-
-        SysUser sysUser = sysUserServiceImpl.getByUsername(username);
+        SysUser sysUser = sysUserMapper.selectByUsername(username);
         if(sysUser == null){
             throw new UnknownAccountException();//账号没找到
         }

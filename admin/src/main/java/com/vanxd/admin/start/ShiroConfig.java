@@ -18,28 +18,25 @@ import java.util.Map;
  */
 @Configuration
 public class ShiroConfig{
-    private EhCacheManager ehCacheManager;
 
     @Bean
     public EhCacheManager getEhCacheManager() {
-        if ( null != ehCacheManager ) {
-            return ehCacheManager;
-        }
-        ehCacheManager = new EhCacheManager();
+        EhCacheManager ehCacheManager = new EhCacheManager();
         ehCacheManager.setCacheManagerConfigFile("classpath:ehcache-shiro.xml");
         return ehCacheManager;
     }
 
-    public SysUserRealm myShiroRealm() {
+    @Bean
+    public SysUserRealm myShiroRealm(EhCacheManager ehCacheManager) {
         SysUserRealm realm = new SysUserRealm();
-        realm.setCacheManager(getEhCacheManager());
+        realm.setCacheManager(ehCacheManager);
         return realm;
     }
 
     @Bean(name = "securityManager")
-    public DefaultWebSecurityManager getDefaultWebSecurityManager(EhCacheManager ehCacheManager) {
+    public DefaultWebSecurityManager getDefaultWebSecurityManager(EhCacheManager ehCacheManager, SysUserRealm sysUserRealm) {
         DefaultWebSecurityManager dwsm = new DefaultWebSecurityManager();
-        dwsm.setRealm(myShiroRealm());
+        dwsm.setRealm(sysUserRealm);
         dwsm.setCacheManager(ehCacheManager);
         return dwsm;
     }
