@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:van="https://github.com/VanXD/Thymeleaf-Dialect">
+<head th:include="/common/common_head :: commonHeader('权限管理', '')"></head>
+
+<body>
+<div id="wrapper">
+    <div id="page-wrapper" class="gray-bg dashbard-1">
+        <div th:replace="/common/common_head :: contentHeader"></div>
+        <div class="wrapper wrapper-content  animated fadeInRight">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="ibox ">
+                        <div class="ibox-title">
+                            <h5>菜单管理</h5>
+                        </div>
+                        <div class="ibox-content">
+                            <div class="jqGrid_wrapper">
+                                <table id="data-table-1"></table>
+                                <div id="pager-table-1"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 添加模板模态框 -->
+<div id="edit-modal-form" class="modal fade" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12 b-r">
+                        <h3 class="m-t-none m-b">编辑菜单</h3>
+                        <form id="edit-form" role="form" action="edit.json" method="post">
+                            <!-- 主键 -->
+                            <input id="id" type="hidden" name="id"/>
+                            <div class="form-group">
+                                <label>父菜单ID（不需要请清空）</label>
+                                <input id="parentId" name="parentId" type="text" placeholder="父菜单ID，不需要请清空" class="form-control"/>
+                            </div>
+                            <div class="form-group">
+                                <label>名称</label>
+                                <input id="name" name="name" type="text" placeholder="请填写权限名称" class="form-control"/>
+                            </div>
+                            <div class="form-group">
+                                <label>权限标识</label>
+                                <input id="permission" name="permission" type="text" placeholder="请填写权限标识" class="form-control"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="description" >描述</label>
+                                <input id="description" name="description" type="text" placeholder="简要描述一下该权限" class="form-control"/>
+                            </div>
+                            <div class="form-group">
+                                <label>权重</label>
+                                <input id="weight" name="weight" type="number" placeholder="请填写权限权重，用于排序" class="form-control"/>
+                            </div>
+                            <div class="form-group">
+                                <label>类型</label>
+                                <van:select class="form-control m-b" name="type" dict="SysPermissionTypeEnum"  />
+                            </div>
+                            <div class="form-group">
+                                <label>是否显示</label>
+                                <label class="i-checks form-control" id="is-show-checks">
+                                    <input id="isShow" name="isShow" type="checkbox" />
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label>图标(“fa-”开头)</label>
+                                <input id="icon" name="icon" type="text" placeholder="请填写图标" class="form-control"/>
+                            </div>
+                            <div class="form-group">
+                                <label>URI</label>
+                                <input id="url" name="url" type="text" placeholder="请填写菜单跳转路径（URI，可带参）" class="form-control"/>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div>
+                                <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit">
+                                    <strong>提交</strong>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:include="/common/onload_js :: onloadJS('/article/information/pageArticle.js')"></div>
+</body>
+</html>

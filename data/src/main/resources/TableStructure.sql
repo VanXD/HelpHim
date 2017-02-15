@@ -160,4 +160,19 @@ CREATE TABLE `sys_user_role` (
 INSERT INTO `sys_user_role` VALUES ('0fd727ca33874cdeae77d9e881dc45b5', '2016-10-20 15:33:35', '1', '1', '1');
 INSERT INTO `sys_user_role` VALUES ('5093317921a440228d3c9afe84179d59', '2016-10-28 15:20:23', '1', '1', '5853886fe60f462fb5fb74dbb17ead5b');
 INSERT INTO `sys_user_role` VALUES ('7839963b77ed40e9a45496bd768935d0', '2016-10-29 16:14:18', '1', '97426f411dc7403c9ef78a2a8bc65c0e', 'a779072db9d04bf086df08ad26a94f0a');
+
+-- ----------------------------
+-- Table structure for article
+-- ----------------------------
+DROP TABLE IF EXISTS `article`;
+CREATE TABLE `article` (
+  `id` char(32) NOT NULL,
+  `title` varchar(100) NOT NULL,
+  `content` text NOT NULL,
+  `creator_user_id` char(32) NOT NULL,
+  `status` int(11) NOT NULL,
+  `create_time` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 SET FOREIGN_KEY_CHECKS=1;

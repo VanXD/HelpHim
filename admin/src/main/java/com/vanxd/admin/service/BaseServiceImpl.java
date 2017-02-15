@@ -24,7 +24,7 @@ public abstract class BaseServiceImpl<T extends BaseEntity, Mapper extends BaseM
     public PageResult<T> page(T conditions, JqFilter jqFilter, Pagination pagination) {
         PageResult<T> pageResult = new PageResult<T>(pagination.getPage(), pagination.getPageSize());
         pageResult.setRecords(count(conditions, jqFilter));
-        if(0 > pageResult.getRecords()) {
+        if(0 == pageResult.getRecords()) {
             return pageResult;
         } else {
             pageResult.setRows(list(conditions, jqFilter, pagination));
