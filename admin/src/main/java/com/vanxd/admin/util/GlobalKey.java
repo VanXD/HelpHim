@@ -14,4 +14,12 @@ public class GlobalKey {
     public static final String REQUEST_CLASS = "class";
     /** 保存在servletContext中的请求具体方法的key */
     public static final String REQUEST_METHOD = "method";
+
+    /** 开发环境profile  */
+    public static final String PROFILE_DEV = "dev";
+    /** 测试profile  */
+    public static final String PROFILE_TEST = "test";
+    /** 生产环境profile  */
+    public static final String PROFILE_PRO = "pro";
+
 }

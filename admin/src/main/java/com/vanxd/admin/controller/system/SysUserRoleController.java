@@ -54,6 +54,6 @@ public class SysUserRoleController extends BaseController<SysUserRole, SysUserRo
         if(StringUtils.isEmpty(userId)) {
             return new RespJSON(RespJSON.RespCode.PARAM_ILLEAGUE);
         }
-        return RespJSON.successData(sysUserRoleServiceImpl.findByUserIdAndChecked(userId));
+        return RespJSON.returnResult(sysUserRoleServiceImpl.findByUserIdAndChecked(userId));
     }
 }

@@ -71,12 +71,15 @@ public class RespJSON<T> {
     }
 
     /**
-     * 返回成功，且返回数据
-     *
-     * @param object    成功返回的对象
+     * 返回结果，
+     * 如果结果为null，则返回数据为空
+     * @param object
      * @return
      */
-    public static RespJSON successData(Object object) {
+    public static RespJSON returnResult(Object object) {
+        if ( null == object ) {
+            return RespJSON.respCode(RespCode.DATA_EMPTY);
+        }
         RespJSON<Object> respJSON = new RespJSON(RespCode.SUCCESS);
         respJSON.setResult(object);
         return respJSON;

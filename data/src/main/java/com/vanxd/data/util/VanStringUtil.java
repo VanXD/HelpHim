@@ -5,7 +5,7 @@ import java.util.UUID;
 /**
  * @author wyd on 2016/9/8.
  */
-public class VanStringUtils {
+public class VanStringUtil {
     /**
      * 获取UUID
      *

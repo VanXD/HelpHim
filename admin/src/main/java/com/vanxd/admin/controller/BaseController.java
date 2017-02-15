@@ -121,11 +121,7 @@ public abstract class BaseController<T extends BaseEntity, Service extends BaseS
             throw new ParameterException("参数不正确！");
         }
         T entity = (T) getService().findByPrimaryKey(id);
-        if(null == entity) {
-            return RespJSON.respCode(RespJSON.RespCode.DATA_EMPTY);
-        } else {
-            return RespJSON.successData(entity);
-        }
+        return RespJSON.returnResult(entity);
     }
 
     /**

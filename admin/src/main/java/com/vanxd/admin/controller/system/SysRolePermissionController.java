@@ -53,7 +53,7 @@ public class SysRolePermissionController extends BaseController<SysRolePermissio
         if(StringUtils.isEmpty(roleId)) {
             return new RespJSON(RespJSON.RespCode.PARAM_ILLEAGUE);
         }
-        return RespJSON.successData(sysRolePermissionServiceImpl.findByRoleIdAndChecked(roleId));
+        return RespJSON.returnResult(sysRolePermissionServiceImpl.findByRoleIdAndChecked(roleId));
     }
 
 }
