@@ -1,7 +1,9 @@
 $(function () {
     buildJqGridGenerator();
     initValidate();
-    bindNormalICheckEvents();
+
+    var ue = UE.getEditor('ue-content');
+
 });
 function initValidate() {
     editFormValidator({

@@ -1,0 +1,7 @@
+.wide-dialog {
+    width: 70%;
+}
+
+.edui-default {
+    z-index: 5000 !important;
+}

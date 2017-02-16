@@ -46,7 +46,7 @@ public class FileUtil {
      * @return
      */
     private UploadFile saveLocal(MultipartFile file) {
-        String fileName = VanStringUtil.uuid() + getFileExtensionName(file);
+        String fileName = VanStringUtil.uuid() + getSuffix(file);
         String filePath = uploadFilePrefix + fileName;
         FileChannel fileChannel;
         try {
@@ -66,7 +66,7 @@ public class FileUtil {
      * @param file
      * @return
      */
-    private String getFileExtensionName (MultipartFile file) {
+    public String getSuffix(MultipartFile file) {
         String originalFilename = file.getOriginalFilename();
         return originalFilename.substring(originalFilename.lastIndexOf("."));
     }

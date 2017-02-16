@@ -4,6 +4,11 @@
 <head th:include="/common/common_head :: commonHeader('权限管理', '')"></head>
 
 <body>
+<script type="text/javascript" src="/js/plugins/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" src="/js/plugins/ueditor/ueditor.all.min.js"> </script>
+<!--建议手动加在语言，避免在ie下有时因为加载语言失败导致编辑器加载失败-->
+<!--这里加载的语言文件会覆盖你在配置项目里添加的语言类型，比如你在配置项目里配置的是英文，这里加载的中文，那最后就是中文-->
+<script type="text/javascript" src="/js/plugins/ueditor/lang/zh-cn/zh-cn.js"></script>
 <div id="wrapper">
     <div id="page-wrapper" class="gray-bg dashbard-1">
         <div th:replace="/common/common_head :: contentHeader"></div>
@@ -12,7 +17,7 @@
                 <div class="col-lg-12">
                     <div class="ibox ">
                         <div class="ibox-title">
-                            <h5>菜单管理</h5>
+                            <h5>文章管理</h5>
                         </div>
                         <div class="ibox-content">
                             <div class="jqGrid_wrapper">
@@ -28,52 +33,22 @@
 </div>
 <!-- 添加模板模态框 -->
 <div id="edit-modal-form" class="modal fade" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog wide-dialog">
         <div class="modal-content">
             <div class="modal-body">
                 <div class="row">
                     <div class="col-sm-12 b-r">
-                        <h3 class="m-t-none m-b">编辑菜单</h3>
+                        <h3 class="m-t-none m-b">编辑文章</h3>
                         <form id="edit-form" role="form" action="edit.json" method="post">
                             <!-- 主键 -->
                             <input id="id" type="hidden" name="id"/>
                             <div class="form-group">
-                                <label>父菜单ID（不需要请清空）</label>
-                                <input id="parentId" name="parentId" type="text" placeholder="父菜单ID，不需要请清空" class="form-control"/>
+                                <label>标题</label>
+                                <input id="title" name="title" type="text" placeholder="标题..." class="form-control"/>
                             </div>
                             <div class="form-group">
-                                <label>名称</label>
-                                <input id="name" name="name" type="text" placeholder="请填写权限名称" class="form-control"/>
-                            </div>
-                            <div class="form-group">
-                                <label>权限标识</label>
-                                <input id="permission" name="permission" type="text" placeholder="请填写权限标识" class="form-control"/>
-                            </div>
-                            <div class="form-group">
-                                <label for="description" >描述</label>
-                                <input id="description" name="description" type="text" placeholder="简要描述一下该权限" class="form-control"/>
-                            </div>
-                            <div class="form-group">
-                                <label>权重</label>
-                                <input id="weight" name="weight" type="number" placeholder="请填写权限权重，用于排序" class="form-control"/>
-                            </div>
-                            <div class="form-group">
-                                <label>类型</label>
-                                <van:select class="form-control m-b" name="type" dict="SysPermissionTypeEnum"  />
-                            </div>
-                            <div class="form-group">
-                                <label>是否显示</label>
-                                <label class="i-checks form-control" id="is-show-checks">
-                                    <input id="isShow" name="isShow" type="checkbox" />
-                                </label>
-                            </div>
-                            <div class="form-group">
-                                <label>图标(“fa-”开头)</label>
-                                <input id="icon" name="icon" type="text" placeholder="请填写图标" class="form-control"/>
-                            </div>
-                            <div class="form-group">
-                                <label>URI</label>
-                                <input id="url" name="url" type="text" placeholder="请填写菜单跳转路径（URI，可带参）" class="form-control"/>
+                                <label>内容</label>
+                                <div style="height: 300px;" id="ue-content"></div>
                             </div>
                             <div class="hr-line-dashed"></div>
                             <div>
