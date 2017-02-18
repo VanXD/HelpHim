@@ -43,11 +43,7 @@ public class SysUserServiceImpl extends BaseServiceImpl<SysUser, SysUserMapper> 
         }
         entity.randomSalt();
         encryptPassword(entity);
-        int save = super.save(entity);
-        if ( null != entity ) {
-            throw new RuntimeException("");
-        }
-        return save;
+        return super.save(entity);
     }
 
     /**

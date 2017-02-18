@@ -25,7 +25,7 @@
         clean spring-boot:run -Dspring.profiles.active=dev 这个值决定使用哪一个Profile
     2.  jar包
         
-        java -jar xxx.jar --spring.profiles.active=pro
+        java -Dspring.profiles.active=pro -jar admin-1.0-SNAPSHOT.jar
 2.  分页(page)接口数据筛选条件：    
     1.  可传实体属性作为参数查询。
     2.  可传filters参数，参数值符合jqGrid多条件查询的json字符串格式，具体可看Filter类

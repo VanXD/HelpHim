@@ -4,7 +4,7 @@ spring:
       enabled: always
   thymeleaf:
     cache: false
-    prefix: /WEB-INF/views/
+    prefix: /views/
     suffix: .html
 
 server:
