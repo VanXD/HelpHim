@@ -127,7 +127,7 @@
 
   <sql id="VO_Column_List">
     a.id, a.title, a.creator_user_id, a.status, a.create_time,
-    su.nickname
+    su.nickname creator_nickname
   </sql>
   <!-- 公共查询条件 -->
   <sql id="Common-Conditions">

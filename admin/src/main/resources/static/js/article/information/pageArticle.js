@@ -1,44 +1,27 @@
 $(function () {
     buildJqGridGenerator();
     initValidate();
-
-    var ue = UE.getEditor('ue-content');
+    UEditorFactory.getInstance();
 
 });
 function initValidate() {
     editFormValidator({
         rules: {
-            name : {
-                required : true
-            },
-            permission : {
-                required : true,
-                maxlength : 50
-            },
-            description : {
+            title : {
                 required : true,
                 maxlength : 100
             },
-            weight : {
-                required : true,
-                number : true
+            'ue-content' : {
+                required : true
             }
         },
         messages : {
-            name : {
-                required : "必填"
-            },
-            permission : {
-                required : "必填",
-                maxlength : "最长50个字符"
-            },
-            description : {
+            title : {
                 required : "必填",
                 maxlength : "最长100个字符"
             },
-            weight : {
+            'ue-content' : {
                 required : "必填",
-                number : "只能填数字"
             }
         }
     });
@@ -50,7 +33,7 @@ function buildJqGridGenerator() {
         tableSelector : "#data-table-1",
         pager : "pager-table-1",
         url : "/article/information/list.json",
-        caption:"菜单权限管理",
+        caption:"文章管理",
         colNames : ["标题", "创建人","创建时间" ],
         colModel : [
             {
@@ -81,8 +64,9 @@ function buildJqGridGenerator() {
  * 添加模板，模态框
  */
 function addFuncDiaglog(id) {
-    $("#parentId").val(id);
     $("#id").val();
+    var ue = UEditorFactory.getInstance();
+    ue.setContent("");
 }
 
 /**
@@ -91,7 +75,8 @@ function addFuncDiaglog(id) {
  * @param id 数据ID
  */
 function editFuncDiaglog(entity) {
-    console.log(JSON.stringify(entity));
+    var ue = UEditorFactory.getInstance();
+    ue.setContent(entity.content);
 }
 
 /**

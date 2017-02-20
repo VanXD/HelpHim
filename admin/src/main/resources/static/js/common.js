@@ -324,6 +324,11 @@ function editFormValidator(validate) {
         rules: validate.rules ,
         messages : validate.messages ,
         submitHandler : form => {
+            if (form.editorValue) {
+                form.content = {
+                    value : form.editorValue.value
+                }
+            }
             $(form).ajaxSubmit({
                 success : result => {
                     if(isRequestSuccess(result)) {
@@ -355,3 +360,19 @@ function bindNormalICheckEvents() {
         }
     });
 }
+
+/**
+ * UEditor工具类
+ * @type {{getInstance: UEditorFactory.getInstance}}
+ */
+var UEditorFactory = {
+    /**
+     * 获得对象实例
+     * @param domId 可为空 默认"ue-content"
+     * @returns {*}
+     */
+    getInstance : function (domId) {
+        var _domId = domId || "ue-content";
+        return UE.getEditor(_domId);
+    }
+};
