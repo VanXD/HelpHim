@@ -6,5 +6,9 @@ datasource:
   url: jdbc:mysql://localhost:3306/helphim?useUnicode=true&characterEncoding=UTF-8
   driverClass: com.mysql.jdbc.Driver
 
+## 文件上传配置
 uploadFile:
+  ## 文件保存路径，保存到本地硬盘（项目的静态路径文件夹下）
   prefix: src/main/resources/static/uploadImg/
+  ## 因为上述路径不能直接返回，让前端拿到图片，所以需要该配置
+  uriPrefix : /uploadImg/

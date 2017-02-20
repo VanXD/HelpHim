@@ -8,3 +8,4 @@ datasource:
 
 uploadFile:
   prefix: src/main/resources/static/uploadImg/
+  uriPrefix : /uploadImg/

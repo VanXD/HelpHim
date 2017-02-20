@@ -19,6 +19,8 @@ import java.nio.channels.FileChannel;
 public class FileUtil {
     @Value("${uploadFile.prefix}")
     private String uploadFilePrefix;
+    @Value("${uploadFile.uriPrefix}")
+    private String uriPrefix;
     @Value("${env}")
     private String env;
 
@@ -58,7 +60,7 @@ public class FileUtil {
         } catch (IOException e) {
             throw new BusinessException(e.getMessage());
         }
-        return new UploadFile(fileName, filePath);
+        return new UploadFile(fileName, uriPrefix + fileName);
     }
 
     /**
