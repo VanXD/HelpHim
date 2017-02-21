@@ -2,6 +2,7 @@ package com.vanxd.admin.interceptors;
 
 import com.vanxd.admin.controller.AppErrorController;
 import com.vanxd.admin.util.GlobalKey;
+import com.vanxd.admin.util.ShiroUtil;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
@@ -21,6 +22,7 @@ public class RequestInterceptor extends HandlerInterceptorAdapter{
         if ( handlerMethod.getBeanType() != AppErrorController.class) {
             request.getServletContext().setAttribute(GlobalKey.REQUEST_CLASS, beanType);
             request.getServletContext().setAttribute(GlobalKey.REQUEST_METHOD, handlerMethod);
+            request.getServletContext().setAttribute(GlobalKey.REQUEST_EXCEPTION_USER, ShiroUtil.getSessionSysUser());
         }
         return super.preHandle(request, response, handler);
     }

@@ -2,6 +2,7 @@ package com.vanxd.admin.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.vanxd.admin.service.user.SysPermissionService;
+import com.vanxd.admin.service.user.SysRequestLogService;
 import com.vanxd.admin.util.GlobalKey;
 import com.vanxd.admin.util.LogUtil;
 import com.vanxd.data.component.RespJSON;
@@ -35,6 +36,8 @@ public class AppErrorController extends BasicErrorController {
     private static final String myExceptionPackage = "com.vanxd.admin.exception.";
     @Autowired
     private SysPermissionService sysPermissionService;
+    @Autowired
+    private SysRequestLogService sysRequestLogService;
 
     public AppErrorController(ErrorAttributes errorAttributes, ErrorProperties errorProperties) {
         super(errorAttributes, errorProperties);
@@ -47,8 +50,8 @@ public class AppErrorController extends BasicErrorController {
 
     @Override
     public ResponseEntity<Map<String, Object>> error(HttpServletRequest request) {
-        saveExceptionLog(request);
         ResponseEntity<Map<String, Object>> error = super.error(request);
+        saveExceptionLog(request, error);
         logger.error(JSONObject.toJSONString(error));
         RespJSON exceptionRespJson = RespJSON.exception(error);
         handleErrorByStatusCode(error, exceptionRespJson);
@@ -58,8 +61,9 @@ public class AppErrorController extends BasicErrorController {
     /**
      * 做出异步的保存错误日志
      * @param request
+     * @param error
      */
-    private void saveExceptionLog(HttpServletRequest request) {
+    private void saveExceptionLog(HttpServletRequest request, ResponseEntity<Map<String, Object>> error) {
         ServletContext servletContext = request.getServletContext();
         Class controllerClazz = (Class) servletContext.getAttribute(GlobalKey.REQUEST_CLASS);
         HandlerMethod controllerHandler = (HandlerMethod) servletContext.getAttribute(GlobalKey.REQUEST_METHOD);
@@ -75,6 +79,7 @@ public class AppErrorController extends BasicErrorController {
             LogUtil.errorLog(AppErrorController.class, String.format("没有找到权限：%s的菜单", sysPermission));
             return;
         }
+        sysRequestLogService.save(request, error, sysPermission);
     }
 
     /**

@@ -14,6 +14,10 @@ public class GlobalKey {
     public static final String REQUEST_CLASS = "class";
     /** 保存在servletContext中的请求具体方法的key */
     public static final String REQUEST_METHOD = "method";
+    /** 保存在servletContext中的发生异常的用户 */
+    public static final String REQUEST_EXCEPTION_USER = "exceptionUser";
+    /** 保存在servletContext中的发生异常的请求URI */
+    public static final String REQUEST_EXCEPTION_URI = "exceptionURI";
 
     /** 开发环境profile  */
     public static final String PROFILE_DEV = "dev";

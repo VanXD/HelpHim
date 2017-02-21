@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vanxd.data.mapper.user.SysRequestLogMapper">
+  <resultMap id="BaseResultMap" type="com.vanxd.data.entity.user.SysRequestLog">
+    <id column="id" jdbcType="CHAR" property="id" />
+    <result column="type" jdbcType="TINYINT" property="type" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="remote_ip" jdbcType="VARCHAR" property="remoteIp" />
+    <result column="request_param" jdbcType="VARCHAR" property="requestParam" />
+    <result column="user_agent" jdbcType="VARCHAR" property="userAgent" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="creator_user_id" jdbcType="CHAR" property="creatorUserId" />
+    <result column="exception" jdbcType="VARCHAR" property="exception" />
+  </resultMap>
+  <resultMap id="VOResultMap" extends="BaseResultMap" type="com.vanxd.data.entity.user.SysRequestLog">
+    <result column="creator_nickname" jdbcType="VARCHAR" property="creatorNickname" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, type, title, remote_ip, request_param, user_agent, create_time,
+    status, creator_user_id, exception
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_request_log
+    where id = #{id,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from sys_request_log
+    where id = #{id,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.vanxd.data.entity.user.SysRequestLog">
+    insert into sys_request_log (id, type, title, remote_ip, 
+      request_param, user_agent,
+      create_time, status, creator_user_id, 
+      exception)
+    values (#{id,jdbcType=CHAR}, #{type,jdbcType=TINYINT}, #{title,jdbcType=VARCHAR}, #{remoteIp,jdbcType=VARCHAR}, 
+      #{requestParam,jdbcType=VARCHAR}, #{userAgent,jdbcType=VARCHAR},
+      #{createTime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}, #{creatorUserId,jdbcType=CHAR}, 
+      #{exception,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.vanxd.data.entity.user.SysRequestLog">
+    insert into sys_request_log
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="remoteIp != null">
+        remote_ip,
+      </if>
+      <if test="requestParam != null">
+        request_param,
+      </if>
+      <if test="userAgent != null">
+        user_agent,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="creatorUserId != null">
+        creator_user_id,
+      </if>
+      <if test="exception != null">
+        exception,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=CHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=TINYINT},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="remoteIp != null">
+        #{remoteIp,jdbcType=VARCHAR},
+      </if>
+      <if test="requestParam != null">
+        #{requestParam,jdbcType=VARCHAR},
+      </if>
+      <if test="userAgent != null">
+        #{userAgent,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="creatorUserId != null">
+        #{creatorUserId,jdbcType=CHAR},
+      </if>
+      <if test="exception != null">
+        #{exception,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.vanxd.data.entity.user.SysRequestLog">
+    update sys_request_log
+    <set>
+      <if test="type != null">
+        type = #{type,jdbcType=TINYINT},
+      </if>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="remoteIp != null">
+        remote_ip = #{remoteIp,jdbcType=VARCHAR},
+      </if>
+      <if test="requestParam != null">
+        request_param = #{requestParam,jdbcType=VARCHAR},
+      </if>
+      <if test="userAgent != null">
+        user_agent = #{userAgent,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="creatorUserId != null">
+        creator_user_id = #{creatorUserId,jdbcType=CHAR},
+      </if>
+      <if test="exception != null">
+        exception = #{exception,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.vanxd.data.entity.user.SysRequestLog">
+    update sys_request_log
+    set type = #{type,jdbcType=TINYINT},
+      title = #{title,jdbcType=VARCHAR},
+      remote_ip = #{remoteIp,jdbcType=VARCHAR},
+      request_param = #{requestParam,jdbcType=VARCHAR},
+      user_agent = #{userAgent,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=INTEGER},
+      creator_user_id = #{creatorUserId,jdbcType=CHAR},
+      exception = #{exception,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=CHAR}
+  </update>
+
+  <sql id="VO_Column_List">
+    srl.id, srl.type, srl.title, srl.remote_ip, srl.request_param,
+    srl.user_agent, srl.create_time, srl.status, srl.creator_user_id, srl.exception,
+    su.nickname creator_nickname
+  </sql>
+  <!-- 公共查询条件 -->
+  <sql id="Common-Conditions">
+    <where>
+      AND a.status != -9
+    </where>
+  </sql>
+
+  <!--分页查询记录-->
+  <select id="page" resultMap="VOResultMap" >
+    SELECT
+    <include refid="VO_Column_List"></include>
+    FROM
+    sys_request_log srl
+    JOIN sys_user su ON su.id = a.creator_user_id
+    <include refid="page.Where-Condition"/>
+    ORDER BY
+    a.create_time DESC
+    <include refid="page.limit"/>
+  </select>
+
+  <!-- 获取未删除的所有的记录 -->
+  <select id="count" resultType="long">
+    SELECT
+    count(1)
+    FROM
+    sys_request_log srl
+    JOIN sys_user su ON su.id = a.creator_user_id
+    <include refid="page.Where-Condition"/>
+  </select>
+</mapper>
