@@ -24,6 +24,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 /**
  *
@@ -38,6 +42,11 @@ public class AppErrorController extends BasicErrorController {
     private SysPermissionService sysPermissionService;
     @Autowired
     private SysRequestLogService sysRequestLogService;
+
+    // todo 线程池配置需要写在Profile中各个环境不一样
+    private static ExecutorService executorService = new ThreadPoolExecutor(2, 2, 1L, TimeUnit.MILLISECONDS,
+                                                                            new LinkedBlockingQueue<Runnable>(1000),
+                                                                            new ThreadPoolExecutor.CallerRunsPolicy());
 
     public AppErrorController(ErrorAttributes errorAttributes, ErrorProperties errorProperties) {
         super(errorAttributes, errorProperties);
@@ -79,7 +88,7 @@ public class AppErrorController extends BasicErrorController {
             LogUtil.errorLog(AppErrorController.class, String.format("没有找到权限：%s的菜单", sysPermission));
             return;
         }
-        sysRequestLogService.save(request, error, sysPermission);
+        executorService.execute(() -> sysRequestLogService.save(request, error, sysPermission));
     }
 
     /**
