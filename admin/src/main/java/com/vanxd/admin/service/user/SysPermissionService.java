@@ -12,4 +12,11 @@ import java.util.List;
  */
 public interface SysPermissionService extends BaseService<SysPermission, SysPermissionMapper>{
     List<SysPermission> getPermissionTreeAndMark(String menuModuleParentId, List<SysRolePermission> roleHasPerms);
+
+    /**
+     * 通过权限标识查找权限信息
+     * @param permission
+     * @return
+     */
+    SysPermission findByPermission(String permission);
 }

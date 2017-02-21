@@ -63,6 +63,11 @@ public class SysPermissionServiceImpl extends BaseServiceImpl<SysPermission, Sys
         return list;
     }
 
+    @Override
+    public SysPermission findByPermission(String permission) {
+        return sysPermissionMapper.selectByPermission(permission);
+    }
+
     /**
      * 标记角色已有的权限
      * @param permission

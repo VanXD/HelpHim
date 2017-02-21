@@ -1,11 +1,15 @@
 package com.vanxd.admin.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.vanxd.admin.service.user.SysPermissionService;
 import com.vanxd.admin.util.GlobalKey;
+import com.vanxd.admin.util.LogUtil;
 import com.vanxd.data.component.RespJSON;
+import com.vanxd.data.entity.user.SysPermission;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.BasicErrorController;
 import org.springframework.boot.autoconfigure.web.ErrorAttributes;
 import org.springframework.boot.autoconfigure.web.ErrorProperties;
@@ -29,6 +33,8 @@ import java.util.Map;
 public class AppErrorController extends BasicErrorController {
     private final Logger logger = LoggerFactory.getLogger(getClass());
     private static final String myExceptionPackage = "com.vanxd.admin.exception.";
+    @Autowired
+    private SysPermissionService sysPermissionService;
 
     public AppErrorController(ErrorAttributes errorAttributes, ErrorProperties errorProperties) {
         super(errorAttributes, errorProperties);
@@ -63,7 +69,12 @@ public class AppErrorController extends BasicErrorController {
             return;
         }
         RequiresPermissions methodAnnotation = method.getAnnotation(RequiresPermissions.class);
-        String permAnnotation = clazzAnotation.value()[0] + methodAnnotation.value()[0];
+        String permission = clazzAnotation.value()[0] + methodAnnotation.value()[0];
+        SysPermission sysPermission = sysPermissionService.findByPermission(permission);
+        if (null == sysPermission) {
+            LogUtil.errorLog(AppErrorController.class, String.format("没有找到权限：%s的菜单", sysPermission));
+            return;
+        }
     }
 
     /**

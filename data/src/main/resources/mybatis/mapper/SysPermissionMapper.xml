@@ -238,4 +238,11 @@
     LEFT JOIN sys_user su ON su.id = sp.creator_user_id
     <include refid="page.Where-Condition"/>
   </select>
+
+  <select id="selectByPermission" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sys_permission
+    where permission = #{permission,jdbcType=VARCHAR}
+  </select>
 </mapper>
