@@ -283,7 +283,11 @@ function isRequestSuccess(result) {
 }
 
 function handleRequestFail(result) {
-    alert(result.message);
+    if (result.indexOf("<title>登陆</title>") > -1) {
+        window.location.href = "/login"
+    } else {
+        alert(result.message);
+    }
 }
 
 /**
