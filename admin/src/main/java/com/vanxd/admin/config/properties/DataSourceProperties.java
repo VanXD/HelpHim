@@ -1,4 +1,4 @@
-package com.vanxd.admin.config;
+package com.vanxd.admin.config.properties;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

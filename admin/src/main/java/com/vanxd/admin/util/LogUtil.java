@@ -9,4 +9,8 @@ public class LogUtil {
     public static void errorLog(Class clazz, String msg) {
         Logger.getLogger(clazz).error(msg);
     }
+
+    public static void debug(Class clazz, String msg) {
+        Logger.getLogger(clazz).debug(msg);
+    }
 }

@@ -1,10 +1,16 @@
 env: dev
 
 datasource:
-  username: root
-  password:
-  url: jdbc:mysql://localhost:3306/helphim?useUnicode=true&characterEncoding=UTF-8
-  driverClass: com.mysql.jdbc.Driver
+  write:
+    username: root
+    password:
+    url: jdbc:mysql://localhost:3306/helphim?useUnicode=true&characterEncoding=UTF-8
+    driverClass: com.mysql.jdbc.Driver
+  read1:
+    username: root
+    password:
+    url: jdbc:mysql://localhost:3306/helphim?useUnicode=true&characterEncoding=UTF-8
+    driverClass: com.mysql.jdbc.Driver
 
 ## 文件上传配置
 uploadFile:
