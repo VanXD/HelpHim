@@ -1,4 +1,5 @@
 # SpringBoot项目脚手架
+数据库读写分离、集成Redis
 ## 集成框架
 0.  Java 8， ES6
 1.  SpringBoot1.5.1.RELEASE
