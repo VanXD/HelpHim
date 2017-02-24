@@ -36,7 +36,9 @@
 4.  checkbox和radio统一使用iCheck：
     1.  common.js中的bindIChecks(selector)，之后优化放到其他文件
     2.  iCheck获得事件源event.target
-    3.  $.ajaxSubmit提交含有ICheck的表单时，$.ajaxSubmit是直接提交form表单，所以用的都是value值，而ICheck是不会改变checkbox的value的，所以需要定义事件我们自己去改变(@see common.js 的 bindNormalICheckEvents()方法)
-    
+    3.  $.ajaxSubmit提交含有ICheck的表单时，$.ajaxSubmit是直接提交form表单，所以用的都是value值，而ICheck是不会改变checkbox的value的，所以需要定义事件我们自己去改变(@see common.js 的 bindNormalICheckEvents()方法)   
 5.  权限管理：菜单是由模块->菜单->功能 3级组成
     1.  权限增加时如果是菜单级需要填写相应的URI
+6.  Redis:
+    1.  @Cacheable,@CacheEvict,@CachePut：直接写在相应Service接口上，如果BaseService已有的，就Override。需要注意的是，@Cacheable是把方法**返回值**放进缓存。
+    2.  可以通过@Autowired获得RedisTemplate
