@@ -8,8 +8,6 @@ import com.vanxd.data.mapper.article.ArticleMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-
 @Service
 public class ArticleServiceImpl extends BaseServiceImpl<Article, ArticleMapper> implements ArticleService {
     @Autowired
@@ -23,7 +21,6 @@ public class ArticleServiceImpl extends BaseServiceImpl<Article, ArticleMapper> 
     @Override
     public int save(Article entity) {
         entity.setCreatorUserId(ShiroUtil.getSessionSysUser().getId());
-        entity.setCreateTime(new Date());
         return super.save(entity);
     }
 }
