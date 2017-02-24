@@ -9,11 +9,7 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 
 public interface ArticleService extends BaseService<Article, ArticleMapper> {
-    @CachePut(value = RedisKeyConstant.ARTICLE_DETAIL, key = "#entity.id")
-    @Override
-    boolean edit(Article entity);
-
-    @Cacheable(value = RedisKeyConstant.ARTICLE_DETAIL, key = "#entity.id")
+    @Cacheable(value = RedisKeyConstant.ARTICLE_DETAIL, key = "#id")
     @Override
     Article findByPrimaryKey(String id);
 

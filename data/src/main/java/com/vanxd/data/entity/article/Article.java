@@ -3,10 +3,14 @@ package com.vanxd.data.entity.article;
 import com.vanxd.data.annotation.TableAlias;
 import com.vanxd.data.entity.BaseEntity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @TableAlias(alias = "a")
-public class Article extends BaseEntity{
+public class Article extends BaseEntity implements Serializable{
+
+    private static final long serialVersionUID = 7886395703199807083L;
+
     private String title;
 
     private String creatorUserId;
