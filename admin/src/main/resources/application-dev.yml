@@ -18,3 +18,7 @@ uploadFile:
   prefix: src/main/resources/static/uploadImg/
   ## 因为上述路径不能直接返回，让前端拿到图片，所以需要该配置
   uriPrefix : /uploadImg/
+
+spring:
+  redis:
+    password: redis

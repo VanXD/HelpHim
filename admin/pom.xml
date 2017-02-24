@@ -47,6 +47,12 @@
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
             <version>${org.springframework.boot.version}</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-redis -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+            <version>${org.springframework.boot.version}</version>
+        </dependency>
         <!-- spring boot END -->
         <!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
         <dependency>
