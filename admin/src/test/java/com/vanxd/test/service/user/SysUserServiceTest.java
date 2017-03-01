@@ -11,6 +11,7 @@ import spring.SpringTestParent;
 import java.util.Date;
 
 /**
+ * 用户测试类
  * @author wyd on 2016/9/8.
  */
 public class SysUserServiceTest extends SpringTestParent{
