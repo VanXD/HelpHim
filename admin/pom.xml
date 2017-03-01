@@ -53,6 +53,13 @@
             <artifactId>spring-boot-starter-data-redis</artifactId>
             <version>${org.springframework.boot.version}</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-jdbc -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
+            <version>${org.springframework.boot.version}</version>
+        </dependency>
+
         <!-- spring boot END -->
         <!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
         <dependency>
@@ -128,6 +135,13 @@
             <artifactId>commons-codec</artifactId>
             <version>1.10</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.springframework/spring-aspects -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aspects</artifactId>
+            <version>4.3.6.RELEASE</version>
+        </dependency>
+
     </dependencies>
 
     <build>
