@@ -58,7 +58,7 @@ public class MenuServiceImpl implements MenuService {
      */
     private void getSubMenu(Subject subject, SysPermission parent) {
         List<SysPermission> mens = getMenuByParentIdAndShow(parent.getId());
-        List<SysPermission> functions = null;
+        List<SysPermission> showMenus = null;
         if(CollectionUtils.isEmpty(mens)) {
             return ;
         }
@@ -70,10 +70,10 @@ public class MenuServiceImpl implements MenuService {
                 if(subject.isPermitted(permission.getPermission())) {
                     parentSubPermissions.add(permission);
                 } else {
-                    functions = getMenuByParentIdAndShow(permission.getId());
-                    if ( !CollectionUtils.isEmpty(functions) ) {
-                        for( SysPermission function : functions ) {
-                            if(subject.isPermitted(function.getPermission())) {
+                    showMenus = getMenuByParentIdAndShow(permission.getId());
+                    if ( !CollectionUtils.isEmpty(showMenus) ) {
+                        for( SysPermission showPerms : showMenus ) {
+                            if(subject.isPermitted(showPerms.getPermission())) {
                                 parentSubPermissions.add(permission);
                                 break;
                             }

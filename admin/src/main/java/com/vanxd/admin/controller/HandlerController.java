@@ -1,15 +1,8 @@
 package com.vanxd.admin.controller;
 
-import com.google.common.base.Throwables;
-import com.vanxd.admin.exception.AuthException;
-import com.vanxd.admin.exception.BusinessException;
-import com.vanxd.admin.exception.ParameterException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.web.bind.ServletRequestDataBinder;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.InitBinder;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,38 +21,6 @@ public abstract class HandlerController {
 	
 	/** The Constant SUCCESS. */
 	protected static final String SUCCESS = "success";
-	/** 查询条件变量名 */
-	protected static final String queryConditionName = "queryCondition";
-	/** 分页变量名 */
-	protected static final String pageName = "page";
-
-	protected final Logger logger = LoggerFactory.getLogger(getClass());
-
-    /**
-	 * 全局异常处理类，错误页面。.
-	 *
-	 * @param request
-	 *            用户请求。
-	 * @param ex
-	 *            异常。
-	 * @return 异常显示视图。
-	 */
-//    @ExceptionHandler
-    protected String handleException(HttpServletRequest request, Exception ex) {
-    	String message = Throwables.getStackTraceAsString(ex);
-    	logger.error(message);
-//		todo 保存到数据库，可能删掉，将在AppErrorController中处理异常
-//		LogUtils.saveSyswLog(request,  null, ex, ex.getMessage());
-		if(ex instanceof AuthException){
-			return "redirect:/login";
-		} else if (ex instanceof BusinessException) {
-			return "error/error-business";
-		} else if (ex instanceof ParameterException) {
-			return "error/error-parameter";
-		} else {
-			return "error/error";
-		}
-    }
 
 	/**
 	 * 自动转换日期类型的字段格式
