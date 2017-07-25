@@ -4,9 +4,6 @@
         "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 
 <generatorConfiguration>
-    <classPathEntry
-            location="C:\Users\Administrator\.m2\repository\mysql\mysql-connector-java\5.1.39\mysql-connector-java-5.1.39.jar"/>
-
     <context id="my" targetRuntime="MyBatis3">
         <commentGenerator>
             <property name="suppressDate" value="false"/>
@@ -24,21 +21,21 @@
         -->
         <!--  生成实体文件 改成硬盘上的绝对路径 -->
         <javaModelGenerator targetPackage="com.vanxd.test.data.entity"
-                            targetProject="D:\IdeaWorkSpaces\HelpHim\data\src\test\java">
+                            targetProject="src\test\java">
             <property name="enableSubPackages" value="true"/>
             <!--<property name="trimStrings" value="true"/>-->
         </javaModelGenerator>
 
         <!--  生成xml文件 改成硬盘上的绝对路径 -->
         <sqlMapGenerator targetPackage="mybatis"
-                         targetProject="D:\IdeaWorkSpaces\HelpHim\data\src\test\resources">
+                         targetProject="src\test\resources">
             <property name="enableSubPackages" value="true"/>
         </sqlMapGenerator>
 
 
         <!-- 生成mapper接口文件 改成硬盘上的绝对路径，生成时继承com.vanxd.data.mapper.BaseMapper -->
         <javaClientGenerator targetPackage="com.vanxd.test.data.mapper"
-                             targetProject="D:\IdeaWorkSpaces\HelpHim\data\src\test\java" type="XMLMAPPER">
+                             targetProject="src\test\java" type="XMLMAPPER">
             <property name="enableSubPackages" value="true"/>
             <property name="rootInterface" value="com.vanxd.data.mapper.BaseMapper"/>
         </javaClientGenerator>

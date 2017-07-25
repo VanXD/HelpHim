@@ -44,8 +44,8 @@ public class AppErrorController extends BasicErrorController {
     private SysRequestLogService sysRequestLogService;
 
     // todo 线程池配置需要写在Profile中各个环境不一样
-    private static ExecutorService executorService = new ThreadPoolExecutor(2, 2, 1L, TimeUnit.MILLISECONDS,
-                                                                            new LinkedBlockingQueue<Runnable>(1000),
+    private static ExecutorService executorService = new ThreadPoolExecutor(2, 4, 10, TimeUnit.SECONDS,
+                                                                            new LinkedBlockingQueue<Runnable>(),
                                                                             new ThreadPoolExecutor.CallerRunsPolicy());
 
     public AppErrorController(ErrorAttributes errorAttributes, ErrorProperties errorProperties) {
